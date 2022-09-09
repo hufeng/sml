@@ -1,5 +1,5 @@
+import sml from '../index'
 import { pmlYaml } from '../emitter/puml-yaml'
-import { Yaml } from '../lang/sml-yaml'
 
 describe('sml yaml test suites', () => {
   const title = 'hello yaml demo'
@@ -24,7 +24,7 @@ xmas-fifth-day:
 	turtle-doves: two`
 
   it('test full pipeline', () => {
-    const yaml = Yaml(title, (ml) => {
+    const yaml = sml.Yaml(title, (ml) => {
       ml.highlights(highlights).yaml(content)
     })
 
