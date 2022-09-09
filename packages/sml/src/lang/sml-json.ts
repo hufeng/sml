@@ -1,11 +1,7 @@
 import { Lang } from './sml'
 import { globalCollections } from './sml-global'
+import { JsonPath } from './types'
 
-/**
- * JsonPath 表达json的路径
- * 如：users.0.address.province
- */
-export type JsonPath = string
 // sml json meta interface
 export interface SMLJsonMeta {
   title: string
@@ -46,10 +42,9 @@ export class SmlJson extends Lang {
   }
 }
 
-export function json(title: string, fn: (ml: SmlJson) => void) {
+export function Json(title: string, fn: (ml: SmlJson) => void) {
   const smlJson = new SmlJson(title)
   fn(smlJson)
-  // collection sml json meta
   globalCollections.add(smlJson)
   return smlJson
 }
