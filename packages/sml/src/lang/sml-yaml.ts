@@ -41,6 +41,12 @@ export class SmlYaml extends Lang {
   }
 }
 
+/**
+ * sml yaml diagram syntax
+ * @param title 当前视图的标题
+ * @param fn
+ * @returns
+ */
 export function Yaml(title: string, fn: (ml: SmlYaml) => void) {
   const smlYaml = new SmlYaml(title)
   fn(smlYaml)

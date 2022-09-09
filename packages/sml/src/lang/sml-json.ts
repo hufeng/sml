@@ -42,6 +42,12 @@ export class SmlJson extends Lang {
   }
 }
 
+/**
+ * sml json diagram syntax
+ * @param title 当前视图的标题
+ * @param fn
+ * @returns
+ */
 export function Json(title: string, fn: (ml: SmlJson) => void) {
   const smlJson = new SmlJson(title)
   fn(smlJson)
