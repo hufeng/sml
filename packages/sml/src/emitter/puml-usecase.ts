@@ -8,6 +8,11 @@ export class PumlUseCaseEmitter extends Emitter<SmlUseCase> {
       this.s
         // start
         .str('@startuml')
+        // setting actor style
+        .ifStr(
+          meta.actorStyle !== 'default',
+          `skinparam actorStyle ${meta.actorStyle}`,
+        )
         .str(`${meta.direction.replace('->', ' to ')} direction\n`)
         // actors
         .forStr(

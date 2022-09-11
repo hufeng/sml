@@ -60,6 +60,7 @@ describe('sml usercase test suites', () => {
     expect(meta).toEqual({
       title,
       file: '',
+      actorStyle: 'default',
       direction: 'left->right',
       pkgs: [],
       usecases: [],
@@ -91,6 +92,30 @@ describe('sml usercase test suites', () => {
         .linkMany('g', ['uc1', 'uc2', 'uc3'])
         .link('a', 'uc1')
     })
+
+    const code = new PumlUseCaseEmitter(usecase).emitCode()
+    expect(code).toMatchSnapshot()
+  })
+
+  it('test actor style', () => {
+    const usecase = sml.Usecase('test actor style', (ml) => {
+      ml.actorStyle('default')
+        .actor('u1', 'user')
+        .usecase('c1', 'Write Blog')
+        .link('u1', 'c1')
+    })
+    const code = new PumlUseCaseEmitter(usecase).emitCode()
+    expect(code).toMatchSnapshot()
+  })
+
+  it('test actor awesome style', () => {
+    const usecase = sml.Usecase('test actor asesome style', (ml) =>
+      ml
+        .actorStyle('awesome')
+        .actor('a1', 'User')
+        .usecase(`u1`, 'Learn JavaScript')
+        .link('a1', 'u1'),
+    )
     const code = new PumlUseCaseEmitter(usecase).emitCode()
     expect(code).toMatchSnapshot()
   })

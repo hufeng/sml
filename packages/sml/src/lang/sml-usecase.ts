@@ -23,6 +23,9 @@ type Link = {
   to: Array<string>
 }
 
+type ActorStyleType = 'default' | 'awesome' | 'Hollow'
+type DirectionType = 'left->right' | 'top->down'
+
 // ~~~~~~~~~~ compositor ~~~~~~~~~~~~`
 interface IScope {
   label: string
@@ -33,7 +36,8 @@ interface IScope {
 export interface SmlUseCaseMeta {
   title: string
   file: string
-  direction: 'left->right' | 'top->down'
+  actorStyle: ActorStyleType
+  direction: DirectionType
   actors: Array<Actor>
   usecases: Array<UseCase>
   pkgs: Array<Pkg>
@@ -69,6 +73,7 @@ export class SmlUseCase extends Lang {
     this.meta = {
       title,
       file: '',
+      actorStyle: 'default',
       direction: 'left->right',
       actors: [],
       usecases: [],
@@ -78,7 +83,12 @@ export class SmlUseCase extends Lang {
     }
   }
 
-  direction(direction: 'left->right' | 'top->down') {
+  actorStyle(style: ActorStyleType = 'default') {
+    this.meta.actorStyle = style
+    return this
+  }
+
+  direction(direction: DirectionType) {
     this.meta.direction = direction
   }
 

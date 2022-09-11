@@ -11,6 +11,31 @@ actor :Last actor: as user3
 @enduml"
 `;
 
+exports[`sml usercase test suites > test actor awesome style 1`] = `
+"@startuml
+skinparam actorStyle awesome
+left to right direction
+
+actor :User: as a1
+
+usecase (Learn JavaScript) as u1
+
+a1 --> u1
+@enduml"
+`;
+
+exports[`sml usercase test suites > test actor style 1`] = `
+"@startuml
+left to right direction
+
+actor :user: as u1
+
+usecase (Write Blog) as c1
+
+u1 --> c1
+@enduml"
+`;
+
 exports[`sml usercase test suites > test only usercases 1`] = `
 "@startuml
 left to right direction
