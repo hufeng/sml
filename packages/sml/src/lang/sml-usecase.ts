@@ -2,15 +2,9 @@ import { Lang } from './sml'
 import { globalCollections } from './sml-global'
 
 // ~~~~~~~~~~ basic ~~~~~~~~~~
-interface Actor {
-  name: string
-  label: string
-}
-
-interface UseCase {
-  name: string
-  label: string
-}
+type Base = { name: string; label: string }
+type Actor = Base
+type UseCase = Base
 
 interface Pkg {
   label: string
@@ -23,14 +17,23 @@ type Link = {
   to: Array<string>
 }
 
+type Note = {
+  label: string
+  position: string
+  on: Name | { from: Name; to: Name }
+}
+
+type Name = string
 type ActorStyleType = 'default' | 'awesome' | 'Hollow'
 type DirectionType = 'left->right' | 'top->down'
+type Postion = 'top' | 'right' | 'bottom' | 'left'
 
 // ~~~~~~~~~~ compositor ~~~~~~~~~~~~`
 interface IScope {
   label: string
   usecases: Array<UseCase>
   actors: Array<Actor>
+  notes: Array<Note>
 }
 
 export interface SmlUseCaseMeta {
@@ -43,9 +46,21 @@ export interface SmlUseCaseMeta {
   pkgs: Array<Pkg>
   rects: Array<IScope>
   links: Array<Link>
+  notes: Array<Note>
 }
 
-// ~~~~~~~~~~~~~~~~~ Rectangle ~~~~~~~~~~~~~~~~
+class Basic {
+  private n: Note
+
+  constructor(n: Note) {
+    this.n = n
+  }
+
+  note(label: string, position: Postion = 'right') {
+    this.n = { ...this.n, label, position }
+  }
+}
+
 class Scope {
   private prop: IScope
 
@@ -53,13 +68,26 @@ class Scope {
     this.prop = data
   }
 
-  actor(name: string, label: string) {
+  actor(name: string, label: string, fn?: (c: Basic) => void) {
     this.prop.actors.push({ name, label })
+    if (typeof fn !== 'undefined') {
+      const note = { label: '', position: 'right', on: name }
+      const b = new Basic(note)
+      this.prop.notes.push(note)
+      fn(b)
+    }
     return this
   }
 
-  usecase(name: string, label: string) {
+  usecase(name: string, label: string, fn?: (c: Basic) => void) {
     this.prop.usecases.push({ name, label })
+
+    if (typeof fn !== 'undefined') {
+      const note = { label: '', position: 'right', on: name }
+      const b = new Basic(note)
+      fn(b)
+      this.prop.notes.push(note)
+    }
     return this
   }
 }
@@ -80,6 +108,7 @@ export class SmlUseCase extends Lang {
       pkgs: [],
       rects: [],
       links: [],
+      notes: [],
     }
   }
 
@@ -92,15 +121,29 @@ export class SmlUseCase extends Lang {
     this.meta.direction = direction
   }
 
-  actor(name: string, label: string) {
+  actor(name: string, label: string, fn?: (c: Basic) => void) {
     const actor = { name, label }
     this.meta.actors.push(actor)
+
+    if (typeof fn !== 'undefined') {
+      const note = { label: '', position: 'right', on: name }
+      new Basic(note)
+      this.meta.notes.push(note)
+    }
+
     return this
   }
 
-  usecase(name: string, label: string) {
+  usecase(name: string, label: string, fn?: (c: Basic) => void) {
     const usecase = { name, label }
     this.meta.usecases.push(usecase)
+
+    if (typeof fn !== 'undefined') {
+      const note = { label: '', position: 'right', on: name }
+      new Basic(note)
+      this.meta.notes.push(note)
+    }
+
     return this
   }
 
@@ -109,16 +152,23 @@ export class SmlUseCase extends Lang {
     return this
   }
 
-  link(from: string, to: string) {
+  link(from: string, to: string, fn?: (c: Basic) => void) {
     this.meta.links = [...this.meta.links, { from, to: [to] }]
+    if (typeof fn !== 'undefined') {
+      const note = { label: '', position: 'right', on: { from, to } } as Note
+      const b = new Basic(note)
+      fn(b)
+      this.meta.notes.push(note)
+    }
   }
 
-  pkgScope(label: string, fn: (s: Scope) => void) {
+  pkgScope(label: string, fn: (c: Scope) => void) {
     const data = {
       label,
       usecases: [],
       actors: [],
-    }
+      notes: [],
+    } as IScope
 
     const scope = new Scope(data)
     fn(scope)
@@ -127,12 +177,10 @@ export class SmlUseCase extends Lang {
     return this
   }
 
-  rectScope(label: string, fn: (s: Scope) => void) {
-    const data = { label, usecases: [], actors: [] } as IScope
-
+  rectScope(label: string, fn: (c: Scope) => void) {
+    const data = { label, usecases: [], actors: [], notes: [] } as IScope
     const rect = new Scope(data)
     fn(rect)
-
     this.meta.rects.push(data)
     return this
   }

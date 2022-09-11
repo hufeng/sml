@@ -54,6 +54,23 @@ export class PumlUseCaseEmitter extends Emitter<SmlUseCase> {
           },
           meta.pkgs.length > 0 ? '\n' : '',
         )
+
+        .forStr(
+          meta.notes,
+          (s, note, i) => {
+            const { label, position, on } = note
+            if (typeof on === 'string') {
+              s.str(`note ${position} of (${on})`)
+                .str(`  ${label}`)
+                .str('end note')
+            } else {
+              s.str(`node ${label} as N${i}`)
+                .str(`(${on.from}) .. N${i}`)
+                .str(`N${i} .. (${on.to})`)
+            }
+          },
+          meta.notes.length > 0 ? '\n' : '',
+        )
         //links
         .forStr(meta.links, (s, link) => {
           s.forStr(link.to, (s, to) => s.str(`${link.from} --> ${to}`))

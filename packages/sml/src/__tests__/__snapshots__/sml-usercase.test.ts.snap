@@ -36,6 +36,24 @@ u1 --> c1
 @enduml"
 `;
 
+exports[`sml usercase test suites > test note on simple actor or usecase 1`] = `
+"@startuml
+left to right direction
+
+actor :User: as a1
+
+usecase (Coding) as u1
+
+note right of (a1)
+  a student user
+end note
+note right of (u1)
+  Codingt Rust
+end note
+
+@enduml"
+`;
+
 exports[`sml usercase test suites > test only usercases 1`] = `
 "@startuml
 left to right direction

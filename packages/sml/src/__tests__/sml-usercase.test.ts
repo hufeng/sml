@@ -1,6 +1,7 @@
 import sml from '../index'
 import { SmlUseCaseMeta } from '../lang/sml-usecase'
 import { PumlUseCaseEmitter } from '../emitter/puml-usecase'
+import { m } from 'vitest/dist/index-5f09f4d0'
 
 describe('sml usercase test suites', () => {
   const title = 'hello usercase diagram'
@@ -64,6 +65,7 @@ describe('sml usercase test suites', () => {
       direction: 'left->right',
       pkgs: [],
       usecases: [],
+      notes: [],
       actors: [{ name: 'fc', label: 'Food Critic' }],
       rects: [
         {
@@ -119,4 +121,26 @@ describe('sml usercase test suites', () => {
     const code = new PumlUseCaseEmitter(usecase).emitCode()
     expect(code).toMatchSnapshot()
   })
+
+  it('test note on simple actor or usecase', () => {
+    const usecase = sml.Usecase('test simple note', (ml) =>
+      ml
+        .actor('a1', 'User', (c) => c.note('a student user'))
+        .usecase('u1', 'Coding', (c) => c.note('Coding Rust')),
+    )
+    const code = new PumlUseCaseEmitter(usecase).emitCode()
+    expect(code).toMatchSnapshot()
+  })
 })
+
+// usecase
+//    config
+//       actorStyle
+//       direction
+//    usecase
+//       Label Note Link => WithNote(), WithLink()
+//    actor
+//    rectangle
+//    package
+//    Note
+//    Link
