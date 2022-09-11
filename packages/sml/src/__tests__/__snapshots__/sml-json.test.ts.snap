@@ -2,10 +2,9 @@
 
 exports[`sml json test suites > test syntax api 1`] = `
 "@startjson
-
-#highlight  \\"lastName\\"
-#highlight  \\"address\\" / \\"city\\"
-#highlight  \\"phoneNumbers\\" / \\"0\\" / \\"number\\"
+#highlight \\"lastName\\"
+#highlight \\"address\\" / \\"city\\"
+#highlight \\"phoneNumbers\\" / \\"0\\" / \\"number\\"
 
 {
   \\"firstName\\": \\"John\\",

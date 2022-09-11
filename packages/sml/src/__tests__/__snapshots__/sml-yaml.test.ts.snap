@@ -2,9 +2,8 @@
 
 exports[`sml yaml test suites > test full pipeline 1`] = `
 "@startyaml
-
-#highlight  \\"french-hens\\"
-#highlight  \\"xmas-fifth-day\\" / \\"partridges\\"
+#highlight \\"french-hens\\"
+#highlight \\"xmas-fifth-day\\" / \\"partridges\\"
 
 doe: \\"a deer, a female deer\\"
 ray: \\"a drop of golden sun\\"

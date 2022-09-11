@@ -1,5 +1,5 @@
+import { PmlJsonEmitter } from '../emitter/puml-json'
 import sml from '../index'
-import { pmlJson } from '../emitter/puml-json'
 
 describe('sml json test suites', () => {
   const title = `hello world`
@@ -42,7 +42,7 @@ describe('sml json test suites', () => {
       json,
     })
 
-    const code = pmlJson(smlJson)
+    const code = new PmlJsonEmitter(smlJson).emitCode()
     expect(code).toMatchSnapshot()
   })
 })

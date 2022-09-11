@@ -1,16 +1,24 @@
-import ejs from 'ejs'
-import { SmlYaml } from '../lang/sml-yaml'
+import { Emitter } from './emitter'
+import { SmlYaml, SmlYamlMeta } from '../lang/sml-yaml'
 
-const render = ejs.compile(`
-@startyaml
-<% for (let hl of highlights) { %>
-#highlight  <%- hl.split('.').map(JSON.stringify).join(' / ') -%>
-<% } %>
-
-<%- yaml %>
-@endyaml
-`)
-
-export function pmlYaml(sml: SmlYaml) {
-  return render((sml as any).meta).trim()
+export default class PmlYamlEmitter extends Emitter<SmlYaml> {
+  emitCode() {
+    const meta = (this.sml as any).meta as SmlYamlMeta
+    return this.s
+      .str(`@startyaml`)
+      .forStr(
+        meta.highlights,
+        (s, highlight) =>
+          s.str(
+            `#highlight ${highlight
+              .split('.')
+              .map((str) => JSON.stringify(str))
+              .join(' / ')}`,
+          ),
+        meta.highlights.length > 0 ? '\n' : '',
+      )
+      .str(meta.yaml)
+      .str('@endyaml')
+      .toString('\n')
+  }
 }

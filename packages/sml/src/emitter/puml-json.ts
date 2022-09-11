@@ -1,16 +1,24 @@
-import ejs from 'ejs'
-import { SmlJson } from '../lang/sml-json'
+import { Emitter } from './emitter'
+import { SmlJson, SMLJsonMeta } from '../lang/sml-json'
 
-const render = ejs.compile(`
-@startjson
-<% for (let hl of highlights) { %>
-#highlight  <%- hl.split('.').map(JSON.stringify).join(' / ') -%>
-<% } %>
-
-<%- JSON.stringify(json, null, 2) %>
-@endjson
-`)
-
-export function pmlJson(sml: SmlJson) {
-  return render((sml as any).meta).trim()
+export class PmlJsonEmitter extends Emitter<SmlJson> {
+  emitCode() {
+    const meta = (this.sml as any).meta as SMLJsonMeta
+    return this.s
+      .str(`@startjson`)
+      .forStr(
+        meta.highlights,
+        (s, highlight) =>
+          s.str(
+            `#highlight ${highlight
+              .split('.')
+              .map((str) => JSON.stringify(str))
+              .join(' / ')}`,
+          ),
+        meta.highlights.length > 0 ? '\n' : '',
+      )
+      .str(JSON.stringify(meta.json, null, 2))
+      .str('@endjson')
+      .toString('\n')
+  }
 }

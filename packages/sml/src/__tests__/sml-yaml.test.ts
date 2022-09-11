@@ -1,5 +1,5 @@
 import sml from '../index'
-import { pmlYaml } from '../emitter/puml-yaml'
+import PmlYamlEmitter from '../emitter/puml-yaml'
 
 describe('sml yaml test suites', () => {
   const title = 'hello yaml demo'
@@ -36,7 +36,7 @@ xmas-fifth-day:
     })
 
     // emitter
-    const code = pmlYaml(yaml)
+    const code = new PmlYamlEmitter(yaml).emitCode()
     expect(code).toMatchSnapshot()
   })
 })
