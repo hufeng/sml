@@ -54,7 +54,7 @@ describe('sml usercase test suites', () => {
             .usecase('uc2', 'Pay for food')
             .usecase('uc3', 'Drink'),
         )
-        .link('fc', ['uc1', 'uc2', 'uc3'])
+        .linkMany('fc', ['uc1', 'uc2', 'uc3'])
     })
     const meta = (usercase as any).meta as SmlUseCaseMeta
     expect(meta).toEqual({
@@ -88,8 +88,8 @@ describe('sml usercase test suites', () => {
           s.usecase('uc1', 'Eat Food').usecase('uc2', 'Pay for food'),
         )
         .pkgScope('Professional', (s) => s.actor('a', 'Chef'))
-        .link('g', ['uc1', 'uc2', 'uc3'])
-        .link('a', ['uc1'])
+        .linkMany('g', ['uc1', 'uc2', 'uc3'])
+        .link('a', 'uc1')
     })
     const code = new PumlUseCaseEmitter(usecase).emitCode()
     expect(code).toMatchSnapshot()

@@ -94,9 +94,13 @@ export class SmlUseCase extends Lang {
     return this
   }
 
-  link(from: string, to: Array<string>) {
+  linkMany(from: string, to: Array<string>) {
     this.meta.links = [...this.meta.links, { from, to }]
     return this
+  }
+
+  link(from: string, to: string) {
+    this.meta.links = [...this.meta.links, { from, to: [to] }]
   }
 
   pkgScope(label: string, fn: (s: Scope) => void) {
