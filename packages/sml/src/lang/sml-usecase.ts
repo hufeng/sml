@@ -1,94 +1,80 @@
 import { Lang } from './sml'
 import { globalCollections } from './sml-global'
 
+const noop = () => {}
+
 // ~~~~~~~~~~ basic ~~~~~~~~~~
-type Base = { name: string; label: string }
-type Actor = Base
-type UseCase = Base
+type ID = string
+type Actor = { label: string; name: string }
+type UseCase = { label: string; name: string }
 
-interface Pkg {
+type ActorStyleType = 'default' | 'awesome' | 'Hollow'
+type DirectionType = 'left->right' | 'top->down'
+type Postion = 'top' | 'right' | 'bottom' | 'left'
+type DomainType = 'package' | 'rectangle'
+
+// ~~~~~~~~~~ composite ~~~~~~~~~~~~~~~
+interface Domain {
   label: string
-  usecases: Array<UseCase>
+  type: DomainType
   actors: Array<Actor>
+  usecases: Array<UseCase>
 }
-
 type Link = {
   from: string
   to: Array<string>
 }
-
 type Note = {
   label: string
-  position: string
-  on: Name | { from: Name; to: Name }
-}
-
-type Name = string
-type ActorStyleType = 'default' | 'awesome' | 'Hollow'
-type DirectionType = 'left->right' | 'top->down'
-type Postion = 'top' | 'right' | 'bottom' | 'left'
-
-// ~~~~~~~~~~ compositor ~~~~~~~~~~~~`
-interface IScope {
-  label: string
-  usecases: Array<UseCase>
-  actors: Array<Actor>
-  notes: Array<Note>
+  position: Postion
+  on: ID | { from: ID; to: ID }
 }
 
 export interface SmlUseCaseMeta {
   title: string
-  file: string
-  actorStyle: ActorStyleType
-  direction: DirectionType
+  config: {
+    actorStyle: ActorStyleType
+    direction: DirectionType
+  }
   actors: Array<Actor>
   usecases: Array<UseCase>
-  pkgs: Array<Pkg>
-  rects: Array<IScope>
+  domains: Array<Domain>
   links: Array<Link>
   notes: Array<Note>
 }
 
-class Basic {
-  private n: Note
+class DomainBuilder {
+  private prop: Domain
 
-  constructor(n: Note) {
-    this.n = n
-  }
-
-  note(label: string, position: Postion = 'right') {
-    this.n = { ...this.n, label, position }
-  }
-}
-
-class Scope {
-  private prop: IScope
-
-  constructor(data: IScope) {
+  constructor(data: Domain) {
     this.prop = data
   }
 
-  actor(name: string, label: string, fn?: (c: Basic) => void) {
+  actor(label: string, name: string = '') {
     this.prop.actors.push({ name, label })
-    if (typeof fn !== 'undefined') {
-      const note = { label: '', position: 'right', on: name }
-      const b = new Basic(note)
-      this.prop.notes.push(note)
-      fn(b)
-    }
     return this
   }
 
-  usecase(name: string, label: string, fn?: (c: Basic) => void) {
+  usecase(label: string, name: string = '') {
     this.prop.usecases.push({ name, label })
-
-    if (typeof fn !== 'undefined') {
-      const note = { label: '', position: 'right', on: name }
-      const b = new Basic(note)
-      fn(b)
-      this.prop.notes.push(note)
-    }
     return this
+  }
+}
+
+class ConfigBuilder {
+  private config: SmlUseCaseMeta['config']
+
+  constructor(config: SmlUseCaseMeta['config']) {
+    this.config = config
+  }
+
+  actorStyle(style: ActorStyleType = 'default') {
+    this.config.actorStyle = style
+    return this
+  }
+
+  direction(direction: DirectionType) {
+    this.config.direction = direction
   }
 }
 
@@ -100,89 +86,92 @@ export class SmlUseCase extends Lang {
     super(title)
     this.meta = {
       title,
-      file: '',
-      actorStyle: 'default',
-      direction: 'left->right',
+      config: {
+        actorStyle: 'default',
+        direction: 'left->right',
+      },
       actors: [],
       usecases: [],
-      pkgs: [],
-      rects: [],
+      domains: [],
       links: [],
       notes: [],
     }
   }
 
-  actorStyle(style: ActorStyleType = 'default') {
-    this.meta.actorStyle = style
-    return this
+  get config() {
+    return new ConfigBuilder(this.meta.config)
   }
 
-  direction(direction: DirectionType) {
-    this.meta.direction = direction
-  }
-
-  actor(name: string, label: string, fn?: (c: Basic) => void) {
-    const actor = { name, label }
-    this.meta.actors.push(actor)
-
-    if (typeof fn !== 'undefined') {
-      const note = { label: '', position: 'right', on: name }
-      new Basic(note)
-      this.meta.notes.push(note)
+  actor(
+    label: string,
+    name: string = '',
+    note: (a: { name: string }) => void = noop,
+  ) {
+    this.meta.actors.push({ label, name })
+    if (name !== '') {
+      note({ name })
     }
-
     return this
   }
 
-  usecase(name: string, label: string, fn?: (c: Basic) => void) {
-    const usecase = { name, label }
-    this.meta.usecases.push(usecase)
-
-    if (typeof fn !== 'undefined') {
-      const note = { label: '', position: 'right', on: name }
-      new Basic(note)
-      this.meta.notes.push(note)
+  usecase(
+    label: string,
+    name: string = '',
+    note: (u: { name: string }) => void = noop,
+  ) {
+    this.meta.usecases.push({ label, name })
+    if (name !== '') {
+      note({ name })
     }
-
     return this
   }
 
-  linkMany(from: string, to: Array<string>) {
-    this.meta.links = [...this.meta.links, { from, to }]
-    return this
-  }
-
-  link(from: string, to: string, fn?: (c: Basic) => void) {
-    this.meta.links = [...this.meta.links, { from, to: [to] }]
-    if (typeof fn !== 'undefined') {
-      const note = { label: '', position: 'right', on: { from, to } } as Note
-      const b = new Basic(note)
-      fn(b)
-      this.meta.notes.push(note)
-    }
-  }
-
-  pkgScope(label: string, fn: (c: Scope) => void) {
+  domain(label: string, type: DomainType = 'package') {
     const data = {
       label,
+      type,
       usecases: [],
       actors: [],
-      notes: [],
-    } as IScope
+    }
+    this.meta.domains.push(data)
+    return new DomainBuilder(data)
+  }
 
-    const scope = new Scope(data)
-    fn(scope)
-
-    this.meta.pkgs.push(data)
+  linkMany(
+    from: string,
+    to: Array<string>,
+    note: (l: { from: ID; to: Array<ID> }) => void = noop,
+  ) {
+    this.meta.links = [...this.meta.links, { from, to }]
+    note({ from, to })
     return this
   }
 
-  rectScope(label: string, fn: (c: Scope) => void) {
-    const data = { label, usecases: [], actors: [], notes: [] } as IScope
-    const rect = new Scope(data)
-    fn(rect)
-    this.meta.rects.push(data)
+  link(
+    from: string,
+    to: string,
+    note: (l: { from: ID; to: Array<ID> }) => void = noop,
+  ) {
+    this.meta.links = [...this.meta.links, { from, to: [to] }]
+    note({ from, to: [to] })
     return this
+  }
+
+  noteOf = (label: string, position: Postion = 'right') => {
+    return (c: { name: string }) =>
+      this.meta.notes.push({ label, position, on: c.name })
+  }
+
+  noteLink = (label: string, position: Postion = 'right') => {
+    return (c: Link) => {
+      for (let t of c.to) {
+        this.meta.notes.push({
+          label,
+          position,
+          on: { from: c.from, to: t },
+        })
+      }
+    }
   }
 }
 

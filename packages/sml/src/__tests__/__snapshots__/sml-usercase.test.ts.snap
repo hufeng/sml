@@ -48,7 +48,7 @@ note right of (a1)
   a student user
 end note
 note right of (u1)
-  Codingt Rust
+  Coding Rust
 end note
 
 @enduml"
@@ -75,8 +75,7 @@ rectangle Restaurant {
   usecase \\"Eat Food\\" as uc1
   usecase \\"Pay for food\\" as uc2
 }
-
-package Professional {
+rectangle Professional {
 actor :Chef: as a
 }
 

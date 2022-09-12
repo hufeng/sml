@@ -1,14 +1,13 @@
 import sml from '../index'
 import { SmlUseCaseMeta } from '../lang/sml-usecase'
 import { PumlUseCaseEmitter } from '../emitter/puml-usecase'
-import { m } from 'vitest/dist/index-5f09f4d0'
 
 describe('sml usercase test suites', () => {
   const title = 'hello usercase diagram'
 
   it('test only usercases', () => {
     const usercase = sml.Usecase(title, (ml) => {
-      ml.usecase('u1', 'blog').usecase('u2', 'music').usecase('u3', 'play')
+      ml.usecase('blog', 'u1').usecase('music', 'u2').usecase('play', 'u3')
     })
 
     const meta = (usercase as any).meta as SmlUseCaseMeta
@@ -27,9 +26,9 @@ describe('sml usercase test suites', () => {
 
   it('only actor', () => {
     const usercase = sml.Usecase(title, (ml) => {
-      ml.actor('user1', 'first actor')
-        .actor('user2', 'another actor')
-        .actor('user3', 'Last actor')
+      ml.actor('first actor', 'user1')
+        .actor('another actor', 'user2')
+        .actor('Last actor', 'user3')
     })
 
     const meta = (usercase as any).meta as SmlUseCaseMeta
@@ -48,28 +47,29 @@ describe('sml usercase test suites', () => {
 
   it('test rect', () => {
     const usercase = sml.Usecase(title, (ml) => {
-      ml.actor('fc', 'Food Critic')
-        .rectScope('Restaurant', (s) =>
-          s
-            .usecase('uc1', 'Eat Food')
-            .usecase('uc2', 'Pay for food')
-            .usecase('uc3', 'Drink'),
-        )
-        .linkMany('fc', ['uc1', 'uc2', 'uc3'])
+      ml.actor('Food Critic', 'fc')
+      ml.domain('Restaurant')
+        .usecase('Eat Food', 'uc1')
+        .usecase('Pay for food', 'uc2')
+        .usecase('Drink', 'uc3')
+
+      ml.linkMany('fc', ['uc1', 'uc2', 'uc3'])
     })
+
     const meta = (usercase as any).meta as SmlUseCaseMeta
     expect(meta).toEqual({
       title,
-      file: '',
-      actorStyle: 'default',
-      direction: 'left->right',
-      pkgs: [],
+      config: {
+        actorStyle: 'default',
+        direction: 'left->right',
+      },
       usecases: [],
       notes: [],
       actors: [{ name: 'fc', label: 'Food Critic' }],
-      rects: [
+      domains: [
         {
           label: 'Restaurant',
+          type: 'package',
           actors: [],
           usecases: [
             { name: 'uc1', label: 'Eat Food' },
@@ -86,13 +86,12 @@ describe('sml usercase test suites', () => {
 
   it('test packages', () => {
     const usecase = sml.Usecase(title, (ml) => {
-      ml.actor('g', 'guest')
-        .rectScope(`Restaurant`, (s) =>
-          s.usecase('uc1', 'Eat Food').usecase('uc2', 'Pay for food'),
-        )
-        .pkgScope('Professional', (s) => s.actor('a', 'Chef'))
-        .linkMany('g', ['uc1', 'uc2', 'uc3'])
-        .link('a', 'uc1')
+      ml.actor('guest', 'g')
+      ml.domain(`Restaurant`, 'rectangle')
+        .usecase('Eat Food', 'uc1')
+        .usecase('Pay for food', 'uc2')
+      ml.domain('Professional').actor('Chef', 'a')
+      ml.linkMany('g', ['uc1', 'uc2', 'uc3']).link('a', 'uc1')
     })
 
     const code = new PumlUseCaseEmitter(usecase).emitCode()
@@ -101,46 +100,30 @@ describe('sml usercase test suites', () => {
 
   it('test actor style', () => {
     const usecase = sml.Usecase('test actor style', (ml) => {
-      ml.actorStyle('default')
-        .actor('u1', 'user')
-        .usecase('c1', 'Write Blog')
-        .link('u1', 'c1')
+      ml.config.actorStyle('default')
+
+      ml.actor('user', 'u1').usecase('Write Blog', 'c1').link('u1', 'c1')
     })
     const code = new PumlUseCaseEmitter(usecase).emitCode()
     expect(code).toMatchSnapshot()
   })
 
   it('test actor awesome style', () => {
-    const usecase = sml.Usecase('test actor asesome style', (ml) =>
-      ml
-        .actorStyle('awesome')
-        .actor('a1', 'User')
-        .usecase(`u1`, 'Learn JavaScript')
-        .link('a1', 'u1'),
-    )
+    const usecase = sml.Usecase('test actor asesome style', (ml) => {
+      ml.config.actorStyle('awesome')
+      ml.actor('User', 'a1').usecase('Learn JavaScript', `u1`)
+      ml.link('a1', 'u1')
+    })
     const code = new PumlUseCaseEmitter(usecase).emitCode()
     expect(code).toMatchSnapshot()
   })
 
   it('test note on simple actor or usecase', () => {
-    const usecase = sml.Usecase('test simple note', (ml) =>
-      ml
-        .actor('a1', 'User', (c) => c.note('a student user'))
-        .usecase('u1', 'Coding', (c) => c.note('Coding Rust')),
-    )
+    const usecase = sml.Usecase('test simple note', (ml) => {
+      ml.actor('User', 'a1', ml.noteOf('a student user'))
+      ml.usecase('Coding', 'u1', ml.noteOf('Coding Rust'))
+    })
     const code = new PumlUseCaseEmitter(usecase).emitCode()
     expect(code).toMatchSnapshot()
   })
 })
-
-// usecase
-//    config
-//       actorStyle
-//       direction
-//    usecase
-//       Label Note Link => WithNote(), WithLink()
-//    actor
-//    rectangle
-//    package
-//    Note
-//    Link
