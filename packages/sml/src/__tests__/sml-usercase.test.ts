@@ -101,7 +101,7 @@ describe('sml usercase test suites', () => {
 
   it('test actor style', () => {
     const usecase = sml.UsecaseDiagram('test actor style', (ml) => {
-      ml.config.actorStyle('default')
+      ml.configuration.actorStyle('default')
 
       ml.actor('user', 'u1').usecase('Write Blog', 'c1').link('u1', 'c1')
     })
@@ -111,7 +111,7 @@ describe('sml usercase test suites', () => {
 
   it('test actor awesome style', () => {
     const usecase = sml.UsecaseDiagram('test actor asesome style', (ml) => {
-      ml.config.actorStyle('awesome')
+      ml.configuration.actorStyle('awesome')
       ml.actor('User', 'a1').usecase('Learn JavaScript', `u1`)
       ml.link('a1', 'u1')
     })

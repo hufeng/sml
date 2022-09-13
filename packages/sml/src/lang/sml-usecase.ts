@@ -1,4 +1,4 @@
-import { Lang } from './sml'
+import { Lang, PackageStyle, ConfigType } from './sml'
 import { globalCollections } from './sml-global'
 
 const noop = () => {}
@@ -7,17 +7,7 @@ const noop = () => {}
 type ID = string
 type Actor = { label: string; name: string }
 type UseCase = { label: string; name: string }
-
-type ActorStyleType = 'default' | 'awesome' | 'Hollow'
-type DirectionType = 'left->right' | 'top->down'
 type Postion = 'top' | 'right' | 'bottom' | 'left'
-type PackageStyle =
-  | 'Node'
-  | 'Rectangle'
-  | 'Folder'
-  | 'Frame'
-  | 'Cloud'
-  | 'DataBase'
 
 // ~~~~~~~~~~ composite ~~~~~~~~~~~~~~~
 interface PacakgeType {
@@ -37,11 +27,7 @@ type Note = {
 }
 export interface SmlUseCaseMeta {
   title: string
-  config: {
-    actorStyle: ActorStyleType
-    direction: DirectionType
-    packageStyle: PackageStyle
-  }
+  config: ConfigType
   actors: Array<Actor>
   usecases: Array<UseCase>
   packages: Array<PacakgeType>
@@ -68,42 +54,6 @@ class PackageBuilder {
   }
 }
 
-class ConfigBuilder {
-  private config: SmlUseCaseMeta['config']
-
-  constructor(config: SmlUseCaseMeta['config']) {
-    this.config = config
-  }
-
-  /**
-   * setting actor style
-   * @param style
-   * @returns
-   */
-  actorStyle(style: ActorStyleType = 'default') {
-    this.config.actorStyle = style
-    return this
-  }
-
-  /**
-   * setting package style
-   * @param style
-   * @returns
-   */
-  packageStyle(style: PackageStyle = 'Rectangle') {
-    this.config.packageStyle = style
-    return this
-  }
-
-  /**
-   * setting direction
-   * @param direction
-   */
-  direction(direction: DirectionType) {
-    this.config.direction = direction
-  }
-}
-
 // ~~~~~~~~~ define usecase lang modeling ~~~~~~~~~~~~~~~
 export class SmlUseCaseLang extends Lang {
   private meta: SmlUseCaseMeta
@@ -112,11 +62,7 @@ export class SmlUseCaseLang extends Lang {
     super(title)
     this.meta = {
       title,
-      config: {
-        actorStyle: 'default',
-        direction: 'left->right',
-        packageStyle: 'Rectangle',
-      },
+      config: this.config,
       actors: [],
       usecases: [],
       packages: [],
@@ -125,9 +71,6 @@ export class SmlUseCaseLang extends Lang {
     }
   }
 
-  get config() {
-    return new ConfigBuilder(this.meta.config)
-  }
   /**
    * define actor
    * @param label
