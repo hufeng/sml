@@ -64,4 +64,22 @@ describe('sml class diagram test suites', () => {
     const code = new PumlClassEmitter(diagram).emitCode()
     expect(code).toMatchSnapshot()
   })
+
+  it('test extends and implements', () => {
+    const diagram = sml.ClassDiagram(title, (ml) => {
+      ml.interface(`List`)
+      ml.abstractClazz('AbstractList')
+
+      ml.clazz('org.hufeng.util.MyList')
+        .extends('AbstractList')
+        .implements('List')
+
+      ml.interface('I1')
+      ml.interface('I2')
+      ml.interface('I3').implements('I1').implements('I2')
+    })
+
+    const code = new PumlClassEmitter(diagram).emitCode()
+    expect(code).toMatchSnapshot()
+  })
 })

@@ -50,6 +50,27 @@ enum org.hufeng.enum.FileType {
 @enduml"
 `;
 
+exports[`sml class diagram test suites > test extends and implements 1`] = `
+"@startuml
+interface List {
+}
+interface I1 {
+}
+interface I2 {
+}
+interface I3 implements I1, I2
+interface I3 {
+}
+
+abstract class AbstractList {
+}
+class org.hufeng.util.MyList extends AbstractList implements List
+ class org.hufeng.util.MyList {
+}
+
+@enduml"
+`;
+
 exports[`sml class diagram test suites > test inf 1`] = `
 "@startuml
 interface org.hufeng.service.UserService {

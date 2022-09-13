@@ -43,6 +43,21 @@ export class PumlClassEmitter extends Emitter<SmlClazzLang> {
     this.s.forStr(
       clazzes,
       (s, clazz) => {
+        // extends and implements
+        if (clazz.extends.length > 0 || clazz.implements.length > 0) {
+          s.str(
+            `class ${clazz.name}${
+              clazz.extends.length > 0
+                ? ' extends ' + clazz.extends.join(', ')
+                : ' '
+            }${
+              clazz.implements.length > 0
+                ? ' implements ' + clazz.implements.join(', ')
+                : ' '
+            }`,
+          )
+        }
+
         // class start
         s.str(`${clazz.abstract ? 'abstract' : ''} class ${clazz.name} {`)
         // fields
@@ -101,6 +116,11 @@ export class PumlClassEmitter extends Emitter<SmlClazzLang> {
     this.s.forStr(
       infs,
       (s, i) => {
+        // implements other interfaces
+        if (i.implements.length > 0) {
+          s.str(`interface ${i.name} implements ${i.implements.join(', ')}`)
+        }
+        // start interface
         s.str(`interface ${i.name} {`)
           .forStr(i.methods, (s, method) => {
             const params = method.params
@@ -119,6 +139,12 @@ export class PumlClassEmitter extends Emitter<SmlClazzLang> {
     this.s.forStr(
       prots,
       (s, prot) => {
+        // implements other interfaces
+        if (prot.implements.length > 0) {
+          s.str(
+            `interface ${prot.name} implements ${prot.implements.join(', ')}`,
+          )
+        }
         s.str(`protocol ${prot.name} {`)
           .forStr(prot.methods, (s, method) => {
             const params = method.params
@@ -137,7 +163,21 @@ export class PumlClassEmitter extends Emitter<SmlClazzLang> {
     this.s.forStr(
       structs,
       (s, struct) => {
-        // class start
+        // extends and implements
+        if (struct.extends.length > 0 || struct.implements.length > 0) {
+          s.str(
+            `class ${struct.name}${
+              struct.extends.length > 0
+                ? ' extends ' + struct.extends.join(', ')
+                : ' '
+            }${
+              struct.implements.length > 0
+                ? ' implements ' + struct.implements.join(', ')
+                : ' '
+            }`,
+          )
+        }
+        // struct start
         s.str(`struct ${struct.name} {`)
         // fields
         s.forStr(
