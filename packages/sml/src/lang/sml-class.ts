@@ -130,6 +130,39 @@ class EnumBuilder {
 }
 
 // ~~~~~~~~~~~~~ define class lang modeing ~~~~~~~~~~~~~~~~~~~
+enum T {
+  void = 'void',
+  string = `string`,
+  boolean = `boolean`,
+  number = `number`,
+
+  go_int8 = `go_int8`,
+  go_int16 = `go_int16`,
+  go_int32 = `go_int32`,
+  go_int = `go_int`,
+  go_uint = `go_uint`,
+  go_byte = 'go_byte',
+  go_int64 = `go_int64`,
+  go_uint8 = `go_uint8`,
+  go_uint16 = `go_uint16`,
+  go_uint32 = `go_uint32`,
+  go_uint64 = `go_uint64`,
+  go_float32 = `go_float32`,
+  go_float64 = `go_float64`,
+
+  py_int = 'py_int',
+  py_bool = `py_bool`,
+  py_float = `py_float`,
+
+  java_byte = `java_byte`,
+  java_short = `java_short`,
+  java_int = `java_int`,
+  java_long = `java_long`,
+  java_float = `java_float`,
+  java_double = `java_double`,
+  java_boolean = `java_boolean`,
+  java_char = `java_char`,
+}
 export class SmlClazzLang extends Lang {
   private meta: SmlClazzMeta
 
@@ -284,6 +317,8 @@ export class SmlClazzLang extends Lang {
   abstract(v: boolean) {
     return (val: { abstract: boolean }) => (val.abstract = v)
   }
+
+  t = T
 }
 
 /**
