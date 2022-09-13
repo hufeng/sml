@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "es2017",
     "module": "commonjs",
+    "resolveJsonModule": true,
 
     "strict": true,
     "noImplicitAny": true,
@@ -20,11 +21,11 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    
+
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    
+
     "types": ["vitest/globals"]
   }
 }

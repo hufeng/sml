@@ -2,7 +2,13 @@
   "name": "sml",
   "main": "./lib/index.js",
   "types": "./lib/typings/index.d.ts",
+  "bin": {
+    "smlc": "./lib/cmd/index.js"
+  },
   "version": "1.0.0",
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+    "commander": "^9.4.0",
+    "chalk": "^5.0.1"
+  }
 }
