@@ -1,4 +1,4 @@
 declare global {
-  const sml: string
+  const sml: typeof import('sml')
 }
 export = {}
