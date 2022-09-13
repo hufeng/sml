@@ -1,0 +1,66 @@
+// Vitest Snapshot v1
+
+exports[`sml class diagram test suites > test abstract class 1`] = `
+"@startuml
+abstract class or.hf.sml.AbstractUserCase {
+  - id: number;
+  - name: string;
+
+  + setId(id: number): void
+  + getFullInof(): string
+}
+
+@enduml"
+`;
+
+exports[`sml class diagram test suites > test class 1`] = `
+"@startuml
+ class org.hf.sml.UseCase {
+  - id: number;
+  - name: string;
+
+  + setId(id: number): void
+  + getFullInof(): string
+}
+
+struct org.hf.sml.Customer {
+  - id: number;
+  - name: string;
+
+  + setId(id: number): void
+  + getFullInof(): string
+}
+
+@enduml"
+`;
+
+exports[`sml class diagram test suites > test enum 1`] = `
+"@startuml
+enum org.hufeng.enum.Color {
+  Red: 0
+  Green: 1
+  Blue: 2
+}
+enum org.hufeng.enum.FileType {
+  Pdf: PDF
+  doc: WORD
+  xls: Excel
+}
+
+@enduml"
+`;
+
+exports[`sml class diagram test suites > test inf 1`] = `
+"@startuml
+interface org.hufeng.service.UserService {
+  + sayYou(name: string): void
+  + sayMe(you: string): void
+}
+
+protocol org.hufeng.protocol.UserService {
+   + sayYou(name: string): void
+   + sayMe(you: string): void
+}
+
+@enduml"
+`;

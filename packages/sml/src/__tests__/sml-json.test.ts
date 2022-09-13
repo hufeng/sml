@@ -1,5 +1,5 @@
 import { PmlJsonEmitter } from '../emitter/puml-json'
-import sml from '../index'
+import * as sml from '../index'
 
 describe('sml json test suites', () => {
   const title = `hello world`

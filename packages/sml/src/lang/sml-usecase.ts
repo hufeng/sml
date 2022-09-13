@@ -11,12 +11,18 @@ type UseCase = { label: string; name: string }
 type ActorStyleType = 'default' | 'awesome' | 'Hollow'
 type DirectionType = 'left->right' | 'top->down'
 type Postion = 'top' | 'right' | 'bottom' | 'left'
-type DomainType = 'package' | 'rectangle'
+type PackageStyle =
+  | 'Node'
+  | 'Rectangle'
+  | 'Folder'
+  | 'Frame'
+  | 'Cloud'
+  | 'DataBase'
 
 // ~~~~~~~~~~ composite ~~~~~~~~~~~~~~~
-interface Domain {
+interface PacakgeType {
   label: string
-  type: DomainType
+  type: PackageStyle
   actors: Array<Actor>
   usecases: Array<UseCase>
 }
@@ -35,18 +41,19 @@ export interface SmlUseCaseMeta {
   config: {
     actorStyle: ActorStyleType
     direction: DirectionType
+    packageStyle: PackageStyle
   }
   actors: Array<Actor>
   usecases: Array<UseCase>
-  domains: Array<Domain>
+  packages: Array<PacakgeType>
   links: Array<Link>
   notes: Array<Note>
 }
 
-class DomainBuilder {
-  private prop: Domain
+class PackageBuilder {
+  private prop: PacakgeType
 
-  constructor(data: Domain) {
+  constructor(data: PacakgeType) {
     this.prop = data
   }
 
@@ -73,6 +80,11 @@ class ConfigBuilder {
     return this
   }
 
+  packageStyle(style: PackageStyle = 'Rectangle') {
+    this.config.packageStyle = style
+    return this
+  }
+
   direction(direction: DirectionType) {
     this.config.direction = direction
   }
@@ -89,10 +101,11 @@ export class SmlUseCase extends Lang {
       config: {
         actorStyle: 'default',
         direction: 'left->right',
+        packageStyle: 'Rectangle',
       },
       actors: [],
       usecases: [],
-      domains: [],
+      packages: [],
       links: [],
       notes: [],
     }
@@ -126,15 +139,15 @@ export class SmlUseCase extends Lang {
     return this
   }
 
-  domain(label: string, type: DomainType = 'package') {
+  package(label: string, type: PackageStyle = 'Rectangle') {
     const data = {
       label,
       type,
       usecases: [],
       actors: [],
     }
-    this.meta.domains.push(data)
-    return new DomainBuilder(data)
+    this.meta.packages.push(data)
+    return new PackageBuilder(data)
   }
 
   linkMany(

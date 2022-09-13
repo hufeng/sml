@@ -1,4 +1,4 @@
-import sml from '../index'
+import * as sml from '../index'
 import { SmlUseCaseMeta } from '../lang/sml-usecase'
 import { PumlUseCaseEmitter } from '../emitter/puml-usecase'
 
@@ -48,7 +48,7 @@ describe('sml usercase test suites', () => {
   it('test rect', () => {
     const usercase = sml.Usecase(title, (ml) => {
       ml.actor('Food Critic', 'fc')
-      ml.domain('Restaurant')
+      ml.package('Restaurant')
         .usecase('Eat Food', 'uc1')
         .usecase('Pay for food', 'uc2')
         .usecase('Drink', 'uc3')
@@ -61,15 +61,16 @@ describe('sml usercase test suites', () => {
       title,
       config: {
         actorStyle: 'default',
+        packageStyle: 'Rectangle',
         direction: 'left->right',
       },
       usecases: [],
       notes: [],
       actors: [{ name: 'fc', label: 'Food Critic' }],
-      domains: [
+      packages: [
         {
           label: 'Restaurant',
-          type: 'package',
+          type: 'Rectangle',
           actors: [],
           usecases: [
             { name: 'uc1', label: 'Eat Food' },
@@ -87,10 +88,10 @@ describe('sml usercase test suites', () => {
   it('test packages', () => {
     const usecase = sml.Usecase(title, (ml) => {
       ml.actor('guest', 'g')
-      ml.domain(`Restaurant`, 'rectangle')
+      ml.package(`Restaurant`, 'rectangle')
         .usecase('Eat Food', 'uc1')
         .usecase('Pay for food', 'uc2')
-      ml.domain('Professional').actor('Chef', 'a')
+      ml.package('Professional').actor('Chef', 'a')
       ml.linkMany('g', ['uc1', 'uc2', 'uc3']).link('a', 'uc1')
     })
 

@@ -1,4 +1,4 @@
-import sml from '../index'
+import * as sml from '../index'
 import PmlYamlEmitter from '../emitter/puml-yaml'
 
 describe('sml yaml test suites', () => {

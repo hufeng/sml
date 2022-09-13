@@ -3,9 +3,14 @@ import { SmlUseCase, SmlUseCaseMeta } from '../lang/sml-usecase'
 
 export class PumlUseCaseEmitter extends Emitter<SmlUseCase> {
   emitCode() {
-    const { config, actors, usecases, domains, links, notes } = (
-      this.sml as any
-    ).meta as SmlUseCaseMeta
+    const {
+      config,
+      actors,
+      usecases,
+      packages: domains,
+      links,
+      notes,
+    } = (this.sml as any).meta as SmlUseCaseMeta
 
     return (
       this.s
