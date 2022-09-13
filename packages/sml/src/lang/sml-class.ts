@@ -53,6 +53,7 @@ export interface SmlClazzMeta {
   protocols: Array<ProtocolType>
 }
 
+//~~~~~~~~~~~~ builder ~~~~~~~~~~~~~~~~
 class ClazzBuilder {
   constructor(private clazz: ClazzType) {}
 
@@ -128,6 +129,7 @@ class EnumBuilder {
   }
 }
 
+// ~~~~~~~~~~~~~ define class lang modeing ~~~~~~~~~~~~~~~~~~~
 export class SmlClazzLang extends Lang {
   private meta: SmlClazzMeta
 
@@ -142,6 +144,11 @@ export class SmlClazzLang extends Lang {
     }
   }
 
+  /**
+   * define abstract class
+   * @param name abstract class name
+   * @returns
+   */
   abstractClazz(name: string) {
     const clazz = {
       name,
@@ -155,6 +162,11 @@ export class SmlClazzLang extends Lang {
     return new ClazzBuilder(clazz)
   }
 
+  /**
+   * define class
+   * @param name class name
+   * @returns
+   */
   clazz(name: string) {
     const clazz = {
       name,
@@ -168,6 +180,11 @@ export class SmlClazzLang extends Lang {
     return new ClazzBuilder(clazz)
   }
 
+  /**
+   * define interface
+   * @param name interface name
+   * @returns
+   */
   interface(name: string) {
     const inf = {
       name,
@@ -178,6 +195,11 @@ export class SmlClazzLang extends Lang {
     return new InfBuilder(inf)
   }
 
+  /**
+   * define enum
+   * @param name enum name
+   * @returns
+   */
   enum(name: string) {
     const e = {
       name,
@@ -187,6 +209,11 @@ export class SmlClazzLang extends Lang {
     return new EnumBuilder(e)
   }
 
+  /**
+   * define struct
+   * @param name struct name
+   * @returns
+   */
   struct(name: string) {
     const s = {
       name,
@@ -200,6 +227,11 @@ export class SmlClazzLang extends Lang {
     return new ClazzBuilder(s)
   }
 
+  /**
+   * define a protocol
+   * @param name protocol name
+   * @returns
+   */
   protocol(name: string) {
     const prot = {
       name,
@@ -210,28 +242,57 @@ export class SmlClazzLang extends Lang {
     return new InfBuilder(prot)
   }
 
+  /**
+   * args optional
+   * @param args
+   * @returns
+   */
   args(...args: Array<ParamType>) {
     return (m: MethodType) => (m.params = [...m.params, ...args])
   }
 
+  /**
+   * arg optional
+   */
   arg(name: string, type: string) {
     return { name, type } as ParamType
   }
 
+  /**
+   * return value type
+   * @param type
+   * @returns
+   */
   ret(type: string) {
     return (m: MethodType) => (m.ret = type)
   }
 
+  /**
+   * setting field or method visible
+   * @param v
+   * @returns
+   */
   visible(v: VisibleType) {
     return (val: { visible: VisibleType }) => (val.visible = v)
   }
 
+  /**
+   * setting method whether is abstract
+   * @param v
+   * @returns
+   */
   abstract(v: boolean) {
     return (val: { abstract: boolean }) => (val.abstract = v)
   }
 }
 
-export function Class(title: string, fn: (ml: SmlClazzLang) => void) {
+/**
+ * ClassDiagram factory
+ * @param title
+ * @param fn
+ * @returns
+ */
+export function ClassDiagram(title: string, fn: (ml: SmlClazzLang) => void) {
   const lang = new SmlClazzLang(title)
   fn(lang)
   globalCollections.add(lang)

@@ -31,7 +31,7 @@ describe('sml json test suites', () => {
 
   it('test syntax api', () => {
     // sml json syntax
-    const smlJson = sml.Json(title, (ml) => {
+    const smlJson = sml.JsonDiagram(title, (ml) => {
       ml.highlights(highlights).json(json)
     })
 

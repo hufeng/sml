@@ -1,7 +1,7 @@
 import { Emitter } from './emitter'
-import { SmlJson, SMLJsonMeta } from '../lang/sml-json'
+import { SmlJsonLang, SMLJsonMeta } from '../lang/sml-json'
 
-export class PmlJsonEmitter extends Emitter<SmlJson> {
+export class PmlJsonEmitter extends Emitter<SmlJsonLang> {
   emitCode() {
     const meta = (this.sml as any).meta as SMLJsonMeta
     return this.s

@@ -24,7 +24,7 @@ xmas-fifth-day:
 	turtle-doves: two`
 
   it('test full pipeline', () => {
-    const yaml = sml.Yaml(title, (ml) => {
+    const yaml = sml.YamlDiagram(title, (ml) => {
       ml.highlights(highlights).yaml(content)
     })
 

@@ -5,7 +5,7 @@ describe('sml class diagram test suites', () => {
   const title = `suml test suite`
 
   it('test class', () => {
-    const clazz = sml.Class(title, (ml) => {
+    const clazz = sml.ClassDiagram(title, (ml) => {
       ml.clazz(`org.hf.sml.UseCase`)
         .field('id', 'number')
         .field('name', 'string')
@@ -22,7 +22,7 @@ describe('sml class diagram test suites', () => {
   })
 
   it('test abstract class', () => {
-    const abs = sml.Class(title, (ml) => {
+    const abs = sml.ClassDiagram(title, (ml) => {
       ml.abstractClazz('or.hf.sml.AbstractUserCase')
         .field('id', 'number', 'private')
         .field('name', 'string')
@@ -35,7 +35,7 @@ describe('sml class diagram test suites', () => {
   })
 
   it('test enum', () => {
-    const diagram = sml.Class(title, (ml) => {
+    const diagram = sml.ClassDiagram(title, (ml) => {
       ml.enum('org.hufeng.enum.Color')
         .field('Red', 0)
         .field('Green', 1)
@@ -51,7 +51,7 @@ describe('sml class diagram test suites', () => {
   })
 
   it('test inf', () => {
-    const diagram = sml.Class(title, (ml) => {
+    const diagram = sml.ClassDiagram(title, (ml) => {
       ml.interface('org.hufeng.service.UserService')
         .method('sayYou', ml.args(ml.arg('name', 'string')))
         .method('sayMe', ml.args(ml.arg('you', 'string')))

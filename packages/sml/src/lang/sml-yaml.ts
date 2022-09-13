@@ -8,7 +8,8 @@ export interface SmlYamlMeta {
   highlights: Array<JsonPath>
 }
 
-export class SmlYaml extends Lang {
+// ~~~~~~~~~~~~~ define sml yaml lang modeling ~~~~~~~~~~~
+export class SmlYamlLang extends Lang {
   private meta: SmlYamlMeta
 
   constructor(title: string) {
@@ -47,8 +48,8 @@ export class SmlYaml extends Lang {
  * @param fn
  * @returns
  */
-export function Yaml(title: string, fn: (ml: SmlYaml) => void) {
-  const smlYaml = new SmlYaml(title)
+export function YamlDiagram(title: string, fn: (ml: SmlYamlLang) => void) {
+  const smlYaml = new SmlYamlLang(title)
   fn(smlYaml)
   globalCollections.add(smlYaml)
   return smlYaml

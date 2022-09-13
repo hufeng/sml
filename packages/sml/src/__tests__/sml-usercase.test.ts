@@ -6,7 +6,7 @@ describe('sml usercase test suites', () => {
   const title = 'hello usercase diagram'
 
   it('test only usercases', () => {
-    const usercase = sml.Usecase(title, (ml) => {
+    const usercase = sml.UsecaseDiagram(title, (ml) => {
       ml.usecase('blog', 'u1').usecase('music', 'u2').usecase('play', 'u3')
     })
 
@@ -25,7 +25,7 @@ describe('sml usercase test suites', () => {
   })
 
   it('only actor', () => {
-    const usercase = sml.Usecase(title, (ml) => {
+    const usercase = sml.UsecaseDiagram(title, (ml) => {
       ml.actor('first actor', 'user1')
         .actor('another actor', 'user2')
         .actor('Last actor', 'user3')
@@ -46,7 +46,7 @@ describe('sml usercase test suites', () => {
   })
 
   it('test rect', () => {
-    const usercase = sml.Usecase(title, (ml) => {
+    const usercase = sml.UsecaseDiagram(title, (ml) => {
       ml.actor('Food Critic', 'fc')
       ml.package('Restaurant')
         .usecase('Eat Food', 'uc1')
@@ -86,9 +86,9 @@ describe('sml usercase test suites', () => {
   })
 
   it('test packages', () => {
-    const usecase = sml.Usecase(title, (ml) => {
+    const usecase = sml.UsecaseDiagram(title, (ml) => {
       ml.actor('guest', 'g')
-      ml.package(`Restaurant`, 'rectangle')
+      ml.package(`Restaurant`, 'Rectangle')
         .usecase('Eat Food', 'uc1')
         .usecase('Pay for food', 'uc2')
       ml.package('Professional').actor('Chef', 'a')
@@ -100,7 +100,7 @@ describe('sml usercase test suites', () => {
   })
 
   it('test actor style', () => {
-    const usecase = sml.Usecase('test actor style', (ml) => {
+    const usecase = sml.UsecaseDiagram('test actor style', (ml) => {
       ml.config.actorStyle('default')
 
       ml.actor('user', 'u1').usecase('Write Blog', 'c1').link('u1', 'c1')
@@ -110,7 +110,7 @@ describe('sml usercase test suites', () => {
   })
 
   it('test actor awesome style', () => {
-    const usecase = sml.Usecase('test actor asesome style', (ml) => {
+    const usecase = sml.UsecaseDiagram('test actor asesome style', (ml) => {
       ml.config.actorStyle('awesome')
       ml.actor('User', 'a1').usecase('Learn JavaScript', `u1`)
       ml.link('a1', 'u1')
@@ -120,7 +120,7 @@ describe('sml usercase test suites', () => {
   })
 
   it('test note on simple actor or usecase', () => {
-    const usecase = sml.Usecase('test simple note', (ml) => {
+    const usecase = sml.UsecaseDiagram('test simple note', (ml) => {
       ml.actor('User', 'a1', ml.noteOf('a student user'))
       ml.usecase('Coding', 'u1', ml.noteOf('Coding Rust'))
     })

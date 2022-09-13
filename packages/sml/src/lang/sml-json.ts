@@ -9,7 +9,8 @@ export interface SMLJsonMeta {
   highlights: Array<JsonPath>
 }
 
-export class SmlJson extends Lang {
+// ~~~~~~~~~~~` define json lang modeling ~~~~~~~~~~~~~~`
+export class SmlJsonLang extends Lang {
   private meta: SMLJsonMeta
 
   constructor(title: string) {
@@ -48,8 +49,8 @@ export class SmlJson extends Lang {
  * @param fn
  * @returns
  */
-export function Json(title: string, fn: (ml: SmlJson) => void) {
-  const smlJson = new SmlJson(title)
+export function JsonDiagram(title: string, fn: (ml: SmlJsonLang) => void) {
+  const smlJson = new SmlJsonLang(title)
   fn(smlJson)
   globalCollections.add(smlJson)
   return smlJson

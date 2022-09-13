@@ -35,7 +35,6 @@ type Note = {
   position: Postion
   on: ID | { from: ID; to: ID }
 }
-
 export interface SmlUseCaseMeta {
   title: string
   config: {
@@ -50,6 +49,7 @@ export interface SmlUseCaseMeta {
   notes: Array<Note>
 }
 
+// ~~~~~~~~~~~~~~~` builder ~~~~~~~~~~~
 class PackageBuilder {
   private prop: PacakgeType
 
@@ -75,23 +75,37 @@ class ConfigBuilder {
     this.config = config
   }
 
+  /**
+   * setting actor style
+   * @param style
+   * @returns
+   */
   actorStyle(style: ActorStyleType = 'default') {
     this.config.actorStyle = style
     return this
   }
 
+  /**
+   * setting package style
+   * @param style
+   * @returns
+   */
   packageStyle(style: PackageStyle = 'Rectangle') {
     this.config.packageStyle = style
     return this
   }
 
+  /**
+   * setting direction
+   * @param direction
+   */
   direction(direction: DirectionType) {
     this.config.direction = direction
   }
 }
 
-// ~~~~~~~~~ Sml Use case ~~~~~~~~~~~~~~~
-export class SmlUseCase extends Lang {
+// ~~~~~~~~~ define usecase lang modeling ~~~~~~~~~~~~~~~
+export class SmlUseCaseLang extends Lang {
   private meta: SmlUseCaseMeta
 
   constructor(title: string) {
@@ -114,7 +128,13 @@ export class SmlUseCase extends Lang {
   get config() {
     return new ConfigBuilder(this.meta.config)
   }
-
+  /**
+   * define actor
+   * @param label
+   * @param name
+   * @param note
+   * @returns
+   */
   actor(
     label: string,
     name: string = '',
@@ -127,6 +147,13 @@ export class SmlUseCase extends Lang {
     return this
   }
 
+  /**
+   * define usecase
+   * @param label
+   * @param name
+   * @param note
+   * @returns
+   */
   usecase(
     label: string,
     name: string = '',
@@ -139,6 +166,12 @@ export class SmlUseCase extends Lang {
     return this
   }
 
+  /**
+   * setting package scope
+   * @param label
+   * @param type
+   * @returns
+   */
   package(label: string, type: PackageStyle = 'Rectangle') {
     const data = {
       label,
@@ -150,6 +183,13 @@ export class SmlUseCase extends Lang {
     return new PackageBuilder(data)
   }
 
+  /**
+   * link one actor to multiple usecases
+   * @param from
+   * @param to
+   * @param note
+   * @returns
+   */
   linkMany(
     from: string,
     to: Array<string>,
@@ -160,6 +200,13 @@ export class SmlUseCase extends Lang {
     return this
   }
 
+  /**
+   * link actor to usecase
+   * @param from
+   * @param to
+   * @param note
+   * @returns
+   */
   link(
     from: string,
     to: string,
@@ -170,11 +217,23 @@ export class SmlUseCase extends Lang {
     return this
   }
 
+  /**
+   * note optional for actor or package
+   * @param label
+   * @param position
+   * @returns
+   */
   noteOf = (label: string, position: Postion = 'right') => {
     return (c: { name: string }) =>
       this.meta.notes.push({ label, position, on: c.name })
   }
 
+  /**
+   * note link optional
+   * @param label
+   * @param position
+   * @returns
+   */
   noteLink = (label: string, position: Postion = 'right') => {
     return (c: Link) => {
       for (let t of c.to) {
@@ -189,8 +248,11 @@ export class SmlUseCase extends Lang {
 }
 
 //~~~~~~~~~~~~ factory ~~~~~~~~~~~~~~~
-export function Usecase(title: string, fn: (ml: SmlUseCase) => void) {
-  const usecase = new SmlUseCase(title)
+export function UsecaseDiagram(
+  title: string,
+  fn: (ml: SmlUseCaseLang) => void,
+) {
+  const usecase = new SmlUseCaseLang(title)
   fn(usecase)
   globalCollections.add(usecase)
   return usecase

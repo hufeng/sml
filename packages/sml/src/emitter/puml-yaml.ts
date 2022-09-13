@@ -1,7 +1,7 @@
 import { Emitter } from './emitter'
-import { SmlYaml, SmlYamlMeta } from '../lang/sml-yaml'
+import { SmlYamlLang, SmlYamlMeta } from '../lang/sml-yaml'
 
-export default class PmlYamlEmitter extends Emitter<SmlYaml> {
+export default class PmlYamlEmitter extends Emitter<SmlYamlLang> {
   emitCode() {
     const meta = (this.sml as any).meta as SmlYamlMeta
     return this.s

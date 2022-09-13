@@ -1,7 +1,7 @@
 import { Emitter } from './emitter'
-import { SmlUseCase, SmlUseCaseMeta } from '../lang/sml-usecase'
+import { SmlUseCaseLang, SmlUseCaseMeta } from '../lang/sml-usecase'
 
-export class PumlUseCaseEmitter extends Emitter<SmlUseCase> {
+export class PumlUseCaseEmitter extends Emitter<SmlUseCaseLang> {
   emitCode() {
     const {
       config,
