@@ -8,7 +8,7 @@
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest",
-    "build": "tsc --project ./packages/sml/tsconfig.json",
+    "build": "rm -rf ./packages/sml/lib && tsc --project ./packages/sml/tsconfig.json",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {

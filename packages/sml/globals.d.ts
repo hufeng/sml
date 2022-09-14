@@ -1,4 +1,7 @@
+import * as sml from './lib/typings/index'
+
 declare global {
-  const sml: typeof import('sml')
+  const sml = sml
 }
+
 export = {}
