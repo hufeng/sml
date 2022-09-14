@@ -1,4 +1,3 @@
-import { PmlJsonEmitter } from '../emitter/puml-json'
 import * as sml from '../index'
 
 describe('sml json test suites', () => {
@@ -31,18 +30,9 @@ describe('sml json test suites', () => {
 
   it('test syntax api', () => {
     // sml json syntax
-    const smlJson = sml.JsonDiagram(title, (ml) => {
+    const { emitter } = sml.JsonDiagram(title, (ml) => {
       ml.highlights(highlights).json(json)
     })
-
-    // assert json
-    expect((smlJson as any).meta).toEqual({
-      title,
-      highlights,
-      json,
-    })
-
-    const code = new PmlJsonEmitter(smlJson).emitCode()
-    expect(code).toMatchSnapshot()
+    expect(emitter.emitCode()).toMatchSnapshot()
   })
 })

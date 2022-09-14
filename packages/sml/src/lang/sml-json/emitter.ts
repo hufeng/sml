@@ -1,13 +1,12 @@
-import { Emitter } from './emitter'
-import { SmlJsonLang, SMLJsonMeta } from '../lang/sml-json'
+import { Emitter } from '../base'
 
-export class PmlJsonEmitter extends Emitter<SmlJsonLang> {
+export class PumlJsonEmitter extends Emitter<sml.JsonDiagramAst> {
   emitCode() {
-    const meta = (this.sml as any).meta as SMLJsonMeta
+    const { highlights, json } = this.meta
     return this.s
       .str(`@startjson`)
       .forStr(
-        meta.highlights,
+        highlights,
         (s, highlight) =>
           s.str(
             `#highlight ${highlight
@@ -15,9 +14,9 @@ export class PmlJsonEmitter extends Emitter<SmlJsonLang> {
               .map((str) => JSON.stringify(str))
               .join(' / ')}`,
           ),
-        meta.highlights.length > 0 ? '\n' : '',
+        highlights.length > 0 ? '\n' : '',
       )
-      .str(JSON.stringify(meta.json, null, 2))
+      .str(JSON.stringify(json, null, 2))
       .str('@endjson')
       .toString('\n')
   }

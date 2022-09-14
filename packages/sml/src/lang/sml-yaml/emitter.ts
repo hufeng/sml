@@ -1,13 +1,13 @@
-import { Emitter } from './emitter'
-import { SmlYamlLang, SmlYamlMeta } from '../lang/sml-yaml'
+import { Emitter } from '../base'
 
-export default class PmlYamlEmitter extends Emitter<SmlYamlLang> {
+export default class PumlYamlEmitter extends Emitter<sml.YamlDiagramAst> {
   emitCode() {
-    const meta = (this.sml as any).meta as SmlYamlMeta
+    const { highlights, yaml } = this.meta
+
     return this.s
       .str(`@startyaml`)
       .forStr(
-        meta.highlights,
+        highlights,
         (s, highlight) =>
           s.str(
             `#highlight ${highlight
@@ -15,9 +15,9 @@ export default class PmlYamlEmitter extends Emitter<SmlYamlLang> {
               .map((str) => JSON.stringify(str))
               .join(' / ')}`,
           ),
-        meta.highlights.length > 0 ? '\n' : '',
+        highlights.length > 0 ? '\n' : '',
       )
-      .str(meta.yaml)
+      .str(yaml)
       .str('@endyaml')
       .toString('\n')
   }

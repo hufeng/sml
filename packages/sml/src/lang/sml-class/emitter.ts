@@ -1,7 +1,6 @@
-import { SmlClazzLang, SmlClazzMeta } from '../lang/sml-class'
-import { Emitter } from './emitter'
+import { Emitter } from '../base'
 
-export class PumlClassEmitter extends Emitter<SmlClazzLang> {
+export class PumlClassEmitter extends Emitter<sml.ClassDiagramAst> {
   static visibleMap = {
     private: '-',
     protected: '#',
@@ -10,9 +9,7 @@ export class PumlClassEmitter extends Emitter<SmlClazzLang> {
   } as const
 
   emitCode() {
-    const { clazzes, structs, enums, interfaces, protocols } = (this.sml as any)
-      .meta as SmlClazzMeta
-
+    const { clazzes, structs, enums, interfaces, protocols } = this.meta
     this.emitStart()
       .emitInf(interfaces)
       .emitProtocol(protocols)
@@ -39,7 +36,7 @@ export class PumlClassEmitter extends Emitter<SmlClazzLang> {
    * @param s
    * @param clazzes
    */
-  private emitClazz(clazzes: SmlClazzMeta['clazzes']) {
+  private emitClazz(clazzes: sml.ClassDiagramAst['clazzes']) {
     this.s.forStr(
       clazzes,
       (s, clazz) => {
@@ -92,7 +89,7 @@ export class PumlClassEmitter extends Emitter<SmlClazzLang> {
    * @param s
    * @param enums
    */
-  private emitEnum(enums: SmlClazzMeta['enums']) {
+  private emitEnum(enums: sml.ClassDiagramAst['enums']) {
     this.s.forStr(
       enums,
       (s, e) => {
@@ -112,7 +109,7 @@ export class PumlClassEmitter extends Emitter<SmlClazzLang> {
     return this
   }
 
-  private emitInf(infs: SmlClazzMeta['interfaces']) {
+  private emitInf(infs: sml.ClassDiagramAst['interfaces']) {
     this.s.forStr(
       infs,
       (s, i) => {
@@ -135,7 +132,7 @@ export class PumlClassEmitter extends Emitter<SmlClazzLang> {
     return this
   }
 
-  private emitProtocol(prots: SmlClazzMeta['protocols']) {
+  private emitProtocol(prots: sml.ClassDiagramAst['protocols']) {
     this.s.forStr(
       prots,
       (s, prot) => {
@@ -159,7 +156,7 @@ export class PumlClassEmitter extends Emitter<SmlClazzLang> {
     return this
   }
 
-  private emitStruct(structs: SmlClazzMeta['structs']) {
+  private emitStruct(structs: sml.ClassDiagramAst['structs']) {
     this.s.forStr(
       structs,
       (s, struct) => {

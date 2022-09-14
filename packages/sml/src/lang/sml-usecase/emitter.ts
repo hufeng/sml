@@ -1,28 +1,13 @@
-import { Emitter } from './emitter'
-import { SmlUseCaseLang, SmlUseCaseMeta } from '../lang/sml-usecase'
+import { Emitter } from '../base'
 
-export class PumlUseCaseEmitter extends Emitter<SmlUseCaseLang> {
+export class PumlUseCaseEmitter extends Emitter<sml.UseCaseDiagramAst> {
   emitCode() {
-    const {
-      config,
-      actors,
-      usecases,
-      packages: domains,
-      links,
-      notes,
-    } = (this.sml as any).meta as SmlUseCaseMeta
+    const { actors, usecases, packages: domains, links, notes } = this.meta
 
     return (
       this.s
         // start
         .str('@startuml')
-        // setting actor style
-        .ifStr(
-          config.actorStyle !== 'default',
-          `skinparam actorStyle ${config.actorStyle}`,
-        )
-        // setting direction
-        .str(`${config.direction.replace('->', ' to ')} direction\n`)
         // actors
         .forStr(
           actors,

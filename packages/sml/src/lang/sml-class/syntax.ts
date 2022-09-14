@@ -1,79 +1,30 @@
-import { Lang } from './sml'
-import { globalCollections } from './sml-global'
-
-// ~~~~~~~~~~~~~~ basic type ~~~~~~~~~~~~~~~~~
-type DataType = string
-export type VisibleType = 'private' | 'protected' | 'public' | 'package_private'
-type ParamType = { name: string; type: DataType }
-type MethodOptional = (m: MethodType) => void
-type VisibleOptional = (v: { visible: VisibleType }) => void
-type abstractOptional = (a: { abstract: boolean }) => void
-
-// ~~~~~~~~~~~~~~ container type ~~~~~~~~~~~~
-type FiledType = {
-  name: string
-  type: DataType
-  visible: VisibleType
-}
-type MethodType = {
-  abstract: boolean
-  visible: VisibleType
-  name: string
-  params: Array<ParamType>
-  ret: DataType
-}
-type ClazzType = {
-  name: string
-  abstract: boolean
-  fields: Array<FiledType>
-  methods: Array<MethodType>
-  extends: Array<string>
-  implements: Array<string>
-}
-type InterfaceType = {
-  name: string
-  implements: Array<string>
-  methods: Array<MethodType>
-}
-type EnumFieldTyep = {
-  name: string
-  value?: number | string
-}
-type EnumType = {
-  name: string
-  fields: Array<EnumFieldTyep>
-}
-type StructType = ClazzType
-type ProtocolType = InterfaceType
-export interface SmlClazzMeta {
-  clazzes: Array<ClazzType>
-  interfaces: Array<InterfaceType>
-  enums: Array<EnumType>
-  structs: Array<StructType>
-  protocols: Array<ProtocolType>
-}
+import { Lang } from '../base'
 
 //~~~~~~~~~~~~ builder ~~~~~~~~~~~~~~~~
 class ClazzBuilder {
-  constructor(private clazz: ClazzType) {}
+  constructor(private clazz: sml.ClazzAst) {}
 
-  field(name: string, type: DataType, visible: VisibleType = 'private') {
+  field(
+    name: string,
+    type: sml.DataType,
+    visible: sml.VisibleType = 'private',
+  ) {
     this.clazz.fields.push({ name, type, visible })
     return this
   }
 
   method(
     name: string,
-    params: MethodOptional,
-    ret: MethodOptional,
-    ...rest: Array<VisibleOptional | abstractOptional>
+    params: sml.MethodOptional,
+    ret: sml.MethodOptional,
+    ...rest: Array<sml.VisibleOptional | sml.abstractOptional>
   ) {
     const method = {
       abstract: false,
-      visible: 'public' as VisibleType,
+      visible: 'public' as sml.VisibleType,
       name,
-      params: [] as Array<ParamType>,
-      ret: '' as DataType,
+      params: [] as Array<sml.ParamType>,
+      ret: '' as sml.DataType,
     }
     params(method)
     ret(method)
@@ -94,19 +45,19 @@ class ClazzBuilder {
 }
 
 class InfBuilder {
-  constructor(private interfaces: InterfaceType) {}
+  constructor(private interfaces: sml.InfAst) {}
 
   method(
     name: string,
-    args: MethodOptional = (m: MethodType) => (m.params = []),
-    ret: MethodOptional = (m: MethodType) => (m.ret = 'void'),
+    args: sml.MethodOptional = (m: sml.MethodAst) => (m.params = []),
+    ret: sml.MethodOptional = (m: sml.MethodAst) => (m.ret = 'void'),
   ) {
     const method = {
       name,
-      visible: 'public' as VisibleType,
+      visible: 'public' as sml.VisibleType,
       abstract: false,
-      params: [] as Array<ParamType>,
-      ret: '' as DataType,
+      params: [] as Array<sml.ParamType>,
+      ret: '' as sml.DataType,
     }
     args(method)
     ret(method)
@@ -121,7 +72,7 @@ class InfBuilder {
 }
 
 class EnumBuilder {
-  constructor(private e: EnumType) {}
+  constructor(private e: sml.EnumType) {}
 
   field(name: string, value?: string | number) {
     this.e.fields.push({ name, value })
@@ -163,18 +114,9 @@ enum T {
   java_boolean = `java_boolean`,
   java_char = `java_char`,
 }
-export class SmlClazzLang extends Lang {
-  private meta: SmlClazzMeta
-
-  constructor(title: string) {
-    super(title)
-    this.meta = {
-      clazzes: [],
-      interfaces: [],
-      enums: [],
-      structs: [],
-      protocols: [],
-    }
+export class SmlClazzLang extends Lang<sml.ClassDiagramAst> {
+  constructor(meta: sml.ClassDiagramAst) {
+    super(meta)
   }
 
   /**
@@ -185,6 +127,7 @@ export class SmlClazzLang extends Lang {
   abstractClazz(name: string) {
     const clazz = {
       name,
+
       abstract: true,
       fields: [],
       methods: [],
@@ -223,7 +166,7 @@ export class SmlClazzLang extends Lang {
       name,
       implements: [],
       methods: [],
-    } as InterfaceType
+    } as sml.InfAst
     this.meta.interfaces.push(inf)
     return new InfBuilder(inf)
   }
@@ -255,7 +198,7 @@ export class SmlClazzLang extends Lang {
       methods: [],
       extends: [],
       implements: [],
-    } as ClazzType
+    }
     this.meta.structs.push(s)
     return new ClazzBuilder(s)
   }
@@ -270,7 +213,7 @@ export class SmlClazzLang extends Lang {
       name,
       implements: [],
       methods: [],
-    } as InterfaceType
+    } as sml.InfAst
     this.meta.protocols.push(prot)
     return new InfBuilder(prot)
   }
@@ -280,15 +223,15 @@ export class SmlClazzLang extends Lang {
    * @param args
    * @returns
    */
-  args(...args: Array<ParamType>) {
-    return (m: MethodType) => (m.params = [...m.params, ...args])
+  args(...args: Array<sml.ParamType>) {
+    return (m: sml.MethodAst) => (m.params = [...m.params, ...args])
   }
 
   /**
    * arg optional
    */
   arg(name: string, type: string) {
-    return { name, type } as ParamType
+    return { name, type } as sml.ParamType
   }
 
   /**
@@ -297,7 +240,7 @@ export class SmlClazzLang extends Lang {
    * @returns
    */
   ret(type: string) {
-    return (m: MethodType) => (m.ret = type)
+    return (m: sml.MethodAst) => (m.ret = type)
   }
 
   /**
@@ -305,8 +248,8 @@ export class SmlClazzLang extends Lang {
    * @param v
    * @returns
    */
-  visible(v: VisibleType) {
-    return (val: { visible: VisibleType }) => (val.visible = v)
+  visible(v: sml.VisibleType) {
+    return (val: { visible: sml.VisibleType }) => (val.visible = v)
   }
 
   /**
@@ -319,17 +262,4 @@ export class SmlClazzLang extends Lang {
   }
 
   t = T
-}
-
-/**
- * ClassDiagram factory
- * @param title
- * @param fn
- * @returns
- */
-export function ClassDiagram(title: string, fn: (ml: SmlClazzLang) => void) {
-  const lang = new SmlClazzLang(title)
-  fn(lang)
-  globalCollections.add(lang)
-  return lang
 }

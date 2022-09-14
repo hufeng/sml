@@ -1,5 +1,4 @@
 import * as sml from '../index'
-import PmlYamlEmitter from '../emitter/puml-yaml'
 
 describe('sml yaml test suites', () => {
   const title = 'hello yaml demo'
@@ -24,19 +23,23 @@ xmas-fifth-day:
 	turtle-doves: two`
 
   it('test full pipeline', () => {
-    const yaml = sml.YamlDiagram(title, (ml) => {
+    const { ast, emitter } = sml.YamlDiagram(title, (ml) => {
       ml.highlights(highlights).yaml(content)
     })
 
     // assert
-    expect((yaml as any).meta).toEqual({
+    expect(ast).toEqual({
       title,
+      config: {
+        actorStyle: 'default',
+        direction: 'left->right',
+        packageStyle: 'Rectangle',
+      },
       highlights,
       yaml: content,
     })
 
     // emitter
-    const code = new PmlYamlEmitter(yaml).emitCode()
-    expect(code).toMatchSnapshot()
+    expect(emitter.emitCode()).toMatchSnapshot()
   })
 })

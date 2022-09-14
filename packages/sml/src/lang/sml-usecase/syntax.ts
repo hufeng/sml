@@ -1,45 +1,12 @@
-import { Lang, PackageStyle, ConfigType } from './sml'
-import { globalCollections } from './sml-global'
+import { Lang } from '../base'
 
 const noop = () => {}
 
-// ~~~~~~~~~~ basic ~~~~~~~~~~
-type ID = string
-type Actor = { label: string; name: string }
-type UseCase = { label: string; name: string }
-type Postion = 'top' | 'right' | 'bottom' | 'left'
-
-// ~~~~~~~~~~ composite ~~~~~~~~~~~~~~~
-interface PacakgeType {
-  label: string
-  type: PackageStyle
-  actors: Array<Actor>
-  usecases: Array<UseCase>
-}
-type Link = {
-  from: string
-  to: Array<string>
-}
-type Note = {
-  label: string
-  position: Postion
-  on: ID | { from: ID; to: ID }
-}
-export interface SmlUseCaseMeta {
-  title: string
-  config: ConfigType
-  actors: Array<Actor>
-  usecases: Array<UseCase>
-  packages: Array<PacakgeType>
-  links: Array<Link>
-  notes: Array<Note>
-}
-
 // ~~~~~~~~~~~~~~~` builder ~~~~~~~~~~~
 class PackageBuilder {
-  private prop: PacakgeType
+  private prop: sml.PackageAst
 
-  constructor(data: PacakgeType) {
+  constructor(data: sml.PackageAst) {
     this.prop = data
   }
 
@@ -55,20 +22,9 @@ class PackageBuilder {
 }
 
 // ~~~~~~~~~ define usecase lang modeling ~~~~~~~~~~~~~~~
-export class SmlUseCaseLang extends Lang {
-  private meta: SmlUseCaseMeta
-
-  constructor(title: string) {
-    super(title)
-    this.meta = {
-      title,
-      config: this.config,
-      actors: [],
-      usecases: [],
-      packages: [],
-      links: [],
-      notes: [],
-    }
+export class SmlUseCaseLang extends Lang<sml.UseCaseDiagramAst> {
+  constructor(meta: sml.UseCaseDiagramAst) {
+    super(meta)
   }
 
   /**
@@ -115,7 +71,7 @@ export class SmlUseCaseLang extends Lang {
    * @param type
    * @returns
    */
-  package(label: string, type: PackageStyle = 'Rectangle') {
+  package(label: string, type: sml.PackageStyle = 'Rectangle') {
     const data = {
       label,
       type,
@@ -136,7 +92,7 @@ export class SmlUseCaseLang extends Lang {
   linkMany(
     from: string,
     to: Array<string>,
-    note: (l: { from: ID; to: Array<ID> }) => void = noop,
+    note: (l: { from: sml.ID; to: Array<sml.ID> }) => void = noop,
   ) {
     this.meta.links = [...this.meta.links, { from, to }]
     note({ from, to })
@@ -153,7 +109,7 @@ export class SmlUseCaseLang extends Lang {
   link(
     from: string,
     to: string,
-    note: (l: { from: ID; to: Array<ID> }) => void = noop,
+    note: (l: { from: sml.ID; to: Array<sml.ID> }) => void = noop,
   ) {
     this.meta.links = [...this.meta.links, { from, to: [to] }]
     note({ from, to: [to] })
@@ -166,7 +122,7 @@ export class SmlUseCaseLang extends Lang {
    * @param position
    * @returns
    */
-  noteOf = (label: string, position: Postion = 'right') => {
+  noteOf = (label: string, position: sml.Postion = 'right') => {
     return (c: { name: string }) =>
       this.meta.notes.push({ label, position, on: c.name })
   }
@@ -177,8 +133,8 @@ export class SmlUseCaseLang extends Lang {
    * @param position
    * @returns
    */
-  noteLink = (label: string, position: Postion = 'right') => {
-    return (c: Link) => {
+  noteLink = (label: string, position: sml.Postion = 'right') => {
+    return (c: sml.LinkAst) => {
       for (let t of c.to) {
         this.meta.notes.push({
           label,
@@ -188,15 +144,4 @@ export class SmlUseCaseLang extends Lang {
       }
     }
   }
-}
-
-//~~~~~~~~~~~~ factory ~~~~~~~~~~~~~~~
-export function UsecaseDiagram(
-  title: string,
-  fn: (ml: SmlUseCaseLang) => void,
-) {
-  const usecase = new SmlUseCaseLang(title)
-  fn(usecase)
-  globalCollections.add(usecase)
-  return usecase
 }
