@@ -1,6 +1,6 @@
 import { Emitter } from '../base'
 
-export class PumlJsonEmitter extends Emitter<sml.JsonDiagramAst> {
+export class PumlJsonEmitter extends Emitter<Sml.JsonDiagramAst> {
   emitCode() {
     const { highlights, json } = this.meta
     return this.s

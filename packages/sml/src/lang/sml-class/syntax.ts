@@ -2,12 +2,12 @@ import { Lang } from '../base'
 
 //~~~~~~~~~~~~ builder ~~~~~~~~~~~~~~~~
 class ClazzBuilder {
-  constructor(private clazz: sml.ClazzAst) {}
+  constructor(private clazz: Sml.ClazzAst) {}
 
   field(
     name: string,
-    type: sml.DataType,
-    visible: sml.VisibleType = 'private',
+    type: Sml.DataType,
+    visible: Sml.VisibleType = 'private',
   ) {
     this.clazz.fields.push({ name, type, visible })
     return this
@@ -15,16 +15,16 @@ class ClazzBuilder {
 
   method(
     name: string,
-    params: sml.MethodOptional,
-    ret: sml.MethodOptional,
-    ...rest: Array<sml.VisibleOptional | sml.abstractOptional>
+    params: Sml.MethodOptional,
+    ret: Sml.MethodOptional,
+    ...rest: Array<Sml.VisibleOptional | Sml.abstractOptional>
   ) {
     const method = {
       abstract: false,
-      visible: 'public' as sml.VisibleType,
+      visible: 'public' as Sml.VisibleType,
       name,
-      params: [] as Array<sml.ParamType>,
-      ret: '' as sml.DataType,
+      params: [] as Array<Sml.ParamType>,
+      ret: '' as Sml.DataType,
     }
     params(method)
     ret(method)
@@ -45,19 +45,19 @@ class ClazzBuilder {
 }
 
 class InfBuilder {
-  constructor(private interfaces: sml.InfAst) {}
+  constructor(private interfaces: Sml.InfAst) {}
 
   method(
     name: string,
-    args: sml.MethodOptional = (m: sml.MethodAst) => (m.params = []),
-    ret: sml.MethodOptional = (m: sml.MethodAst) => (m.ret = 'void'),
+    args: Sml.MethodOptional = (m: Sml.MethodAst) => (m.params = []),
+    ret: Sml.MethodOptional = (m: Sml.MethodAst) => (m.ret = 'void'),
   ) {
     const method = {
       name,
-      visible: 'public' as sml.VisibleType,
+      visible: 'public' as Sml.VisibleType,
       abstract: false,
-      params: [] as Array<sml.ParamType>,
-      ret: '' as sml.DataType,
+      params: [] as Array<Sml.ParamType>,
+      ret: '' as Sml.DataType,
     }
     args(method)
     ret(method)
@@ -72,7 +72,7 @@ class InfBuilder {
 }
 
 class EnumBuilder {
-  constructor(private e: sml.EnumType) {}
+  constructor(private e: Sml.EnumType) {}
 
   field(name: string, value?: string | number) {
     this.e.fields.push({ name, value })
@@ -114,8 +114,8 @@ enum T {
   java_boolean = `java_boolean`,
   java_char = `java_char`,
 }
-export class SmlClazzLang extends Lang<sml.ClassDiagramAst> {
-  constructor(meta: sml.ClassDiagramAst) {
+export class SmlClazzLang extends Lang<Sml.ClassDiagramAst> {
+  constructor(meta: Sml.ClassDiagramAst) {
     super(meta)
   }
 
@@ -166,7 +166,7 @@ export class SmlClazzLang extends Lang<sml.ClassDiagramAst> {
       name,
       implements: [],
       methods: [],
-    } as sml.InfAst
+    } as Sml.InfAst
     this.meta.interfaces.push(inf)
     return new InfBuilder(inf)
   }
@@ -213,7 +213,7 @@ export class SmlClazzLang extends Lang<sml.ClassDiagramAst> {
       name,
       implements: [],
       methods: [],
-    } as sml.InfAst
+    } as Sml.InfAst
     this.meta.protocols.push(prot)
     return new InfBuilder(prot)
   }
@@ -223,15 +223,15 @@ export class SmlClazzLang extends Lang<sml.ClassDiagramAst> {
    * @param args
    * @returns
    */
-  args(...args: Array<sml.ParamType>) {
-    return (m: sml.MethodAst) => (m.params = [...m.params, ...args])
+  args(...args: Array<Sml.ParamType>) {
+    return (m: Sml.MethodAst) => (m.params = [...m.params, ...args])
   }
 
   /**
    * arg optional
    */
   arg(name: string, type: string) {
-    return { name, type } as sml.ParamType
+    return { name, type } as Sml.ParamType
   }
 
   /**
@@ -240,7 +240,7 @@ export class SmlClazzLang extends Lang<sml.ClassDiagramAst> {
    * @returns
    */
   ret(type: string) {
-    return (m: sml.MethodAst) => (m.ret = type)
+    return (m: Sml.MethodAst) => (m.ret = type)
   }
 
   /**
@@ -248,8 +248,8 @@ export class SmlClazzLang extends Lang<sml.ClassDiagramAst> {
    * @param v
    * @returns
    */
-  visible(v: sml.VisibleType) {
-    return (val: { visible: sml.VisibleType }) => (val.visible = v)
+  visible(v: Sml.VisibleType) {
+    return (val: { visible: Sml.VisibleType }) => (val.visible = v)
   }
 
   /**

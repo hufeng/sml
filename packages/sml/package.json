@@ -9,6 +9,9 @@
   "license": "MIT",
   "dependencies": {
     "commander": "^9.4.0",
-    "chalk": "^5.0.1"
+    "chalk": "^4.1.1",
+    "esbuild": "^0.15.7",
+    "esbuild-register": "^3.3.3",
+    "glob": "^8.0.3"
   }
 }

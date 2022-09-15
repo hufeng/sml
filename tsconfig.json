@@ -27,5 +27,8 @@
     "forceConsistentCasingInFileNames": true,
 
     "types": ["vitest/globals"]
+  },
+  "ts-node": {
+    "files": true
   }
 }

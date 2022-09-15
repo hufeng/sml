@@ -6,7 +6,5 @@
     "declaration": true,
     "declarationDir": "./lib/typings"
   },
-  "exclude": [
-    "src/_tests_/**"
-  ]
+  "exclude": ["src/__tests__/**", "lib/**/*"]
 }

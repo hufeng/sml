@@ -4,9 +4,9 @@ import Builder from '../common/builder'
 
 // ~~~~~~~~~~ builder ~~~~~~~~~~~~~~~~~~~~~~
 class ConfigBuilder {
-  private config: sml.GlobalConfigType
+  private config: Sml.GlobalConfigType
 
-  constructor(config: sml.GlobalConfigType) {
+  constructor(config: Sml.GlobalConfigType) {
     this.config = config
   }
 
@@ -15,7 +15,7 @@ class ConfigBuilder {
    * @param style
    * @returns
    */
-  actorStyle(style: sml.ActorStyleType = 'default') {
+  actorStyle(style: Sml.ActorStyleType = 'default') {
     this.config.actorStyle = style
     return this
   }
@@ -25,7 +25,7 @@ class ConfigBuilder {
    * @param style
    * @returns
    */
-  packageStyle(style: sml.PackageStyle = 'Rectangle') {
+  packageStyle(style: Sml.PackageStyle = 'Rectangle') {
     this.config.packageStyle = style
     return this
   }
@@ -34,7 +34,7 @@ class ConfigBuilder {
    * setting direction
    * @param direction
    */
-  direction(direction: sml.DirectionType) {
+  direction(direction: Sml.DirectionType) {
     this.config.direction = direction
   }
 }
@@ -44,7 +44,7 @@ class ConfigBuilder {
 /**
  * all lang base class
  */
-export class Lang<T extends { title: string; config?: sml.GlobalConfigType }> {
+export class Lang<T extends { title: string; config?: Sml.GlobalConfigType }> {
   protected meta: T
 
   constructor(meta: T) {
@@ -64,7 +64,7 @@ export class Lang<T extends { title: string; config?: sml.GlobalConfigType }> {
 /**
  * all Emitter base class
  */
-export abstract class Emitter<T extends sml.BaseAst> {
+export abstract class Emitter<T extends Sml.BaseAst> {
   protected meta: T
   protected s: Builder
 

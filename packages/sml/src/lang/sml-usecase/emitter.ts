@@ -1,6 +1,6 @@
 import { Emitter } from '../base'
 
-export class PumlUseCaseEmitter extends Emitter<sml.UseCaseDiagramAst> {
+export class PumlUseCaseEmitter extends Emitter<Sml.UseCaseDiagramAst> {
   emitCode() {
     const { actors, usecases, packages: domains, links, notes } = this.meta
 

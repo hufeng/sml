@@ -1,6 +1,6 @@
 import { Emitter } from '../base'
 
-export class PumlClassEmitter extends Emitter<sml.ClassDiagramAst> {
+export class PumlClassEmitter extends Emitter<Sml.ClassDiagramAst> {
   static visibleMap = {
     private: '-',
     protected: '#',
@@ -36,7 +36,7 @@ export class PumlClassEmitter extends Emitter<sml.ClassDiagramAst> {
    * @param s
    * @param clazzes
    */
-  private emitClazz(clazzes: sml.ClassDiagramAst['clazzes']) {
+  private emitClazz(clazzes: Sml.ClassDiagramAst['clazzes']) {
     this.s.forStr(
       clazzes,
       (s, clazz) => {
@@ -89,7 +89,7 @@ export class PumlClassEmitter extends Emitter<sml.ClassDiagramAst> {
    * @param s
    * @param enums
    */
-  private emitEnum(enums: sml.ClassDiagramAst['enums']) {
+  private emitEnum(enums: Sml.ClassDiagramAst['enums']) {
     this.s.forStr(
       enums,
       (s, e) => {
@@ -109,7 +109,7 @@ export class PumlClassEmitter extends Emitter<sml.ClassDiagramAst> {
     return this
   }
 
-  private emitInf(infs: sml.ClassDiagramAst['interfaces']) {
+  private emitInf(infs: Sml.ClassDiagramAst['interfaces']) {
     this.s.forStr(
       infs,
       (s, i) => {
@@ -132,7 +132,7 @@ export class PumlClassEmitter extends Emitter<sml.ClassDiagramAst> {
     return this
   }
 
-  private emitProtocol(prots: sml.ClassDiagramAst['protocols']) {
+  private emitProtocol(prots: Sml.ClassDiagramAst['protocols']) {
     this.s.forStr(
       prots,
       (s, prot) => {
@@ -156,7 +156,7 @@ export class PumlClassEmitter extends Emitter<sml.ClassDiagramAst> {
     return this
   }
 
-  private emitStruct(structs: sml.ClassDiagramAst['structs']) {
+  private emitStruct(structs: Sml.ClassDiagramAst['structs']) {
     this.s.forStr(
       structs,
       (s, struct) => {

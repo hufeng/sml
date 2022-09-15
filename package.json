@@ -8,10 +8,12 @@
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest",
-    "build": "rm -rf ./packages/sml/lib && tsc --project ./packages/sml/tsconfig.json",
+    "clean": "rm -rf ./packages/sml/lib",
+    "build": "pnpm run clean && tsc --project ./packages/sml/tsconfig.json",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
+    "@types/glob": "^8.0.0",
     "@types/node": "^18.6.4",
     "typescript": "^4.8.3",
     "prettier": "latest",

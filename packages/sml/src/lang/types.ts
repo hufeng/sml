@@ -1,4 +1,4 @@
-namespace sml {
+namespace Sml {
   // ~~~~~~~~~~basic type~~~~~~~~~~~~~
 
   /**

@@ -1,6 +1,6 @@
 import { Emitter } from '../base'
 
-export default class PumlYamlEmitter extends Emitter<sml.YamlDiagramAst> {
+export default class PumlYamlEmitter extends Emitter<Sml.YamlDiagramAst> {
   emitCode() {
     const { highlights, yaml } = this.meta
 

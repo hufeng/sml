@@ -1,35 +1,41 @@
-import { readFileSync } from 'fs'
+import path from 'node:path'
+import fs from 'node:fs'
+import glob from 'glob'
+import chalk from 'chalk'
+import './global'
 
-function bundler() {
-  // scan files
-  // wrap file
-  const wrapFile = (file: string) => {
-    const content = readFileSync(file)
-    return `
-    import globalCollections from 'sml/lang'
-
-    ${content}
-
-    for (let [_, v] of [...globalCollections] ) {
-    
-    }
-    `
-  }
+/**
+ * scan all sml.ts or sml.js files
+ * @returns
+ */
+function scanSmlModules(): Promise<Array<string>> {
+  return new Promise((resolve) => {
+    glob('./**/*.sml.[t|j]s', { ignore: 'node_modules' }, (err, list) => {
+      console.log(err)
+      if (err) {
+        console.log(chalk.redBright(`${err.message}`))
+        resolve([])
+        return
+      }
+      resolve(list)
+    })
+  })
 }
 
-function build() {
-  let config = {
-    'suffix.file': /\.sml.[t|j]s/,
+export async function build() {
+  const files = await scanSmlModules()
+  for (let file of files) {
+    console.log(chalk.greenBright(`compile ${file}...`))
+    require(file)
   }
-
-  try {
-    const json = require('.sml.json')
-    config = { ...config, ...json }
-  } catch (err) {
-    console.log(`no .sml.json file`)
+  if (!fs.existsSync('./dist')) {
+    fs.mkdirSync(`./dist`)
   }
-
-  // emit plantuml code
-
-  // gen images
+  for (let { ast, emitter } of __emitters__) {
+    // write puml code
+    fs.writeFileSync(
+      path.join('./dist', `${ast.title.replace(/ /g, '_')}.txt`),
+      emitter.emitCode(),
+    )
+  }
 }
