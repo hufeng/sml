@@ -5,7 +5,7 @@
   "bin": {
     "smlc": "./lib/cmd/index.js"
   },
-  "version": "1.0.0",
+  "version": "0.0.1",
   "license": "MIT",
   "dependencies": {
     "commander": "^9.4.0",
