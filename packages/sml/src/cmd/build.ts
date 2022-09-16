@@ -1,4 +1,4 @@
-import './global'
+import './proxy'
 import path from 'node:path'
 import fs from 'node:fs'
 import glob from 'glob'
