@@ -5,16 +5,21 @@ describe('sml class diagram test suites', () => {
 
   it('test class', () => {
     const { emitter } = sml.ClassDiagram(title, (ml) => {
-      ml.clazz(`org.hf.sml.UseCase`)
-        .field('id', 'number')
-        .field('name', 'string')
-        .method('setId', ml.args(ml.arg('id', 'number')), ml.ret(ml.t.void))
-        .method('getFullInof', ml.args(), ml.ret('string'))
-      ml.struct(`org.hf.sml.Customer`)
-        .field('id', 'number')
-        .field('name', 'string')
-        .method('setId', ml.args(ml.arg('id', 'number')), ml.ret(ml.t.void))
-        .method('getFullInof', ml.args(), ml.ret('string'))
+      ml.clazz(`org.hf.sml.UseCase`, (c) =>
+        c
+          .field('id', 'number')
+          .field('name', 'string')
+          .method('setId', (m) => m.arg('id', 'number').ret(ml.t.void))
+          .method('getFullInof', (m) => m.ret('string')),
+      )
+
+      ml.struct(`org.hf.sml.Customer`, (s) =>
+        s
+          .field('id', 'number')
+          .field('name', 'string')
+          .method('setId', (m) => m.arg('id', 'number').ret(ml.t.void))
+          .method('getFullInof', (m) => m.ret('string')),
+      )
     })
     expect(emitter.emitCode()).toMatchSnapshot()
   })
@@ -24,8 +29,8 @@ describe('sml class diagram test suites', () => {
       ml.abstractClazz('or.hf.sml.AbstractUserCase')
         .field('id', 'number', 'private')
         .field('name', 'string')
-        .method('setId', ml.args(ml.arg('id', 'number')), ml.ret(ml.t.void))
-        .method('getFullInof', ml.args(), ml.ret('string'))
+        .method('setId', (m) => m.arg('id', 'number').ret(ml.t.void))
+        .method('getFullInof', (m) => m.ret('string'))
     })
 
     expect(emitter.emitCode()).toMatchSnapshot()
@@ -33,27 +38,30 @@ describe('sml class diagram test suites', () => {
 
   it('test enum', () => {
     const { emitter } = sml.ClassDiagram(title, (ml) => {
-      ml.enum('org.hufeng.enum.Color')
-        .field('Red', 0)
-        .field('Green', 1)
-        .field('Blue', 2)
-      ml.enum('org.hufeng.enum.FileType')
-        .field('Pdf', 'PDF')
-        .field('doc', 'WORD')
-        .field('xls', 'Excel')
+      ml.enum('org.hufeng.enum.Color', (e) =>
+        e.field('Red', 0).field('Green', 1).field('Blue', 2),
+      )
+
+      ml.enum('org.hufeng.enum.FileType', (e) =>
+        e.field('Pdf', 'PDF').field('doc', 'WORD').field('xls', 'Excel'),
+      )
     })
     expect(emitter.emitCode()).toMatchSnapshot()
   })
 
   it('test inf', () => {
     const { emitter } = sml.ClassDiagram(title, (ml) => {
-      ml.interface('org.hufeng.service.UserService')
-        .method('sayYou', ml.args(ml.arg('name', 'string')))
-        .method('sayMe', ml.args(ml.arg('you', 'string')))
+      ml.interface('org.hufeng.service.UserService', (i) =>
+        i
+          .method('sayYou', (m) => m.arg('name', 'string'))
+          .method('sayMe', (m) => m.arg('you', 'string')),
+      )
 
-      ml.protocol('org.hufeng.protocol.UserService')
-        .method('sayYou', ml.args(ml.arg('name', 'string')))
-        .method('sayMe', ml.args(ml.arg('you', 'string')))
+      ml.protocol('org.hufeng.protocol.UserService', (p) =>
+        p
+          .method('sayYou', (m) => m.arg('name', 'string'))
+          .method('sayMe', (m) => m.arg('you', 'string')),
+      )
     })
 
     expect(emitter.emitCode()).toMatchSnapshot()
@@ -64,13 +72,13 @@ describe('sml class diagram test suites', () => {
       ml.interface(`List`)
       ml.abstractClazz('AbstractList')
 
-      ml.clazz('org.hufeng.util.MyList')
-        .extends('AbstractList')
-        .implements('List')
+      ml.clazz('org.hufeng.util.MyList', (c) =>
+        c.extends('AbstractList').implements('List'),
+      )
 
       ml.interface('I1')
       ml.interface('I2')
-      ml.interface('I3').implements('I1').implements('I2')
+      ml.interface('I3', (i) => i.implements('I1', 'I2'))
     })
 
     expect(emitter.emitCode()).toMatchSnapshot()

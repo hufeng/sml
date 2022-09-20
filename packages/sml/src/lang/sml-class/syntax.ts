@@ -1,37 +1,29 @@
 import { Lang } from '../base'
 
+class MethodBuilder {
+  constructor(private methodAst: Sml.MethodAst) {}
+
+  visible(v: Sml.VisibleType) {
+    this.methodAst.visible = v
+  }
+
+  abstract(b: boolean) {
+    this.methodAst.abstract = b
+  }
+
+  arg(name: string, type: string) {
+    this.methodAst.params.push({ name, type })
+    return this
+  }
+
+  ret(type: string = 'void') {
+    this.methodAst.ret = type
+  }
+}
+
 //~~~~~~~~~~~~ builder ~~~~~~~~~~~~~~~~
 class ClazzBuilder {
   constructor(private clazz: Sml.ClazzAst) {}
-
-  field(
-    name: string,
-    type: Sml.DataType,
-    visible: Sml.VisibleType = 'private',
-  ) {
-    this.clazz.fields.push({ name, type, visible })
-    return this
-  }
-
-  method(
-    name: string,
-    params: Sml.MethodOptional,
-    ret: Sml.MethodOptional,
-    ...rest: Array<Sml.VisibleOptional | Sml.abstractOptional>
-  ) {
-    const method = {
-      abstract: false,
-      visible: 'public' as Sml.VisibleType,
-      name,
-      params: [] as Array<Sml.ParamType>,
-      ret: '' as Sml.DataType,
-    }
-    params(method)
-    ret(method)
-    rest.forEach((opt) => opt(method))
-    this.clazz.methods.push(method)
-    return this
-  }
 
   extends(...names: Array<string>) {
     this.clazz.extends = [...this.clazz.extends, ...names]
@@ -42,26 +34,47 @@ class ClazzBuilder {
     this.clazz.implements = [...this.clazz.implements, ...names]
     return this
   }
+
+  field(
+    name: string,
+    type: Sml.DataType,
+    visible: Sml.VisibleType = 'private',
+  ) {
+    this.clazz.fields.push({ name, type, visible })
+    return this
+  }
+
+  method(name: string, fn: (m: MethodBuilder) => void) {
+    const method = {
+      abstract: false,
+      visible: 'public' as Sml.VisibleType,
+      name,
+      params: [] as Array<Sml.ParamType>,
+      ret: 'void' as Sml.DataType,
+    } as Sml.MethodAst
+
+    fn(new MethodBuilder(method))
+    this.clazz.methods.push(method)
+
+    return this
+  }
 }
 
 class InfBuilder {
   constructor(private interfaces: Sml.InfAst) {}
 
-  method(
-    name: string,
-    args: Sml.MethodOptional = (m: Sml.MethodAst) => (m.params = []),
-    ret: Sml.MethodOptional = (m: Sml.MethodAst) => (m.ret = 'void'),
-  ) {
+  method(name: string, fn: (m: MethodBuilder) => void) {
     const method = {
       name,
       visible: 'public' as Sml.VisibleType,
       abstract: false,
       params: [] as Array<Sml.ParamType>,
-      ret: '' as Sml.DataType,
+      ret: 'void' as Sml.DataType,
     }
-    args(method)
-    ret(method)
+
+    fn(new MethodBuilder(method))
     this.interfaces.methods.push(method)
+
     return this
   }
 
@@ -114,6 +127,7 @@ enum T {
   java_boolean = `java_boolean`,
   java_char = `java_char`,
 }
+
 export class SmlClazzLang extends Lang<Sml.ClassDiagramAst> {
   constructor(meta: Sml.ClassDiagramAst) {
     super(meta)
@@ -143,7 +157,7 @@ export class SmlClazzLang extends Lang<Sml.ClassDiagramAst> {
    * @param name class name
    * @returns
    */
-  clazz(name: string) {
+  clazz(name: string, fn: (c: ClazzBuilder) => void = () => {}) {
     const clazz = {
       name,
       abstract: false,
@@ -153,7 +167,7 @@ export class SmlClazzLang extends Lang<Sml.ClassDiagramAst> {
       implements: [],
     }
     this.meta.clazzes.push(clazz)
-    return new ClazzBuilder(clazz)
+    return fn(new ClazzBuilder(clazz))
   }
 
   /**
@@ -161,14 +175,14 @@ export class SmlClazzLang extends Lang<Sml.ClassDiagramAst> {
    * @param name interface name
    * @returns
    */
-  interface(name: string) {
+  interface(name: string, fn: (i: InfBuilder) => void = () => {}) {
     const inf = {
       name,
       implements: [],
       methods: [],
     } as Sml.InfAst
     this.meta.interfaces.push(inf)
-    return new InfBuilder(inf)
+    return fn(new InfBuilder(inf))
   }
 
   /**
@@ -176,13 +190,13 @@ export class SmlClazzLang extends Lang<Sml.ClassDiagramAst> {
    * @param name enum name
    * @returns
    */
-  enum(name: string) {
+  enum(name: string, fn: (e: EnumBuilder) => void = () => {}) {
     const e = {
       name,
       fields: [],
     }
     this.meta.enums.push(e)
-    return new EnumBuilder(e)
+    return fn(new EnumBuilder(e))
   }
 
   /**
@@ -190,7 +204,7 @@ export class SmlClazzLang extends Lang<Sml.ClassDiagramAst> {
    * @param name struct name
    * @returns
    */
-  struct(name: string) {
+  struct(name: string, fn: (s: ClazzBuilder) => void = () => {}) {
     const s = {
       name,
       abstract: false,
@@ -200,7 +214,7 @@ export class SmlClazzLang extends Lang<Sml.ClassDiagramAst> {
       implements: [],
     }
     this.meta.structs.push(s)
-    return new ClazzBuilder(s)
+    return fn(new ClazzBuilder(s))
   }
 
   /**
@@ -208,57 +222,14 @@ export class SmlClazzLang extends Lang<Sml.ClassDiagramAst> {
    * @param name protocol name
    * @returns
    */
-  protocol(name: string) {
+  protocol(name: string, fn: (p: InfBuilder) => void = () => {}) {
     const prot = {
       name,
       implements: [],
       methods: [],
     } as Sml.InfAst
     this.meta.protocols.push(prot)
-    return new InfBuilder(prot)
-  }
-
-  /**
-   * args optional
-   * @param args
-   * @returns
-   */
-  args(...args: Array<Sml.ParamType>) {
-    return (m: Sml.MethodAst) => (m.params = [...m.params, ...args])
-  }
-
-  /**
-   * arg optional
-   */
-  arg(name: string, type: string) {
-    return { name, type } as Sml.ParamType
-  }
-
-  /**
-   * return value type
-   * @param type
-   * @returns
-   */
-  ret(type: string) {
-    return (m: Sml.MethodAst) => (m.ret = type)
-  }
-
-  /**
-   * setting field or method visible
-   * @param v
-   * @returns
-   */
-  visible(v: Sml.VisibleType) {
-    return (val: { visible: Sml.VisibleType }) => (val.visible = v)
-  }
-
-  /**
-   * setting method whether is abstract
-   * @param v
-   * @returns
-   */
-  abstract(v: boolean) {
-    return (val: { abstract: boolean }) => (val.abstract = v)
+    return fn(new InfBuilder(prot))
   }
 
   t = T
