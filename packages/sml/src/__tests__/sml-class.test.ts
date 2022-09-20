@@ -26,11 +26,13 @@ describe('sml class diagram test suites', () => {
 
   it('test abstract class', () => {
     const { emitter } = sml.ClassDiagram(title, (ml) => {
-      ml.abstractClazz('or.hf.sml.AbstractUserCase')
-        .field('id', 'number', 'private')
-        .field('name', 'string')
-        .method('setId', (m) => m.arg('id', 'number').ret(ml.t.void))
-        .method('getFullInof', (m) => m.ret('string'))
+      ml.abstractClazz('or.hf.sml.AbstractUserCase', (c) =>
+        c
+          .field('id', 'number', c.private)
+          .field('name', 'string')
+          .method('setId', (m) => m.arg('id', 'number').ret(ml.t.void))
+          .method('getFullInof', (m) => m.ret('string')),
+      )
     })
 
     expect(emitter.emitCode()).toMatchSnapshot()

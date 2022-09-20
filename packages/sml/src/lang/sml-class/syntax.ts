@@ -1,5 +1,12 @@
 import { Lang } from '../base'
 
+export enum VisibleType {
+  private = 'private',
+  protected = 'protected',
+  public = 'public',
+  package_private = 'package_private',
+}
+
 class MethodBuilder {
   constructor(private methodAst: Sml.MethodAst) {}
 
@@ -35,10 +42,26 @@ class ClazzBuilder {
     return this
   }
 
+  get private() {
+    return VisibleType.private
+  }
+
+  get protected() {
+    return VisibleType.protected
+  }
+
+  get public() {
+    return VisibleType.public
+  }
+
+  get package_private() {
+    return VisibleType.package_private
+  }
+
   field(
     name: string,
     type: Sml.DataType,
-    visible: Sml.VisibleType = 'private',
+    visible: VisibleType = VisibleType.private,
   ) {
     this.clazz.fields.push({ name, type, visible })
     return this
@@ -47,7 +70,7 @@ class ClazzBuilder {
   method(name: string, fn: (m: MethodBuilder) => void) {
     const method = {
       abstract: false,
-      visible: 'public' as Sml.VisibleType,
+      visible: VisibleType.public,
       name,
       params: [] as Array<Sml.ParamType>,
       ret: 'void' as Sml.DataType,
@@ -66,7 +89,7 @@ class InfBuilder {
   method(name: string, fn: (m: MethodBuilder) => void) {
     const method = {
       name,
-      visible: 'public' as Sml.VisibleType,
+      visible: VisibleType.public,
       abstract: false,
       params: [] as Array<Sml.ParamType>,
       ret: 'void' as Sml.DataType,
@@ -138,10 +161,9 @@ export class SmlClazzLang extends Lang<Sml.ClassDiagramAst> {
    * @param name abstract class name
    * @returns
    */
-  abstractClazz(name: string) {
+  abstractClazz(name: string, fn: (c: ClazzBuilder) => void = () => {}) {
     const clazz = {
       name,
-
       abstract: true,
       fields: [],
       methods: [],
@@ -149,7 +171,7 @@ export class SmlClazzLang extends Lang<Sml.ClassDiagramAst> {
       implements: [],
     }
     this.meta.clazzes.push(clazz)
-    return new ClazzBuilder(clazz)
+    return fn(new ClazzBuilder(clazz))
   }
 
   /**

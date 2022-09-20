@@ -24,15 +24,8 @@ namespace Sml {
   export type UseCase = { label: string; name: string }
   export type Postion = 'top' | 'right' | 'bottom' | 'left'
   export type DataType = string
-  export type VisibleType =
-    | 'private'
-    | 'protected'
-    | 'public'
-    | 'package_private'
+
   export type ParamType = { name: string; type: DataType }
-  export type MethodOptional = (m: MethodAst) => void
-  export type VisibleOptional = (v: { visible: VisibleType }) => void
-  export type abstractOptional = (a: { abstract: boolean }) => void
 
   // ~~~~~~ composite type ~~~~~~~~~~~~~~~
 
