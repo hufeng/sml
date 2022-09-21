@@ -1,0 +1,26 @@
+// Vitest Snapshot v1
+
+exports[`component diagram test suites > test all components 1`] = `
+"@startuml
+  package \\"bff\\" {
+    component \\"service-a\\"
+    component \\"service-b\\"
+   interface \\"http\\"
+  }
+
+  node \\"Node\\" {
+   component \\"Go\\"
+ }
+
+  cloud \\"cloud\\" {
+    component \\"Nodejs\\"
+    interface \\"http\\"
+  }
+
+  database \\"Database\\" {
+    component \\"mysql\\"
+    component \\"redis\\"
+  }
+
+@enduml"
+`;

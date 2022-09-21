@@ -140,3 +140,28 @@ export interface DeploymentLangAst extends BaseAst {
   hexagons: Array<DeploymentBase>
   controls: Array<DeploymentBase>
 }
+
+export interface SmlComponentAst extends BaseAst {
+  packages: Array<{
+    title: string
+    components: Array<{ title: string }>
+    infs: Array<{ title: string }>
+  }>
+  nodes: Array<{
+    title: string
+    components: Array<{ title: string }>
+    infs: Array<{ title: string }>
+  }>
+  databases: Array<{
+    title: string
+    components: Array<{ title: string }>
+    infs: Array<{ title: string }>
+  }>
+  clouds: Array<{
+    title: string
+    components: Array<{ title: string }>
+    infs: Array<{ title: string }>
+  }>
+  components: Array<{ title: string }>
+  infs: Array<{ title: string }>
+}
