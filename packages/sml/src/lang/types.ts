@@ -142,26 +142,29 @@ export interface DeploymentLangAst extends BaseAst {
 }
 
 export interface SmlComponentAst extends BaseAst {
+  links: Array<{ from: string; to: string }>
+  vlinks: Array<{ from: string; to: string }>
+  rels: Array<{ from: string; to: string }>
   packages: Array<{
     title: string
-    components: Array<{ title: string }>
-    infs: Array<{ title: string }>
+    components: Array<{ title: string; name?: string }>
+    infs: Array<{ title: string; name?: string }>
   }>
   nodes: Array<{
     title: string
-    components: Array<{ title: string }>
-    infs: Array<{ title: string }>
+    components: Array<{ title: string; name?: string }>
+    infs: Array<{ title: string; name?: string }>
   }>
   databases: Array<{
     title: string
-    components: Array<{ title: string }>
-    infs: Array<{ title: string }>
+    components: Array<{ title: string; name?: string }>
+    infs: Array<{ title: string; name?: string }>
   }>
   clouds: Array<{
     title: string
-    components: Array<{ title: string }>
-    infs: Array<{ title: string }>
+    components: Array<{ title: string; name?: string }>
+    infs: Array<{ title: string; name?: string }>
   }>
-  components: Array<{ title: string }>
-  infs: Array<{ title: string }>
+  components: Array<{ title: string; name?: string }>
+  infs: Array<{ title: string; name?: string }>
 }

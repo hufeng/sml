@@ -3,24 +3,31 @@
 exports[`component diagram test suites > test all components 1`] = `
 "@startuml
   package \\"bff\\" {
-    component \\"service-a\\"
-    component \\"service-b\\"
-   interface \\"http\\"
+    component \\"service-a\\"  as c2
+    component \\"service-b\\"  as c3
+   interface \\"http\\"  as i2
   }
 
   node \\"Node\\" {
-   component \\"Go\\"
+   component \\"Go\\"  as c6
  }
 
   cloud \\"cloud\\" {
-    component \\"Nodejs\\"
-    interface \\"http\\"
+    component \\"Nodejs\\"  as c1
+    interface \\"http\\"  as i1
   }
 
   database \\"Database\\" {
-    component \\"mysql\\"
-    component \\"redis\\"
+    component \\"mysql\\"  as c4
+    component \\"redis\\"  as c5
   }
 
+  c1 --> c2
+  c2 --> c3
+  c3 ..> c4
+  c4 ..> c5
+  c5 ..> c6
+  i1 - c1
+  i2 - c3
 @enduml"
 `;

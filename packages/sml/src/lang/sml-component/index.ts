@@ -13,6 +13,9 @@ export function ComponentDiagram(
     clouds: [],
     components: [],
     infs: [],
+    vlinks: [],
+    links: [],
+    rels: [],
   }
   fn(new SmlComponentLang(ast))
   return { ast, emitter: new PumlComponentEmitter(ast) }
