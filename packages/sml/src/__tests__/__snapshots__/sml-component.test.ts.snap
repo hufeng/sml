@@ -2,32 +2,34 @@
 
 exports[`component diagram test suites > test all components 1`] = `
 "@startuml
-  package \\"bff\\" {
-    component \\"service-a\\"  as c2
-    component \\"service-b\\"  as c3
-   interface \\"http\\"  as i2
-  }
+!theme cerulean-outline
 
-  node \\"Node\\" {
-   component \\"Go\\"  as c6
- }
+package \\"bff\\" {
+  component \\"service-a\\"  as c2
+  component \\"service-b\\"  as c3
+  interface \\"http\\"  as i2
 
-  cloud \\"cloud\\" {
-    component \\"Nodejs\\"  as c1
-    interface \\"http\\"  as i1
-  }
 
-  database \\"Database\\" {
-    component \\"mysql\\"  as c4
-    component \\"redis\\"  as c5
-  }
+node \\"Node\\" {
+ component \\"Go\\"  as c6
+}
 
-  c1 --> c2
-  c2 --> c3
-  c3 ..> c4
-  c4 ..> c5
-  c5 ..> c6
-  i1 - c1
-  i2 - c3
+cloud \\"cloud\\" {
+  component \\"Nodejs\\"  as c1
+  interface \\"http\\"  as i1
+}
+
+database \\"Database\\" {
+  component \\"mysql\\"  as c4
+  component \\"redis\\"  as c5
+}
+
+c1 --> c2
+c2 --> c3
+c3 ..> c4
+c4 ..> c5
+c5 ..> c6
+i1 - c1
+i2 - c3
 @enduml"
 `;

@@ -44,6 +44,10 @@ class ConfigBuilder {
   direction(direction: DirectionType) {
     this.config.direction = direction
   }
+
+  theme(theme: string = 'cerulean-outline') {
+    this.config.theme = theme
+  }
 }
 
 // ~~~~~~~~~~ lang base ~~~~~~~~~~~~~~~~
@@ -60,6 +64,7 @@ export class Lang<T extends { title: string; config?: GlobalConfigType }> {
       actorStyle: 'default',
       direction: 'left->right',
       packageStyle: 'Rectangle',
+      theme: 'cerulean-outline',
     }
   }
 

@@ -34,6 +34,7 @@ export type GlobalConfigType = {
   actorStyle: ActorStyleType
   direction: DirectionType
   packageStyle: PackageStyle
+  theme: string
 }
 
 // ~~~~~~~~ Diagram Ast ~~~~~~~~~~~~~~~~~~~

@@ -59,6 +59,13 @@ export class SmlComponentLang extends Lang<SmlComponentAst> {
     return this
   }
 
+  /**
+   *  生成一个☁️包裹的作用域
+   * @param title 
+   * @param fn 
+   * @returns 
+   */
+
   cloud(title: string, fn: (c: ContainerBuilder) => void = noop) {
     const ast = {
       title,

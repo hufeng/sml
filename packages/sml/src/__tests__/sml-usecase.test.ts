@@ -53,6 +53,7 @@ describe('sml usercase test suites', () => {
         actorStyle: 'default',
         packageStyle: 'Rectangle',
         direction: 'left->right',
+        theme: 'cerulean-outline',
       },
       usecases: [],
       notes: [],
