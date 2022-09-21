@@ -118,4 +118,25 @@ namespace Sml {
     extends: Array<string>
     implements: Array<string>
   }
+
+  export type DeploymentBase = {
+    title: string
+    label: string
+  }
+  export type aritfact = DeploymentBase
+
+  export interface DeploymentLangAst extends Sml.BaseAst {
+    artifacts: Array<DeploymentBase>
+    clouds: Array<DeploymentBase>
+    components: Array<DeploymentBase>
+    databases: Array<DeploymentBase>
+    nodes: Array<DeploymentBase>
+    queues: Array<DeploymentBase>
+    stacks: Array<DeploymentBase>
+    actors: Array<DeploymentBase>
+    boundary: Array<DeploymentBase>
+    infs: Array<DeploymentBase>
+    hexagons: Array<DeploymentBase>
+    controls: Array<DeploymentBase>
+  }
 }

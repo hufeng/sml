@@ -10,7 +10,7 @@ export enum VisibleType {
 class MethodBuilder {
   constructor(private methodAst: Sml.MethodAst) {}
 
-  visible(v: Sml.VisibleType) {
+  visible(v: VisibleType) {
     this.methodAst.visible = v
   }
 

@@ -1,0 +1,19 @@
+// Vitest Snapshot v1
+
+exports[`deployment test suite > test all elements 1`] = `
+"@startuml
+actor :Customer: <<actor>>
+actor :Guest: <<actor>>
+artifact (beehive-service) <<beehive-service>>
+artifact (beehive-consumer) <<beehive-consumer>>
+database (mysql) <<database>>
+queue (queue) <<queue>>
+stack (mem) <<stack>>
+boundary (end) <<boundary>>
+interface (invoke-service) <<interface>>
+control (control) <<control>>
+component (beehive-registry) <<component>>
+cloud (Network) <<cloud>>
+cloud (127.0.0.1) <<node>>
+@enduml"
+`;

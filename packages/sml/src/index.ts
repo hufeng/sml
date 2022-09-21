@@ -1,6 +1,5 @@
-import { ClassDiagram } from './lang/sml-class'
-import { JsonDiagram } from './lang/sml-json'
-import { UsecaseDiagram } from './lang/sml-usecase'
-import { YamlDiagram } from './lang/sml-yaml'
-
-export { JsonDiagram, YamlDiagram, UsecaseDiagram, ClassDiagram }
+export { ClassDiagram } from './lang/sml-class'
+export { JsonDiagram } from './lang/sml-json'
+export { UsecaseDiagram } from './lang/sml-usecase'
+export { YamlDiagram } from './lang/sml-yaml'
+export { DeploymentDiagram } from './lang/sml-deployment'
