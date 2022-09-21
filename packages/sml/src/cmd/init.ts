@@ -3,6 +3,16 @@ import path from 'node:path'
 import chalk from 'chalk'
 import { execSync } from 'node:child_process'
 
+const prettierrc = `
+{
+  "bracketSpacing": true,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "semi": false,
+  "tabWidth": 2,
+  "printWidth": 60
+}
+`
 const pkg = `
 {
   "name": "sml-app",
@@ -37,6 +47,11 @@ export function init(dir: string) {
   const pkgFile = path.join(dir, 'package.json')
   console.log(chalk.greenBright(`write ${pkgFile}`))
   fs.writeFileSync(pkgFile, pkg.trim())
+
+  // write prettierrc
+  const prettierFile = path.join(dir, '.prettierrc')
+  console.log(chalk.greenBright(`write ${prettierFile}`))
+  fs.writeFileSync(prettierFile, prettierrc.trim())
 
   // write tsconfig.json
   const tsConfigFilePath = path.join(dir, 'tsconfig.json')
