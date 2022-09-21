@@ -8,6 +8,7 @@
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest",
+    "ts-check": "tsc --project ./packages/sml/tsconfig.json --noEmit",
     "build": "tsc --project ./packages/sml/tsconfig.json",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },

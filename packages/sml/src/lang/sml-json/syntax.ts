@@ -1,8 +1,9 @@
 import { Lang } from '../base'
+import { JsonDiagramAst, JsonPath } from '../types'
 
 // ~~~~~~~~~~~` define json lang modeling ~~~~~~~~~~~~~~`
-export class SmlJsonLang extends Lang<Sml.JsonDiagramAst> {
-  constructor(meta: Sml.JsonDiagramAst) {
+export class SmlJsonLang extends Lang<JsonDiagramAst> {
+  constructor(meta: JsonDiagramAst) {
     super(meta)
   }
 
@@ -21,7 +22,7 @@ export class SmlJsonLang extends Lang<Sml.JsonDiagramAst> {
    * @param arr 高亮json的路径
    * @returns
    */
-  highlights(arr: Array<Sml.JsonPath>) {
+  highlights(arr: Array<JsonPath>) {
     this.meta.highlights = arr
     return this
   }

@@ -1,7 +1,8 @@
 import { Lang } from '../base'
+import { DeploymentLangAst } from '../types'
 
-export class SmlDeploymentLang extends Lang<Sml.DeploymentLangAst> {
-  constructor(meta: Sml.DeploymentLangAst) {
+export class SmlDeploymentLang extends Lang<DeploymentLangAst> {
+  constructor(meta: DeploymentLangAst) {
     super(meta)
   }
 

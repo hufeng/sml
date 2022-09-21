@@ -1,8 +1,9 @@
 import { Lang } from '../base'
+import { YamlDiagramAst, JsonPath } from '../types'
 
 // ~~~~~~~~~~~~~ define sml yaml lang modeling ~~~~~~~~~~~
-export class SmlYamlLang extends Lang<Sml.YamlDiagramAst> {
-  constructor(meta: Sml.YamlDiagramAst) {
+export class SmlYamlLang extends Lang<YamlDiagramAst> {
+  constructor(meta: YamlDiagramAst) {
     super(meta)
   }
 
@@ -21,7 +22,7 @@ export class SmlYamlLang extends Lang<Sml.YamlDiagramAst> {
    * @param arr 高亮yaml的路径
    * @returns
    */
-  highlights(arr: Array<Sml.JsonPath>) {
+  highlights(arr: Array<JsonPath>) {
     this.meta.highlights = arr
     return this
   }

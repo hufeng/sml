@@ -1,6 +1,7 @@
 import { Emitter } from '../base'
+import { DeploymentLangAst } from '../types'
 
-export class PumlDeploymentEmitter extends Emitter<Sml.DeploymentLangAst> {
+export class PumlDeploymentEmitter extends Emitter<DeploymentLangAst> {
   emitCode() {
     const {
       actors,

@@ -1,12 +1,20 @@
 import { Lang } from '../base'
+import {
+  PackageAst,
+  UseCaseDiagramAst,
+  PackageStyle,
+  ID,
+  Postion,
+  LinkAst,
+} from '../types'
 
 const noop = () => {}
 
 // ~~~~~~~~~~~~~~~` builder ~~~~~~~~~~~
 class PackageBuilder {
-  private prop: Sml.PackageAst
+  private prop: PackageAst
 
-  constructor(data: Sml.PackageAst) {
+  constructor(data: PackageAst) {
     this.prop = data
   }
 
@@ -22,8 +30,8 @@ class PackageBuilder {
 }
 
 // ~~~~~~~~~ define usecase lang modeling ~~~~~~~~~~~~~~~
-export class SmlUseCaseLang extends Lang<Sml.UseCaseDiagramAst> {
-  constructor(meta: Sml.UseCaseDiagramAst) {
+export class SmlUseCaseLang extends Lang<UseCaseDiagramAst> {
+  constructor(meta: UseCaseDiagramAst) {
     super(meta)
   }
 
@@ -71,7 +79,7 @@ export class SmlUseCaseLang extends Lang<Sml.UseCaseDiagramAst> {
    * @param type
    * @returns
    */
-  package(label: string, type: Sml.PackageStyle = 'Rectangle') {
+  package(label: string, type: PackageStyle = 'Rectangle') {
     const data = {
       label,
       type,
@@ -92,7 +100,7 @@ export class SmlUseCaseLang extends Lang<Sml.UseCaseDiagramAst> {
   linkMany(
     from: string,
     to: Array<string>,
-    note: (l: { from: Sml.ID; to: Array<Sml.ID> }) => void = noop,
+    note: (l: { from: ID; to: Array<ID> }) => void = noop,
   ) {
     this.meta.links = [...this.meta.links, { from, to }]
     note({ from, to })
@@ -109,7 +117,7 @@ export class SmlUseCaseLang extends Lang<Sml.UseCaseDiagramAst> {
   link(
     from: string,
     to: string,
-    note: (l: { from: Sml.ID; to: Array<Sml.ID> }) => void = noop,
+    note: (l: { from: ID; to: Array<ID> }) => void = noop,
   ) {
     this.meta.links = [...this.meta.links, { from, to: [to] }]
     note({ from, to: [to] })
@@ -122,7 +130,7 @@ export class SmlUseCaseLang extends Lang<Sml.UseCaseDiagramAst> {
    * @param position
    * @returns
    */
-  noteOf = (label: string, position: Sml.Postion = 'right') => {
+  noteOf = (label: string, position: Postion = 'right') => {
     return (c: { name: string }) =>
       this.meta.notes.push({ label, position, on: c.name })
   }
@@ -133,8 +141,8 @@ export class SmlUseCaseLang extends Lang<Sml.UseCaseDiagramAst> {
    * @param position
    * @returns
    */
-  noteLink = (label: string, position: Sml.Postion = 'right') => {
-    return (c: Sml.LinkAst) => {
+  noteLink = (label: string, position: Postion = 'right') => {
+    return (c: LinkAst) => {
       for (let t of c.to) {
         this.meta.notes.push({
           label,

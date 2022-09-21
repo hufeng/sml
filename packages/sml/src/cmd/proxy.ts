@@ -1,8 +1,9 @@
 import * as lang from '../index'
 import { Emitter } from '../lang/base'
+import { BaseAst } from '../lang/types'
 
 declare global {
-  var __emitters__: Array<{ emitter: Emitter<Sml.BaseAst>; ast: Sml.BaseAst }>
+  var __emitters__: Array<{ emitter: Emitter<BaseAst>; ast: BaseAst }>
 }
 
 // hook sml api

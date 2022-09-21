@@ -1,142 +1,142 @@
-namespace Sml {
-  // ~~~~~~~~~~basic type~~~~~~~~~~~~~
+import type { VisibleType } from './sml-class/syntax'
 
-  /**
-   * package style
-   */
-  export type PackageStyle =
-    | 'Node'
-    | 'Rectangle'
-    | 'Folder'
-    | 'Frame'
-    | 'Cloud'
-    | 'DataBase'
+// ~~~~~~~~~~basic type~~~~~~~~~~~~~
 
-  /**
-   * JsonPath 表达json的路径
-   * 如：users.0.address.province
-   */
-  export type JsonPath = string
-  export type ActorStyleType = 'default' | 'awesome' | 'Hollow'
-  export type DirectionType = 'left->right' | 'top->down'
-  export type ID = string
-  export type Actor = { label: string; name: string }
-  export type UseCase = { label: string; name: string }
-  export type Postion = 'top' | 'right' | 'bottom' | 'left'
-  export type DataType = string
+/**
+ * package style
+ */
+export type PackageStyle =
+  | 'Node'
+  | 'Rectangle'
+  | 'Folder'
+  | 'Frame'
+  | 'Cloud'
+  | 'DataBase'
 
-  export type ParamType = { name: string; type: DataType }
+/**
+ * JsonPath 表达json的路径
+ * 如：users.0.address.province
+ */
+export type JsonPath = string
+export type ActorStyleType = 'default' | 'awesome' | 'Hollow'
+export type DirectionType = 'left->right' | 'top->down'
+export type ID = string
+export type Actor = { label: string; name: string }
+export type UseCase = { label: string; name: string }
+export type Postion = 'top' | 'right' | 'bottom' | 'left'
+export type DataType = string
 
-  // ~~~~~~ composite type ~~~~~~~~~~~~~~~
+export type ParamType = { name: string; type: DataType }
 
-  export type GlobalConfigType = {
-    actorStyle: ActorStyleType
-    direction: DirectionType
-    packageStyle: PackageStyle
-  }
+// ~~~~~~ composite type ~~~~~~~~~~~~~~~
 
-  // ~~~~~~~~ Diagram Ast ~~~~~~~~~~~~~~~~~~~
+export type GlobalConfigType = {
+  actorStyle: ActorStyleType
+  direction: DirectionType
+  packageStyle: PackageStyle
+}
 
-  export interface BaseAst {
-    title: string
-    config?: GlobalConfigType
-  }
-  export interface UseCaseDiagramAst extends BaseAst {
-    actors: Array<Actor>
-    usecases: Array<UseCase>
-    packages: Array<PackageAst>
-    links: Array<LinkAst>
-    notes: Array<NoteAst>
-  }
-  export interface YamlDiagramAst extends BaseAst {
-    title: string
-    yaml: string
-    highlights: Array<JsonPath>
-  }
-  export interface JsonDiagramAst extends BaseAst {
-    json: any
-    highlights: Array<JsonPath>
-  }
-  export interface ClassDiagramAst extends BaseAst {
-    clazzes: Array<ClazzAst>
-    interfaces: Array<InfAst>
-    enums: Array<EnumType>
-    structs: Array<StructAst>
-    protocols: Array<ProtocolAst>
-  }
+// ~~~~~~~~ Diagram Ast ~~~~~~~~~~~~~~~~~~~
 
-  // ~~~~~~~~~~~ Field Ast ~~~~~~~~~~~~~~~~~~~~~~~~~~
+export interface BaseAst {
+  title: string
+  config?: GlobalConfigType
+}
+export interface UseCaseDiagramAst extends BaseAst {
+  actors: Array<Actor>
+  usecases: Array<UseCase>
+  packages: Array<PackageAst>
+  links: Array<LinkAst>
+  notes: Array<NoteAst>
+}
+export interface YamlDiagramAst extends BaseAst {
+  title: string
+  yaml: string
+  highlights: Array<JsonPath>
+}
+export interface JsonDiagramAst extends BaseAst {
+  json: any
+  highlights: Array<JsonPath>
+}
+export interface ClassDiagramAst extends BaseAst {
+  clazzes: Array<ClazzAst>
+  interfaces: Array<InfAst>
+  enums: Array<EnumType>
+  structs: Array<StructAst>
+  protocols: Array<ProtocolAst>
+}
 
-  export type LinkAst = {
-    from: string
-    to: Array<string>
-  }
-  export type NoteAst = {
-    label: string
-    position: Postion
-    on: ID | { from: ID; to: ID }
-  }
+// ~~~~~~~~~~~ Field Ast ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  export type FiledAst = {
-    name: string
-    type: DataType
-    visible: VisibleType
-  }
-  export type MethodAst = {
-    abstract: boolean
-    visible: VisibleType
-    name: string
-    params: Array<ParamType>
-    ret: DataType
-  }
-  export type InfAst = {
-    name: string
-    implements: Array<string>
-    methods: Array<MethodAst>
-  }
-  export type EnumFieldAst = {
-    name: string
-    value?: number | string
-  }
-  export type EnumType = {
-    name: string
-    fields: Array<EnumFieldAst>
-  }
-  export type StructAst = ClazzAst
-  export type ProtocolAst = InfAst
-  export interface PackageAst {
-    label: string
-    type: PackageStyle
-    actors: Array<Actor>
-    usecases: Array<UseCase>
-  }
-  export type ClazzAst = {
-    name: string
-    abstract: boolean
-    fields: Array<FiledAst>
-    methods: Array<MethodAst>
-    extends: Array<string>
-    implements: Array<string>
-  }
+export type LinkAst = {
+  from: string
+  to: Array<string>
+}
+export type NoteAst = {
+  label: string
+  position: Postion
+  on: ID | { from: ID; to: ID }
+}
 
-  export type DeploymentBase = {
-    title: string
-    label: string
-  }
-  export type aritfact = DeploymentBase
+export type FiledAst = {
+  name: string
+  type: DataType
+  visible: VisibleType
+}
+export type MethodAst = {
+  abstract: boolean
+  visible: VisibleType
+  name: string
+  params: Array<ParamType>
+  ret: DataType
+}
+export type InfAst = {
+  name: string
+  implements: Array<string>
+  methods: Array<MethodAst>
+}
+export type EnumFieldAst = {
+  name: string
+  value?: number | string
+}
+export type EnumType = {
+  name: string
+  fields: Array<EnumFieldAst>
+}
+export type StructAst = ClazzAst
+export type ProtocolAst = InfAst
+export interface PackageAst {
+  label: string
+  type: PackageStyle
+  actors: Array<Actor>
+  usecases: Array<UseCase>
+}
+export type ClazzAst = {
+  name: string
+  abstract: boolean
+  fields: Array<FiledAst>
+  methods: Array<MethodAst>
+  extends: Array<string>
+  implements: Array<string>
+}
 
-  export interface DeploymentLangAst extends Sml.BaseAst {
-    artifacts: Array<DeploymentBase>
-    clouds: Array<DeploymentBase>
-    components: Array<DeploymentBase>
-    databases: Array<DeploymentBase>
-    nodes: Array<DeploymentBase>
-    queues: Array<DeploymentBase>
-    stacks: Array<DeploymentBase>
-    actors: Array<DeploymentBase>
-    boundary: Array<DeploymentBase>
-    infs: Array<DeploymentBase>
-    hexagons: Array<DeploymentBase>
-    controls: Array<DeploymentBase>
-  }
+export type DeploymentBase = {
+  title: string
+  label: string
+}
+export type aritfact = DeploymentBase
+
+export interface DeploymentLangAst extends BaseAst {
+  artifacts: Array<DeploymentBase>
+  clouds: Array<DeploymentBase>
+  components: Array<DeploymentBase>
+  databases: Array<DeploymentBase>
+  nodes: Array<DeploymentBase>
+  queues: Array<DeploymentBase>
+  stacks: Array<DeploymentBase>
+  actors: Array<DeploymentBase>
+  boundary: Array<DeploymentBase>
+  infs: Array<DeploymentBase>
+  hexagons: Array<DeploymentBase>
+  controls: Array<DeploymentBase>
 }

@@ -1,12 +1,19 @@
 import path from 'node:path'
 import { exec } from 'node:child_process'
 import Builder from '../common/builder'
+import {
+  ActorStyleType,
+  BaseAst,
+  DirectionType,
+  GlobalConfigType,
+  PackageStyle,
+} from './types'
 
 // ~~~~~~~~~~ builder ~~~~~~~~~~~~~~~~~~~~~~
 class ConfigBuilder {
-  private config: Sml.GlobalConfigType
+  private config: GlobalConfigType
 
-  constructor(config: Sml.GlobalConfigType) {
+  constructor(config: GlobalConfigType) {
     this.config = config
   }
 
@@ -15,7 +22,7 @@ class ConfigBuilder {
    * @param style
    * @returns
    */
-  actorStyle(style: Sml.ActorStyleType = 'default') {
+  actorStyle(style: ActorStyleType = 'default') {
     this.config.actorStyle = style
     return this
   }
@@ -25,7 +32,7 @@ class ConfigBuilder {
    * @param style
    * @returns
    */
-  packageStyle(style: Sml.PackageStyle = 'Rectangle') {
+  packageStyle(style: PackageStyle = 'Rectangle') {
     this.config.packageStyle = style
     return this
   }
@@ -34,7 +41,7 @@ class ConfigBuilder {
    * setting direction
    * @param direction
    */
-  direction(direction: Sml.DirectionType) {
+  direction(direction: DirectionType) {
     this.config.direction = direction
   }
 }
@@ -44,7 +51,7 @@ class ConfigBuilder {
 /**
  * all lang base class
  */
-export class Lang<T extends { title: string; config?: Sml.GlobalConfigType }> {
+export class Lang<T extends { title: string; config?: GlobalConfigType }> {
   protected meta: T
 
   constructor(meta: T) {
@@ -64,7 +71,7 @@ export class Lang<T extends { title: string; config?: Sml.GlobalConfigType }> {
 /**
  * all Emitter base class
  */
-export abstract class Emitter<T extends Sml.BaseAst> {
+export abstract class Emitter<T extends BaseAst> {
   protected meta: T
   protected s: Builder
 

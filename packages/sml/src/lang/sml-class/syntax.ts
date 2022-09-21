@@ -1,4 +1,13 @@
 import { Lang } from '../base'
+import {
+  MethodAst,
+  ClazzAst,
+  DataType,
+  ParamType,
+  InfAst,
+  EnumType,
+  ClassDiagramAst,
+} from '../types'
 
 export enum VisibleType {
   private = 'private',
@@ -8,7 +17,7 @@ export enum VisibleType {
 }
 
 class MethodBuilder {
-  constructor(private methodAst: Sml.MethodAst) {}
+  constructor(private methodAst: MethodAst) {}
 
   visible(v: VisibleType) {
     this.methodAst.visible = v
@@ -30,7 +39,7 @@ class MethodBuilder {
 
 //~~~~~~~~~~~~ builder ~~~~~~~~~~~~~~~~
 class ClazzBuilder {
-  constructor(private clazz: Sml.ClazzAst) {}
+  constructor(private clazz: ClazzAst) {}
 
   extends(...names: Array<string>) {
     this.clazz.extends = [...this.clazz.extends, ...names]
@@ -60,7 +69,7 @@ class ClazzBuilder {
 
   field(
     name: string,
-    type: Sml.DataType,
+    type: DataType,
     visible: VisibleType = VisibleType.private,
   ) {
     this.clazz.fields.push({ name, type, visible })
@@ -72,9 +81,9 @@ class ClazzBuilder {
       abstract: false,
       visible: VisibleType.public,
       name,
-      params: [] as Array<Sml.ParamType>,
-      ret: 'void' as Sml.DataType,
-    } as Sml.MethodAst
+      params: [] as Array<ParamType>,
+      ret: 'void' as DataType,
+    } as MethodAst
 
     fn(new MethodBuilder(method))
     this.clazz.methods.push(method)
@@ -84,15 +93,15 @@ class ClazzBuilder {
 }
 
 class InfBuilder {
-  constructor(private interfaces: Sml.InfAst) {}
+  constructor(private interfaces: InfAst) {}
 
   method(name: string, fn: (m: MethodBuilder) => void) {
     const method = {
       name,
       visible: VisibleType.public,
       abstract: false,
-      params: [] as Array<Sml.ParamType>,
-      ret: 'void' as Sml.DataType,
+      params: [] as Array<ParamType>,
+      ret: 'void' as DataType,
     }
 
     fn(new MethodBuilder(method))
@@ -108,7 +117,7 @@ class InfBuilder {
 }
 
 class EnumBuilder {
-  constructor(private e: Sml.EnumType) {}
+  constructor(private e: EnumType) {}
 
   field(name: string, value?: string | number) {
     this.e.fields.push({ name, value })
@@ -151,8 +160,8 @@ enum T {
   java_char = `java_char`,
 }
 
-export class SmlClazzLang extends Lang<Sml.ClassDiagramAst> {
-  constructor(meta: Sml.ClassDiagramAst) {
+export class SmlClazzLang extends Lang<ClassDiagramAst> {
+  constructor(meta: ClassDiagramAst) {
     super(meta)
   }
 
@@ -202,7 +211,7 @@ export class SmlClazzLang extends Lang<Sml.ClassDiagramAst> {
       name,
       implements: [],
       methods: [],
-    } as Sml.InfAst
+    } as InfAst
     this.meta.interfaces.push(inf)
     return fn(new InfBuilder(inf))
   }
@@ -249,7 +258,7 @@ export class SmlClazzLang extends Lang<Sml.ClassDiagramAst> {
       name,
       implements: [],
       methods: [],
-    } as Sml.InfAst
+    } as InfAst
     this.meta.protocols.push(prot)
     return fn(new InfBuilder(prot))
   }
