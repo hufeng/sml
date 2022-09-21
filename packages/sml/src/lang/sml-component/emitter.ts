@@ -29,7 +29,7 @@ export class PumlComponentEmitter extends Emitter<SmlComponentAst> {
             )
             .forStr(v.infs, (s, v) =>
               s.str(
-                `   interface "${v.title}"${v.name ? '  as ' + v.name : ''}`,
+                `    interface "${v.title}"${v.name ? '  as ' + v.name : ''}`,
               ),
             )
             .str('  }'),
@@ -47,7 +47,7 @@ export class PumlComponentEmitter extends Emitter<SmlComponentAst> {
             )
             .forStr(v.infs, (s, v) =>
               s.str(
-                `   interface "${v.title}"${v.name ? '  as ' + v.name : ''}`,
+                `    interface "${v.title}"${v.name ? '  as ' + v.name : ''}`,
               ),
             )
             .str(' }'),
