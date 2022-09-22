@@ -19,6 +19,9 @@ export function DeploymentDiagram(
     infs: [],
     hexagons: [],
     controls: [],
+    links: [],
+    vlinks: [],
+    rels: [],
   }
 
   fn(new SmlDeploymentLang(ast))

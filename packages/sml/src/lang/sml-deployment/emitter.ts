@@ -1,5 +1,6 @@
+import Builder from '../../common/builder'
 import { Emitter } from '../base'
-import { DeploymentLangAst } from '../types'
+import { DeploymentBase, DeploymentLangAst } from '../types'
 
 export class PumlDeploymentEmitter extends Emitter<DeploymentLangAst> {
   emitCode() {
@@ -17,73 +18,75 @@ export class PumlDeploymentEmitter extends Emitter<DeploymentLangAst> {
       components,
       clouds,
       nodes,
+      links,
+      vlinks,
+      rels,
     } = this.meta
 
     return this.s
       .str('@startuml')
       .str(`!theme ${config!.theme}`)
       .str('')
-      .forStr(
-        actors,
-        (s, v) => s.str(`actor :${v.label}: <<${v.title}>>`),
-        actors.length > 0 ? '\n' : '',
-      )
+      .forStr(actors, this.container('actor'), actors.length > 0 ? '\n' : '')
       .forStr(
         artifacts,
-        (s, v) => s.str(`artifact (${v.label}) <<${v.label}>>`),
+        this.container('artifact'),
         artifacts.length > 0 ? '\n' : '',
       )
       .forStr(
         databases,
-        (s, v) => s.str(`database (${v.label}) <<${v.title}>>`),
+        this.container('database'),
         databases.length > 0 ? '\n' : '',
       )
-      .forStr(
-        queues,
-        (s, v) => s.str(`queue (${v.label}) <<${v.title}>>`),
-        queues.length > 0 ? '\n' : '',
-      )
-      .forStr(
-        stacks,
-        (s, v) => s.str(`stack (${v.label}) <<${v.title}>>`),
-        stacks.length > 0 ? '\n' : '',
-      )
+      .forStr(queues, this.container('queue'), queues.length > 0 ? '\n' : '')
+      .forStr(stacks, this.container('stack'), stacks.length > 0 ? '\n' : '')
       .forStr(
         boundary,
-        (s, v) => s.str(`boundary (${v.label}) <<${v.title}>>`),
+        this.container('boundary'),
         stacks.length > 0 ? '\n' : '',
       )
-      .forStr(
-        infs,
-        (s, v) => s.str(`interface (${v.label}) <<${v.title}>>`),
-        infs.length > 0 ? '\n' : '',
-      )
+      .forStr(infs, this.container('interface'), infs.length > 0 ? '\n' : '')
       .forStr(
         hexagons,
-        (s, v) => s.str(`hexagon (${v.label}) <<${v.title}>>`),
+        this.container('hexagon'),
         hexagons.length > 0 ? '\n' : '',
       )
       .forStr(
         controls,
-        (s, v) => s.str(`control (${v.label}) <<${v.title}>>`),
+        this.container('control'),
         controls.length > 0 ? '\n' : '',
       )
       .forStr(
         components,
-        (s, v) => s.str(`component (${v.label}) <<${v.title}>>`),
+        this.container('component'),
         components.length > 0 ? '\n' : '',
       )
-      .forStr(
-        clouds,
-        (s, v) => s.str(`cloud (${v.label}) <<${v.title}>>`),
-        clouds.length > 0 ? '\n' : '',
-      )
-      .forStr(
-        nodes,
-        (s, v) => s.str(`cloud (${v.label}) <<${v.title}>>`),
-        nodes.length > 0 ? '\n' : '',
-      )
+      .forStr(clouds, this.container('cloud'), clouds.length > 0 ? '\n' : '')
+      .forStr(nodes, this.container('cloud'), nodes.length > 0 ? '\n' : '')
+      .forStr(links, (s, v) => s.str(`${v.from} --> ${v.to}`))
+      .forStr(vlinks, (s, v) => s.str(`${v.from} ..> ${v.to}`))
+      .forStr(rels, (s, v) => s.str(`${v.from} - ${v.to}`))
       .str('@enduml')
       .toString('\n')
+  }
+
+  container(
+    name:
+      | 'cloud'
+      | 'component'
+      | 'control'
+      | 'hexagon'
+      | 'interface'
+      | 'boundary'
+      | 'stack'
+      | 'queue'
+      | 'actor'
+      | 'artifact'
+      | 'database',
+  ) {
+    return (s: Builder, v: DeploymentBase) =>
+      s.str(
+        `${name} (${v.label})${v.name ? ' as ' + v.name : ''} <<${v.title}>>`,
+      )
   }
 }

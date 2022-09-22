@@ -12,19 +12,27 @@ const noop = () => {}
 
 // ~~~~~~~~~~~~~~~` builder ~~~~~~~~~~~
 class PackageBuilder {
-  private prop: PackageAst
+  constructor(private data: PackageAst) {}
 
-  constructor(data: PackageAst) {
-    this.prop = data
-  }
-
+  /**
+   * 设置容器内的actor元素
+   * @param label
+   * @param name
+   * @returns
+   */
   actor(label: string, name: string = '') {
-    this.prop.actors.push({ name, label })
+    this.data.actors.push({ name, label })
     return this
   }
 
+  /**
+   * 设置容器内的用例元素
+   * @param label
+   * @param name
+   * @returns
+   */
   usecase(label: string, name: string = '') {
-    this.prop.usecases.push({ name, label })
+    this.data.usecases.push({ name, label })
     return this
   }
 }
@@ -36,7 +44,7 @@ export class SmlUseCaseLang extends Lang<UseCaseDiagramAst> {
   }
 
   /**
-   * define actor
+   * 设置活动者元素
    * @param label
    * @param name
    * @param note
@@ -55,7 +63,7 @@ export class SmlUseCaseLang extends Lang<UseCaseDiagramAst> {
   }
 
   /**
-   * define usecase
+   * 设置用例元素
    * @param label
    * @param name
    * @param note
@@ -74,7 +82,7 @@ export class SmlUseCaseLang extends Lang<UseCaseDiagramAst> {
   }
 
   /**
-   * setting package scope
+   * 设置包容器
    * @param label
    * @param type
    * @returns

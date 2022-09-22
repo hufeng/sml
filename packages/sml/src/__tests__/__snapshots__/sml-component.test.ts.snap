@@ -8,10 +8,10 @@ package \\"bff\\" {
   component \\"service-a\\"  as c2
   component \\"service-b\\"  as c3
   interface \\"http\\"  as i2
-
+}
 
 node \\"Node\\" {
- component \\"Go\\"  as c6
+  component \\"Go\\"  as c6
 }
 
 cloud \\"cloud\\" {

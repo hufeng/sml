@@ -1,3 +1,4 @@
+import Builder from '../../common/builder'
 import { Emitter } from '../base'
 import { SmlComponentAst } from '../types'
 
@@ -24,33 +25,19 @@ export class PumlComponentEmitter extends Emitter<SmlComponentAst> {
         packages,
         (s, v) =>
           s
-            .str(`package "${v.title}" {`)
-            .forStr(v.components, (s, v) =>
-              s.str(
-                `  component "${v.title}"${v.name ? '  as ' + v.name : ''}`,
-              ),
-            )
-            .forStr(v.infs, (s, v) =>
-              s.str(
-                `  interface "${v.title}"${v.name ? '  as ' + v.name : ''}`,
-              ),
-            )
-            .str(''),
+            .str(`package "${v.label}" {`)
+            .forStr(v.components, this.container('component'))
+            .forStr(v.infs, this.container('interface'))
+            .str('}'),
         packages.length > 0 ? '\n' : '',
       )
       .forStr(
         nodes,
         (s, v) =>
           s
-            .str(`node "${v.title}" {`)
-            .forStr(v.components, (s, v) =>
-              s.str(` component "${v.title}"${v.name ? '  as ' + v.name : ''}`),
-            )
-            .forStr(v.infs, (s, v) =>
-              s.str(
-                `  interface "${v.title}"${v.name ? '  as ' + v.name : ''}`,
-              ),
-            )
+            .str(`node "${v.label}" {`)
+            .forStr(v.components, this.container('component'))
+            .forStr(v.infs, this.container('interface'))
             .str('}'),
         nodes.length > 0 ? '\n' : '',
       )
@@ -58,17 +45,9 @@ export class PumlComponentEmitter extends Emitter<SmlComponentAst> {
         clouds,
         (s, v) =>
           s
-            .str(`cloud "${v.title}" {`)
-            .forStr(v.components, (s, v) =>
-              s.str(
-                `  component "${v.title}"${v.name ? '  as ' + v.name : ''}`,
-              ),
-            )
-            .forStr(v.infs, (s, v) =>
-              s.str(
-                `  interface "${v.title}"${v.name ? '  as ' + v.name : ''}`,
-              ),
-            )
+            .str(`cloud "${v.label}" {`)
+            .forStr(v.components, this.container('component'))
+            .forStr(v.infs, this.container('interface'))
             .str('}'),
         clouds.length > 0 ? '\n' : '',
       )
@@ -76,33 +55,23 @@ export class PumlComponentEmitter extends Emitter<SmlComponentAst> {
         databases,
         (s, v) =>
           s
-            .str(`database "${v.title}" {`)
-            .forStr(v.components, (s, v) =>
-              s.str(
-                `  component "${v.title}"${v.name ? '  as ' + v.name : ''}`,
-              ),
-            )
-            .forStr(v.infs, (s, v) =>
-              s.str(
-                `  interface "${v.title}"${v.name ? '  as ' + v.name : ''}`,
-              ),
-            )
+            .str(`database "${v.label}" {`)
+            .forStr(v.components, this.container('component'))
+            .forStr(v.infs, this.container('interface'))
             .str('}'),
         databases.length > 0 ? '\n' : '',
       )
-      .forStr(components, (s, v) =>
-        s.str(`component "${v.title}"${v.name ? '  as ' + v.name : ''}`),
-      )
-      .forStr(
-        infs,
-        (s, v) =>
-          s.str(`  interface "${v.title}"${v.name ? '  as ' + v.name : ''}`),
-        infs.length > 0 ? '\n' : '',
-      )
+      .forStr(components, this.container(`component`))
+      .forStr(infs, this.container(`interface`), infs.length > 0 ? '\n' : '')
       .forStr(links, (s, v) => s.str(`${v.from} --> ${v.to}`))
       .forStr(vlinks, (s, v) => s.str(`${v.from} ..> ${v.to}`))
       .forStr(rels, (s, v) => s.str(`${v.from} - ${v.to}`))
       .str('@enduml')
       .toString('\n')
+  }
+
+  container(name: 'component' | 'interface') {
+    return (s: Builder, v: { label: string; name?: string }) =>
+      s.str(`  ${name} "${v.label}"${v.name ? '  as ' + v.name : ''}`)
   }
 }

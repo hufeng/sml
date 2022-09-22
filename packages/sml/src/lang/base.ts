@@ -9,6 +9,8 @@ import {
   PackageStyle,
 } from './types'
 
+export const noop = () => {}
+
 // ~~~~~~~~~~ builder ~~~~~~~~~~~~~~~~~~~~~~
 class ConfigBuilder {
   private config: GlobalConfigType

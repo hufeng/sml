@@ -121,18 +121,34 @@ export type ClazzAst = {
   implements: Array<string>
 }
 
-export type DeploymentBase = {
+export interface DeploymentBase {
   title: string
   label: string
+  name?: string
 }
-export type aritfact = DeploymentBase
+
+export interface DeploymentContainer extends DeploymentBase {
+  name: string
+  databases: Array<DeploymentBase>
+  queues: Array<DeploymentBase>
+  stacks: Array<DeploymentBase>
+  boundary: Array<DeploymentBase>
+  infs: Array<DeploymentBase>
+  hexagons: Array<DeploymentBase>
+  controls: Array<DeploymentBase>
+  nodes: Array<DeploymentBase>
+  collections: Array<DeploymentBase>
+}
 
 export interface DeploymentLangAst extends BaseAst {
-  artifacts: Array<DeploymentBase>
-  clouds: Array<DeploymentBase>
-  components: Array<DeploymentBase>
-  databases: Array<DeploymentBase>
-  nodes: Array<DeploymentBase>
+  // container
+  artifacts: Array<DeploymentContainer>
+  clouds: Array<DeploymentContainer>
+  components: Array<DeploymentContainer>
+  databases: Array<DeploymentContainer>
+  nodes: Array<DeploymentContainer>
+
+  // base
   queues: Array<DeploymentBase>
   stacks: Array<DeploymentBase>
   actors: Array<DeploymentBase>
@@ -140,32 +156,29 @@ export interface DeploymentLangAst extends BaseAst {
   infs: Array<DeploymentBase>
   hexagons: Array<DeploymentBase>
   controls: Array<DeploymentBase>
+  collections: Array<DeploymentBase>
+
+  links: Array<{ from: string; to: string }>
+  vlinks: Array<{ from: string; to: string }>
+  rels: Array<{ from: string; to: string }>
+}
+
+export interface ComponentContainer {
+  label: string
+  components: Array<{ label: string; name?: string }>
+  infs: Array<{ label: string; name?: string }>
 }
 
 export interface SmlComponentAst extends BaseAst {
   links: Array<{ from: string; to: string }>
   vlinks: Array<{ from: string; to: string }>
   rels: Array<{ from: string; to: string }>
-  packages: Array<{
-    title: string
-    components: Array<{ title: string; name?: string }>
-    infs: Array<{ title: string; name?: string }>
-  }>
-  nodes: Array<{
-    title: string
-    components: Array<{ title: string; name?: string }>
-    infs: Array<{ title: string; name?: string }>
-  }>
-  databases: Array<{
-    title: string
-    components: Array<{ title: string; name?: string }>
-    infs: Array<{ title: string; name?: string }>
-  }>
-  clouds: Array<{
-    title: string
-    components: Array<{ title: string; name?: string }>
-    infs: Array<{ title: string; name?: string }>
-  }>
-  components: Array<{ title: string; name?: string }>
-  infs: Array<{ title: string; name?: string }>
+
+  packages: Array<ComponentContainer>
+  nodes: Array<ComponentContainer>
+  databases: Array<ComponentContainer>
+  clouds: Array<ComponentContainer>
+
+  components: Array<{ label: string; name?: string }>
+  infs: Array<{ label: string; name?: string }>
 }

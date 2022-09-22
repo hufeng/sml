@@ -1,22 +1,16 @@
 import { Lang } from '../base'
-import { SmlComponentAst } from '../types'
-
-const noop = () => {}
+import { ComponentContainer, SmlComponentAst } from '../types'
 
 class ContainerBuilder {
-  constructor(
-    private meta: {
-      components: Array<{ title: string; name?: string }>
-      infs: Array<{ title: string; name?: string }>
-    },
-  ) {}
+  constructor(private meta: ComponentContainer) {}
 
-  interface(title: string, name?: string) {
-    this.meta.infs.push({ title, name })
+  interface(label: string, name?: string) {
+    this.meta.infs.push({ label, name })
     return this
   }
-  component(title: string, name?: string) {
-    this.meta.components.push({ title, name })
+
+  component(label: string, name?: string) {
+    this.meta.components.push({ label, name })
     return this
   }
 }
@@ -26,66 +20,54 @@ export class SmlComponentLang extends Lang<SmlComponentAst> {
     super(meta)
   }
 
-  package(title: string, fn: (p: ContainerBuilder) => void = noop) {
+  #container(
+    label: string,
+    collections: 'packages' | 'nodes' | 'databases' | 'clouds',
+    fn?: (c: ContainerBuilder) => void,
+  ) {
     const ast = {
-      title,
-      components: [] as Array<{ title: string }>,
-      infs: [] as Array<{ title: string }>,
+      label,
+      components: [],
+      infs: [],
     }
-    fn(new ContainerBuilder(ast))
-    this.meta.packages.push(ast)
+    fn && fn(new ContainerBuilder(ast))
+    this.meta[collections].push(ast)
     return this
   }
 
-  node(title: string, fn: (n: ContainerBuilder) => void = noop) {
-    const ast = {
-      title,
-      components: [] as Array<{ title: string; name?: string }>,
-      infs: [] as Array<{ title: string; name: string }>,
-    }
-    fn(new ContainerBuilder(ast))
-    this.meta.nodes.push(ast)
-    return this
+  package(label: string, fn?: (p: ContainerBuilder) => void) {
+    return this.#container(label, 'packages', fn)
   }
 
-  database(title: string, fn: (d: ContainerBuilder) => void = noop) {
-    const ast = {
-      title,
-      components: [] as Array<{ title: string; name?: string }>,
-      infs: [] as Array<{ title: string; name: string }>,
-    }
-    fn(new ContainerBuilder(ast))
-    this.meta.databases.push(ast)
-    return this
+  node(label: string, fn?: (n: ContainerBuilder) => void) {
+    return this.#container(label, 'nodes', fn)
+  }
+
+  database(label: string, fn?: (d: ContainerBuilder) => void) {
+    return this.#container(label, 'databases', fn)
   }
 
   /**
-   *  生成一个☁️包裹的作用域
-   * @param title 
-   * @param fn 
-   * @returns 
+   * 生成一个☁️包裹的作用域
+   * @param label
+   * @param fn
+   * @returns
    */
+  cloud(label: string, fn?: (c: ContainerBuilder) => void) {
+    return this.#container(label, 'clouds', fn)
+  }
 
-  cloud(title: string, fn: (c: ContainerBuilder) => void = noop) {
-    const ast = {
-      title,
-      components: [] as Array<{ title: string; name?: string }>,
-      infs: [] as Array<{ title: string; name?: string }>,
-    }
-    fn(new ContainerBuilder(ast))
-    this.meta.clouds.push(ast)
+  component(label: string, name?: string) {
+    this.meta.components.push({ label, name })
     return this
   }
 
-  component(title: string, name?: string) {
-    this.meta.components.push({ title, name })
+  interface(label: string, name?: string) {
+    this.meta.infs.push({ label, name })
     return this
   }
 
-  interface(title: string, name?: string) {
-    this.meta.infs.push({ title, name })
-    return this
-  }
+  // ~~~~~~~~~ relations ~~~~~~~~~~~~
 
   link(from: string, to: string) {
     this.meta.links.push({ from, to })
