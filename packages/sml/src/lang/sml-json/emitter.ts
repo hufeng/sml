@@ -6,7 +6,7 @@ export class PumlJsonEmitter extends Emitter<JsonDiagramAst> {
     const { highlights, json } = this.meta
     return this.s
       .str(`@startjson`)
-      .thunk(this.buildConfig)
+      .thunk(this.buildTheme)
       .forStr(
         highlights,
         (s, highlight) =>
