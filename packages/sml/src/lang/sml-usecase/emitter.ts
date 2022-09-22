@@ -9,7 +9,7 @@ export class PumlUseCaseEmitter extends Emitter<UseCaseDiagramAst> {
       this.s
         // start
         .str('@startuml')
-        .thunk(this.buildConfig)
+        .thunk(this.buildTheme)
         // actors
         .forStr(
           actors,

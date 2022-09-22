@@ -3,9 +3,6 @@
 exports[`sml usercase test suites > only actor 1`] = `
 "@startuml
 !theme cerulean-outline
-skinparam packageStyle Rectangle
-left to right direction
-
 actor :first actor: as user1
 actor :another actor: as user2
 actor :Last actor: as user3
@@ -16,10 +13,6 @@ actor :Last actor: as user3
 exports[`sml usercase test suites > test actor awesome style 1`] = `
 "@startuml
 !theme cerulean-outline
-skinparam actorStyle awesome
-skinparam packageStyle Rectangle
-left to right direction
-
 actor :User: as a1
 
 usecase (Learn JavaScript) as u1
@@ -31,9 +24,6 @@ a1 --> u1
 exports[`sml usercase test suites > test actor style 1`] = `
 "@startuml
 !theme cerulean-outline
-skinparam packageStyle Rectangle
-left to right direction
-
 actor :user: as u1
 
 usecase (Write Blog) as c1
@@ -45,9 +35,6 @@ u1 --> c1
 exports[`sml usercase test suites > test note on simple actor or usecase 1`] = `
 "@startuml
 !theme cerulean-outline
-skinparam packageStyle Rectangle
-left to right direction
-
 actor :User: as a1
 
 usecase (Coding) as u1
@@ -65,9 +52,6 @@ end note
 exports[`sml usercase test suites > test only usercases 1`] = `
 "@startuml
 !theme cerulean-outline
-skinparam packageStyle Rectangle
-left to right direction
-
 usecase (blog) as u1
 usecase (music) as u2
 usecase (play) as u3
@@ -78,9 +62,6 @@ usecase (play) as u3
 exports[`sml usercase test suites > test packages 1`] = `
 "@startuml
 !theme cerulean-outline
-skinparam packageStyle Rectangle
-left to right direction
-
 actor :guest: as g
 
 rectangle Restaurant {
@@ -101,9 +82,6 @@ a --> uc1
 exports[`sml usercase test suites > test rect 1`] = `
 "@startuml
 !theme cerulean-outline
-skinparam packageStyle Rectangle
-left to right direction
-
 actor :Food Critic: as fc
 
 rectangle Restaurant {

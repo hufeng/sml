@@ -105,6 +105,13 @@ export abstract class Emitter<T extends BaseAst> {
     return s
   }
 
+  protected buildTheme = (s: Builder) => {
+    const { config } = this.meta
+    s
+      // setting theme
+      .str(`!theme ${config!.theme}`)
+  }
+
   plantUML(img: string) {
     const jar = path.join(__dirname, '../../bin/plantuml-1.2022.7.jar')
 
