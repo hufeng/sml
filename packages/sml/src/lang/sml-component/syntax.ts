@@ -57,11 +57,23 @@ export class SmlComponentLang extends Lang<SmlComponentAst> {
     return this.#container(label, 'clouds', fn)
   }
 
+  /**
+   * 设置component元素
+   * @param label
+   * @param name
+   * @returns
+   */
   component(label: string, name?: string) {
     this.meta.components.push({ label, name })
     return this
   }
 
+  /**
+   * 设置interface元素
+   * @param label
+   * @param name
+   * @returns
+   */
   interface(label: string, name?: string) {
     this.meta.infs.push({ label, name })
     return this
@@ -69,16 +81,34 @@ export class SmlComponentLang extends Lang<SmlComponentAst> {
 
   // ~~~~~~~~~ relations ~~~~~~~~~~~~
 
+  /**
+   * 直线箭头link
+   * @param from
+   * @param to
+   * @returns
+   */
   link(from: string, to: string) {
     this.meta.links.push({ from, to })
     return this
   }
 
+  /**
+   * 虚线箭头link
+   * @param from
+   * @param to
+   * @returns
+   */
   vlink(from: string, to: string) {
     this.meta.vlinks.push({ from, to })
     return this
   }
 
+  /**
+   * 关联元素 - 直线无箭头
+   * @param from
+   * @param to
+   * @returns
+   */
   rel(from: string, to: string) {
     this.meta.rels.push({ from, to })
     return this
