@@ -3,6 +3,9 @@
 exports[`deployment test suite > test all elements 1`] = `
 "@startuml
 !theme cerulean-outline
+skinparam packageStyle Rectangle
+left to right direction
+
 
 actor \\"Customer\\" as a1 <<actor>>
 actor \\"Guest\\" as a2 <<actor>>

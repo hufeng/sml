@@ -17,7 +17,7 @@ const pkg = `
 {
   "name": "sml-app",
   "dependencies": {
-    "sml": "^0.0.1"
+    "@hf/sml": "^0.0.1"
   }
 }
 `
@@ -25,10 +25,12 @@ const pkg = `
 const tsconfig = `
 {
    "compilerOptions": {
+    "strict": true,
     "target": "es2017",
     "module": "commonjs",
     "esModuleInterop": true,
-    "types": ["sml/typings/global"]
+    "forceConsistentCasingInFileNames": true,
+    "types": ["sml/lib/typings/global"]
   }
 } 
 `

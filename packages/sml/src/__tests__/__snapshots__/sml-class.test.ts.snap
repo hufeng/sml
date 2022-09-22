@@ -2,6 +2,10 @@
 
 exports[`sml class diagram test suites > test abstract class 1`] = `
 "@startuml
+!theme cerulean-outline
+skinparam packageStyle Rectangle
+left to right direction
+
 abstract class or.hf.sml.AbstractUserCase {
   - id: number;
   - name: string;
@@ -15,6 +19,10 @@ abstract class or.hf.sml.AbstractUserCase {
 
 exports[`sml class diagram test suites > test class 1`] = `
 "@startuml
+!theme cerulean-outline
+skinparam packageStyle Rectangle
+left to right direction
+
  class org.hf.sml.UseCase {
   - id: number;
   - name: string;
@@ -36,6 +44,10 @@ struct org.hf.sml.Customer {
 
 exports[`sml class diagram test suites > test enum 1`] = `
 "@startuml
+!theme cerulean-outline
+skinparam packageStyle Rectangle
+left to right direction
+
 enum org.hufeng.enum.Color {
   Red: 0
   Green: 1
@@ -52,6 +64,10 @@ enum org.hufeng.enum.FileType {
 
 exports[`sml class diagram test suites > test extends and implements 1`] = `
 "@startuml
+!theme cerulean-outline
+skinparam packageStyle Rectangle
+left to right direction
+
 interface List {
 }
 interface I1 {
@@ -73,6 +89,10 @@ class org.hufeng.util.MyList extends AbstractList implements List
 
 exports[`sml class diagram test suites > test inf 1`] = `
 "@startuml
+!theme cerulean-outline
+skinparam packageStyle Rectangle
+left to right direction
+
 interface org.hufeng.service.UserService {
   + sayYou(name: string): void
   + sayMe(you: string): void

@@ -5,7 +5,6 @@ import { SmlComponentAst } from '../types'
 export class PumlComponentEmitter extends Emitter<SmlComponentAst> {
   emitCode() {
     const {
-      config,
       packages,
       nodes,
       clouds,
@@ -19,7 +18,7 @@ export class PumlComponentEmitter extends Emitter<SmlComponentAst> {
 
     return this.s
       .str('@startuml')
-      .str(`!theme ${config!.theme}`)
+      .thunk(this.buildConfig)
       .str('')
       .forStr(
         packages,

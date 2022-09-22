@@ -23,7 +23,7 @@ export class PumlClassEmitter extends Emitter<ClassDiagramAst> {
   }
 
   private emitStart() {
-    this.s.str('@startuml')
+    this.s.str('@startuml').thunk(this.buildConfig)
     return this
   }
 

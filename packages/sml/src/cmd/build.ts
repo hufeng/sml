@@ -5,6 +5,8 @@ import glob from 'glob'
 import chalk from 'chalk'
 import { exec } from 'node:child_process'
 
+const cwd = process.cwd()
+
 /**
  * scan all sml.ts or sml.js files
  * @returns
@@ -27,7 +29,7 @@ export async function build() {
   console.log(chalk.greenBright(`compile: 🛫️`))
   for (let file of files) {
     console.log(chalk.greenBright(`${file}...`))
-    require(file)
+    require(path.join(cwd, file))
   }
 
   // create dist dir if need

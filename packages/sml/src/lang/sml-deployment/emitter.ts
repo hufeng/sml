@@ -25,44 +25,32 @@ export class PumlDeploymentEmitter extends Emitter<DeploymentLangAst> {
 
     return this.s
       .str('@startuml')
-      .str(`!theme ${config!.theme}`)
+      .thunk(this.buildConfig)
       .str('')
-      .forStr(actors, this.container('actor'), actors.length > 0 ? '\n' : '')
+      .forStr(actors, this.build('actor'), actors.length > 0 ? '\n' : '')
       .forStr(
         artifacts,
-        this.container('artifact'),
+        this.build('artifact'),
         artifacts.length > 0 ? '\n' : '',
       )
       .forStr(
         databases,
-        this.container('database'),
+        this.build('database'),
         databases.length > 0 ? '\n' : '',
       )
-      .forStr(queues, this.container('queue'), queues.length > 0 ? '\n' : '')
-      .forStr(stacks, this.container('stack'), stacks.length > 0 ? '\n' : '')
-      .forStr(
-        boundary,
-        this.container('boundary'),
-        stacks.length > 0 ? '\n' : '',
-      )
-      .forStr(infs, this.container('interface'), infs.length > 0 ? '\n' : '')
-      .forStr(
-        hexagons,
-        this.container('hexagon'),
-        hexagons.length > 0 ? '\n' : '',
-      )
-      .forStr(
-        controls,
-        this.container('control'),
-        controls.length > 0 ? '\n' : '',
-      )
+      .forStr(queues, this.build('queue'), queues.length > 0 ? '\n' : '')
+      .forStr(stacks, this.build('stack'), stacks.length > 0 ? '\n' : '')
+      .forStr(boundary, this.build('boundary'), stacks.length > 0 ? '\n' : '')
+      .forStr(infs, this.build('interface'), infs.length > 0 ? '\n' : '')
+      .forStr(hexagons, this.build('hexagon'), hexagons.length > 0 ? '\n' : '')
+      .forStr(controls, this.build('control'), controls.length > 0 ? '\n' : '')
       .forStr(
         components,
-        this.container('component'),
+        this.build('component'),
         components.length > 0 ? '\n' : '',
       )
-      .forStr(clouds, this.container('cloud'), clouds.length > 0 ? '\n' : '')
-      .forStr(nodes, this.container('node'), nodes.length > 0 ? '\n' : '')
+      .forStr(clouds, this.build('cloud'), clouds.length > 0 ? '\n' : '')
+      .forStr(nodes, this.build('node'), nodes.length > 0 ? '\n' : '')
       .forStr(links, (s, v) => s.str(`${v.from} --> ${v.to}`))
       .forStr(vlinks, (s, v) => s.str(`${v.from} ..> ${v.to}`))
       .forStr(rels, (s, v) => s.str(`${v.from} - ${v.to}`))
@@ -70,7 +58,7 @@ export class PumlDeploymentEmitter extends Emitter<DeploymentLangAst> {
       .toString('\n')
   }
 
-  container(
+  build(
     name:
       | 'node'
       | 'cloud'

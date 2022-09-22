@@ -18,5 +18,10 @@ export function ComponentDiagram(
     rels: [],
   }
   fn(new SmlComponentLang(ast))
+
+  // @ts-ignore
+
+  console.log(ast.meta)
+
   return { ast, emitter: new PumlComponentEmitter(ast) }
 }

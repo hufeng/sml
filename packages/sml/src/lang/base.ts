@@ -89,17 +89,20 @@ export abstract class Emitter<T extends BaseAst> {
 
   abstract emitCode(): string
 
-  protected emitConfig() {
+  protected buildConfig = (s: Builder) => {
     const { config } = this.meta
-    // setting actor style
-    this.s
+    s
+      // setting theme
+      .str(`!theme ${config!.theme}`)
+      // setting actor style
       .ifStr(
         config!.actorStyle !== 'default',
         `skinparam actorStyle ${config!.actorStyle}`,
       )
+      .str(`skinparam packageStyle ${config?.packageStyle}`)
       // setting direction
       .str(`${config!.direction.replace('->', ' to ')} direction\n`)
-    // FIXME lose package style
+    return s
   }
 
   plantUML(img: string) {

@@ -3,6 +3,9 @@
 exports[`component diagram test suites > test all components 1`] = `
 "@startuml
 !theme cerulean-outline
+skinparam packageStyle Rectangle
+left to right direction
+
 
 package \\"bff\\" {
   component \\"service-a\\"  as c2

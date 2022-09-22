@@ -10,6 +10,11 @@ export default class Builder {
     return this
   }
 
+  thunk(fn: (s: Builder) => void) {
+    fn(this)
+    return this
+  }
+
   ifStr(cond: boolean, str: string) {
     if (cond) {
       this.buff.push(str)

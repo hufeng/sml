@@ -7,6 +7,7 @@ export default class PumlYamlEmitter extends Emitter<YamlDiagramAst> {
 
     return this.s
       .str(`@startyaml`)
+      .thunk(this.buildConfig)
       .forStr(
         highlights,
         (s, highlight) =>
