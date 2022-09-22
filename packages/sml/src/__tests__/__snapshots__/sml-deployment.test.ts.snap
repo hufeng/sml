@@ -4,29 +4,29 @@ exports[`deployment test suite > test all elements 1`] = `
 "@startuml
 !theme cerulean-outline
 
-actor (Customer) as a1 <<actor>>
-actor (Guest) as a2 <<actor>>
+actor \\"Customer\\" as a1 <<actor>>
+actor \\"Guest\\" as a2 <<actor>>
 
-artifact (beehive-service) as a3 <<aritfact>>
-artifact (beehive-consumer) as a4 <<aritfact>>
+artifact \\"beehive-service\\" as a3 <<aritfact>>
+artifact \\"beehive-consumer\\" as a4 <<aritfact>>
 
-database (mysql) <<database>>
+database \\"mysql\\" <<database>>
 
-queue (queue) <<queue>>
+queue \\"queue\\" <<queue>>
 
-stack (mem) <<stack>>
+stack \\"mem\\" <<stack>>
 
-boundary (end) as a5 <<boundary>>
+boundary \\"end\\" as a5 <<boundary>>
 
-interface (invoke-service) <<interface>>
+interface \\"invoke-service\\" <<interface>>
 
-control (control) <<control>>
+control \\"control\\" <<control>>
 
-component (beehive-registry) <<component>>
+component \\"beehive-registry\\" <<component>>
 
-cloud (Network) <<cloud>>
+cloud \\"Network\\" <<cloud>>
 
-cloud (127.0.0.1) <<node>>
+node \\"127.0.0.1\\" <<node>>
 
 a1 --> a3
 a2 ..> a4

@@ -62,7 +62,7 @@ export class PumlDeploymentEmitter extends Emitter<DeploymentLangAst> {
         components.length > 0 ? '\n' : '',
       )
       .forStr(clouds, this.container('cloud'), clouds.length > 0 ? '\n' : '')
-      .forStr(nodes, this.container('cloud'), nodes.length > 0 ? '\n' : '')
+      .forStr(nodes, this.container('node'), nodes.length > 0 ? '\n' : '')
       .forStr(links, (s, v) => s.str(`${v.from} --> ${v.to}`))
       .forStr(vlinks, (s, v) => s.str(`${v.from} ..> ${v.to}`))
       .forStr(rels, (s, v) => s.str(`${v.from} - ${v.to}`))
@@ -72,6 +72,7 @@ export class PumlDeploymentEmitter extends Emitter<DeploymentLangAst> {
 
   container(
     name:
+      | 'node'
       | 'cloud'
       | 'component'
       | 'control'
@@ -86,7 +87,7 @@ export class PumlDeploymentEmitter extends Emitter<DeploymentLangAst> {
   ) {
     return (s: Builder, v: DeploymentBase) =>
       s.str(
-        `${name} (${v.label})${v.name ? ' as ' + v.name : ''} <<${v.title}>>`,
+        `${name} "${v.label}"${v.name ? ' as ' + v.name : ''} <<${v.title}>>`,
       )
   }
 }
