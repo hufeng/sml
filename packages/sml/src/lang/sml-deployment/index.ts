@@ -7,11 +7,13 @@ export function DeploymentDiagram(
 ) {
   const ast = {
     title,
+
     artifacts: [],
     clouds: [],
     components: [],
     databases: [],
     nodes: [],
+
     queues: [],
     stacks: [],
     actors: [],
@@ -19,6 +21,8 @@ export function DeploymentDiagram(
     infs: [],
     hexagons: [],
     controls: [],
+    collections: [],
+
     links: [],
     vlinks: [],
     rels: [],
