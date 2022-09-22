@@ -1,5 +1,5 @@
 {
-  "name": "@hf/sml",
+  "name": "smlc",
   "main": "./lib/index.js",
   "types": "./lib/typings/index.d.ts",
   "bin": {

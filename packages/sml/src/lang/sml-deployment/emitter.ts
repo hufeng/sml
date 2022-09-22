@@ -5,7 +5,6 @@ import { DeploymentBase, DeploymentLangAst } from '../types'
 export class PumlDeploymentEmitter extends Emitter<DeploymentLangAst> {
   emitCode() {
     const {
-      config,
       actors,
       artifacts,
       databases,
