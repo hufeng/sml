@@ -34,7 +34,7 @@ export type GlobalConfigType = {
   actorStyle: ActorStyleType
   direction: DirectionType
   packageStyle: PackageStyle
-  theme: string
+  theme: 'sketchy-outline' | 'cerulean-outline' | 'black-knight'
 }
 
 // ~~~~~~~~ Diagram Ast ~~~~~~~~~~~~~~~~~~~
@@ -124,11 +124,11 @@ export type ClazzAst = {
 export interface DeploymentBase {
   title: string
   label: string
-  name?: string
+  id?: string
 }
 
 export interface DeploymentContainer extends DeploymentBase {
-  name: string
+  id: string
   databases: Array<DeploymentBase>
   queues: Array<DeploymentBase>
   stacks: Array<DeploymentBase>
@@ -165,8 +165,8 @@ export interface DeploymentLangAst extends BaseAst {
 
 export interface ComponentContainer {
   label: string
-  components: Array<{ label: string; name?: string }>
-  infs: Array<{ label: string; name?: string }>
+  components: Array<{ label: string; id?: string }>
+  infs: Array<{ label: string; id?: string }>
 }
 
 export interface SmlComponentAst extends BaseAst {
@@ -179,6 +179,6 @@ export interface SmlComponentAst extends BaseAst {
   databases: Array<ComponentContainer>
   clouds: Array<ComponentContainer>
 
-  components: Array<{ label: string; name?: string }>
-  infs: Array<{ label: string; name?: string }>
+  components: Array<{ label: string; id?: string }>
+  infs: Array<{ label: string; id?: string }>
 }

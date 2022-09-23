@@ -12,106 +12,106 @@ class ContainerBuilder {
    * @param name
    */
   name(name: string) {
-    this.meta.name = name
+    this.meta.id = name
     return this
   }
 
   /**
    * 容器内设置database样式
    * @param label
-   * @param name
+   * @param id
    * @returns
    */
-  database(label: string, name?: string) {
-    this.meta.databases.push({ label, name, title: 'database' })
+  database(label: string, id?: string) {
+    this.meta.databases.push({ label, id, title: 'database' })
     return this
   }
 
   /**
    * 设置容器内队列元素
    * @param label
-   * @param name
+   * @param id
    * @returns
    */
-  queue(label: string, name?: string) {
-    this.meta.queues.push({ label, name, title: 'queue' })
+  queue(label: string, id?: string) {
+    this.meta.queues.push({ label, id, title: 'queue' })
     return this
   }
 
   /**
    * 设置容器内栈元素
    * @param label
-   * @param name
+   * @param id
    * @returns
    */
-  stack(label: string, name?: string) {
-    this.meta.stacks.push({ label, name, title: 'stack' })
+  stack(label: string, id?: string) {
+    this.meta.stacks.push({ label, id, title: 'stack' })
     return this
   }
 
   /**
    * 设置容器内边界元素
    * @param label
-   * @param name
+   * @param id
    * @returns
    */
-  boundary(label: string, name?: string) {
-    this.meta.boundary.push({ label, name, title: 'boundary' })
+  boundary(label: string, id?: string) {
+    this.meta.boundary.push({ label, id, title: 'boundary' })
     return this
   }
 
   /**
    * 设置容器内接口元素
    * @param label
-   * @param name
+   * @param id
    * @returns
    */
-  interface(label: string, name?: string) {
-    this.meta.infs.push({ label, name, title: 'interface' })
+  interface(label: string, id?: string) {
+    this.meta.infs.push({ label, id, title: 'interface' })
     return this
   }
 
   /**
    * 设置容器内六边形元素
    * @param label
-   * @param name
+   * @param id
    * @returns
    */
-  hexagon(label: string, name?: string) {
-    this.meta.hexagons.push({ label, name, title: '' })
+  hexagon(label: string, id?: string) {
+    this.meta.hexagons.push({ label, id, title: '' })
     return this
   }
 
   /**
    * 设置容器内的控制元素
    * @param label
-   * @param name
+   * @param id
    * @returns
    */
-  control(label: string, name?: string) {
-    this.meta.controls.push({ label, name, title: 'control' })
+  control(label: string, id?: string) {
+    this.meta.controls.push({ label, id, title: 'control' })
     return this
   }
 
   /**
    * 设置容器内的node节点
    * @param label
-   * @param name
+   * @param id
    * @returns
    */
-  node(label: string, name?: string) {
-    this.meta.nodes.push({ label, name, title: 'node' })
+  node(label: string, id?: string) {
+    this.meta.nodes.push({ label, id, title: 'node' })
     return this
   }
 
   /**
    * 设置容器的集合元素
    * @param label
-   * @param name
+   * @param id
    * @returns
    */
-  collections(label: string, name?: string) {
-    this.meta.collections.push({ label, name, title: 'collections' })
+  collections(label: string, id?: string) {
+    this.meta.collections.push({ label, id, title: 'collections' })
     return this
   }
 }
@@ -133,7 +133,7 @@ export class SmlDeploymentLang extends Lang<DeploymentLangAst> {
     const meta = {
       title,
       label,
-      name: '',
+      id: '',
       databases: [],
       queues: [],
       stacks: [],
@@ -207,88 +207,88 @@ export class SmlDeploymentLang extends Lang<DeploymentLangAst> {
   /**
    * 设置队列元素
    * @param label
-   * @param name
+   * @param id
    * @returns
    */
-  queue(label: string, name?: string) {
-    this.meta.queues.push({ title: 'queue', label, name })
+  queue(label: string, id?: string) {
+    this.meta.queues.push({ title: 'queue', label, id })
     return this
   }
 
   /**
    * 设置栈元素
    * @param label
-   * @param name
+   * @param id
    * @returns
    */
-  stack(label: string, name?: string) {
-    this.meta.stacks.push({ title: 'stack', label, name })
+  stack(label: string, id?: string) {
+    this.meta.stacks.push({ title: 'stack', label, id: id })
     return this
   }
 
   /**
    * 设置actor元素
    * @param label
-   * @param name
+   * @param id
    * @returns
    */
-  actor(label: string, name?: string) {
-    this.meta.actors.push({ title: 'actor', label, name })
+  actor(label: string, id?: string) {
+    this.meta.actors.push({ title: 'actor', label, id })
     return this
   }
 
   /**
    * 设置边界元素
    * @param label
-   * @param name
+   * @param id
    * @returns
    */
-  boundary(label: string, name?: string) {
-    this.meta.boundary.push({ title: 'boundary', label, name })
+  boundary(label: string, id?: string) {
+    this.meta.boundary.push({ title: 'boundary', label, id })
     return this
   }
 
   /**
    * 设置接口元素
    * @param label
-   * @param name
+   * @param id
    * @returns
    */
-  interface(label: string, name?: string) {
-    this.meta.infs.push({ title: 'interface', label, name })
+  interface(label: string, id?: string) {
+    this.meta.infs.push({ title: 'interface', label, id })
     return this
   }
 
   /**
    * 设置六边形元素
    * @param label
-   * @param name
+   * @param id
    * @returns
    */
-  hexagon(label: string, name?: string) {
-    this.meta.hexagons.push({ title: '', label, name })
+  hexagon(label: string, id?: string) {
+    this.meta.hexagons.push({ title: '', label, id })
     return this
   }
 
   /**
    * 设置六边形元素
    * @param label
-   * @param name
+   * @param id
    * @returns
    */
-  control(label: string, name?: string) {
-    this.meta.controls.push({ title: 'control', label, name })
+  control(label: string, id?: string) {
+    this.meta.controls.push({ title: 'control', label, id })
     return this
   }
 
   /**
    * 设置集合元素
    * @param label
-   * @param name
+   * @param id
    * @returns
    */
-  collections(label: string, name?: string) {
-    this.meta.collections.push({ title: '', label, name })
+  collections(label: string, id?: string) {
+    this.meta.collections.push({ title: '', label, id })
     return this
   }
 

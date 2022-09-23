@@ -4,13 +4,25 @@ import { ComponentContainer, SmlComponentAst } from '../types'
 class ContainerBuilder {
   constructor(private meta: ComponentContainer) {}
 
-  interface(label: string, name?: string) {
-    this.meta.infs.push({ label, name })
+  /**
+   * 设置interface元素
+   * @param label
+   * @param id
+   * @returns
+   */
+  interface(label: string, id?: string) {
+    this.meta.infs.push({ label, id })
     return this
   }
 
-  component(label: string, name?: string) {
-    this.meta.components.push({ label, name })
+  /**
+   * 设置component元素
+   * @param label
+   * @param id
+   * @returns
+   */
+  component(label: string, id?: string) {
+    this.meta.components.push({ label, id })
     return this
   }
 }
@@ -35,14 +47,32 @@ export class SmlComponentLang extends Lang<SmlComponentAst> {
     return this
   }
 
+  /**
+   * 设置package容器
+   * @param label
+   * @param fn
+   * @returns
+   */
   package(label: string, fn?: (p: ContainerBuilder) => void) {
     return this.#container(label, 'packages', fn)
   }
 
+  /**
+   * 设置node节点
+   * @param label
+   * @param fn
+   * @returns
+   */
   node(label: string, fn?: (n: ContainerBuilder) => void) {
     return this.#container(label, 'nodes', fn)
   }
 
+  /**
+   * 设置数据库节点
+   * @param label
+   * @param fn
+   * @returns
+   */
   database(label: string, fn?: (d: ContainerBuilder) => void) {
     return this.#container(label, 'databases', fn)
   }
@@ -60,22 +90,22 @@ export class SmlComponentLang extends Lang<SmlComponentAst> {
   /**
    * 设置component元素
    * @param label
-   * @param name
+   * @param id
    * @returns
    */
-  component(label: string, name?: string) {
-    this.meta.components.push({ label, name })
+  component(label: string, id?: string) {
+    this.meta.components.push({ label, id })
     return this
   }
 
   /**
    * 设置interface元素
    * @param label
-   * @param name
+   * @param id
    * @returns
    */
-  interface(label: string, name?: string) {
-    this.meta.infs.push({ label, name })
+  interface(label: string, id?: string) {
+    this.meta.infs.push({ label, id })
     return this
   }
 

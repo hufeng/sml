@@ -73,8 +73,6 @@ export class PumlDeploymentEmitter extends Emitter<DeploymentLangAst> {
       | 'database',
   ) {
     return (s: Builder, v: DeploymentBase) =>
-      s.str(
-        `${name} "${v.label}"${v.name ? ' as ' + v.name : ''} <<${v.title}>>`,
-      )
+      s.str(`${name} "${v.label}"${v.id ? ' as ' + v.id : ''} <<${v.title}>>`)
   }
 }

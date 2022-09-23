@@ -2,7 +2,7 @@
 
 exports[`component diagram test suites > test all components 1`] = `
 "@startuml
-!theme cerulean-outline
+!theme sketchy-outline
 skinparam packageStyle Rectangle
 left to right direction
 

@@ -33,8 +33,11 @@ export async function build() {
   }
 
   // create dist dir if need
-  if (!fs.existsSync('./dist')) {
-    fs.mkdirSync(`./dist`)
+  const dist = path.join(cwd, 'dist')
+  if (!fs.existsSync(dist)) {
+    fs.mkdirSync(dist)
+  } else {
+    fs.rmdirSync(dist, { recursive: true })
   }
 
   // build plant uml dsl code
@@ -55,9 +58,11 @@ export async function build() {
       console.log(chalk.redBright(err.message))
       return
     }
-    console.log(chalk.greenBright(stdout))
-    console.log(chalk.redBright(stderr))
+    stdout && console.log(chalk.greenBright(stdout))
+    stderr && console.log(chalk.redBright(stderr))
   })
+
+  // output
   const outputs = fs.readdirSync('./dist')
   console.log(chalk.blueBright(`ouput: 👌`))
   console.log(chalk.yellowBright(`${outputs.join('\n')}`))

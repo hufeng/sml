@@ -2,7 +2,7 @@
 
 exports[`sml class diagram test suites > test abstract class 1`] = `
 "@startuml
-!theme cerulean-outline
+!theme sketchy-outline
 skinparam packageStyle Rectangle
 left to right direction
 
@@ -19,7 +19,7 @@ abstract class or.hf.sml.AbstractUserCase {
 
 exports[`sml class diagram test suites > test class 1`] = `
 "@startuml
-!theme cerulean-outline
+!theme sketchy-outline
 skinparam packageStyle Rectangle
 left to right direction
 
@@ -44,7 +44,7 @@ struct org.hf.sml.Customer {
 
 exports[`sml class diagram test suites > test enum 1`] = `
 "@startuml
-!theme cerulean-outline
+!theme sketchy-outline
 skinparam packageStyle Rectangle
 left to right direction
 
@@ -64,7 +64,7 @@ enum org.hufeng.enum.FileType {
 
 exports[`sml class diagram test suites > test extends and implements 1`] = `
 "@startuml
-!theme cerulean-outline
+!theme sketchy-outline
 skinparam packageStyle Rectangle
 left to right direction
 
@@ -89,7 +89,7 @@ class org.hufeng.util.MyList extends AbstractList implements List
 
 exports[`sml class diagram test suites > test inf 1`] = `
 "@startuml
-!theme cerulean-outline
+!theme sketchy-outline
 skinparam packageStyle Rectangle
 left to right direction
 

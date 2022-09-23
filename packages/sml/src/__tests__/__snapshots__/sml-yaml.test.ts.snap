@@ -2,7 +2,7 @@
 
 exports[`sml yaml test suites > test full pipeline 1`] = `
 "@startyaml
-!theme cerulean-outline
+!theme sketchy-outline
 #highlight \\"french-hens\\"
 #highlight \\"xmas-fifth-day\\" / \\"partridges\\"
 

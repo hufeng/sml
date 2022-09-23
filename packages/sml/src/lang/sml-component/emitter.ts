@@ -70,7 +70,7 @@ export class PumlComponentEmitter extends Emitter<SmlComponentAst> {
   }
 
   container(name: 'component' | 'interface') {
-    return (s: Builder, v: { label: string; name?: string }) =>
-      s.str(`  ${name} "${v.label}"${v.name ? '  as ' + v.name : ''}`)
+    return (s: Builder, v: { label: string; id?: string }) =>
+      s.str(`  ${name} "${v.label}"${v.id ? '  as ' + v.id : ''}`)
   }
 }

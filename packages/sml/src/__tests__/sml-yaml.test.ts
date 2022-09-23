@@ -34,7 +34,7 @@ xmas-fifth-day:
         actorStyle: 'default',
         direction: 'left->right',
         packageStyle: 'Rectangle',
-        theme: 'cerulean-outline',
+        theme: 'sketchy-outline',
       },
       highlights,
       yaml: content,
