@@ -3,7 +3,7 @@ import { UseCaseDiagramAst } from '../types'
 
 export class PumlUseCaseEmitter extends Emitter<UseCaseDiagramAst> {
   emitCode() {
-    const { actors, usecases, packages: domains, links, notes } = this.meta
+    const { actors, usecases, zones, links, notes } = this.meta
 
     return (
       this.s
@@ -13,19 +13,18 @@ export class PumlUseCaseEmitter extends Emitter<UseCaseDiagramAst> {
         // actors
         .forStr(
           actors,
-          (s, actor) => s.str(`actor :${actor.label}: as ${actor.name}`),
+          (s, v) => s.str(`actor :${v.label}: as ${v.name}`),
           actors.length > 0 ? '\n' : '',
         )
         // usecases
         .forStr(
           usecases,
-          (s, usecase) =>
-            s.str(`usecase (${usecase.label}) as ${usecase.name}`).str,
+          (s, v) => s.str(`usecase (${v.label}) as ${v.name}`).str,
           usecases.length > 0 ? '\n' : '',
         )
         // domains
         .forStr(
-          domains,
+          zones,
           (s, r) => {
             s.str(`rectangle ${r.label.replace(/ /g, '_')} {`)
             s.forStr(r.usecases, (s, uc) =>
@@ -35,28 +34,31 @@ export class PumlUseCaseEmitter extends Emitter<UseCaseDiagramAst> {
             )
             s.str('}')
           },
-          domains.length > 0 ? '\n' : '',
+          zones.length > 0 ? '\n' : '',
         )
         // notes
         .forStr(
           notes,
-          (s, note, i) => {
+          (s, note) => {
             const { label, position, on } = note
-            if (typeof on === 'string') {
-              s.str(`note ${position} of (${on})`)
-                .str(`  ${label}`)
-                .str('end note')
-            } else {
-              s.str(`node ${label} as N${i}`)
-                .str(`(${on.from}) .. N${i}`)
-                .str(`N${i} .. (${on.to})`)
-            }
+            s.str(`note ${position} of (${on})`)
+              .str(`  ${label}`)
+              .str('end note')
           },
           notes.length > 0 ? '\n' : '',
         )
         //links
-        .forStr(links, (s, link) => {
-          s.forStr(link.to, (s, to) => s.str(`${link.from} --> ${to}`))
+        .forStr(links, (s, { from, to, link }) => {
+          if (typeof link !== 'undefined') {
+            s.forStr(to, (s, to, i) =>
+              s
+                .str(`note "${link.label}" as N${i}`)
+                .str(`(${from}) -- N${i}`)
+                .str(`N${i} --> (${to})`),
+            )
+          } else {
+            s.forStr(to, (s, to) => s.str(`${from} --> ${to}`))
+          }
         })
         //end
         .str('@enduml')

@@ -6,7 +6,7 @@ import {
   BaseAst,
   DirectionType,
   GlobalConfigType,
-  PackageStyle,
+  ZoneStyle,
 } from './types'
 
 export const noop = () => {}
@@ -34,7 +34,7 @@ class ConfigBuilder {
    * @param style
    * @returns
    */
-  packageStyle(style: PackageStyle = 'Rectangle') {
+  packageStyle(style: ZoneStyle = 'Rectangle') {
     this.config.packageStyle = style
     return this
   }
@@ -114,6 +114,7 @@ export abstract class Emitter<T extends BaseAst> {
     s
       // setting theme
       .str(`!theme ${config!.theme}`)
+      .str(`${config!.direction.replace('->', ' to ')} direction\n`)
   }
 
   plantUML(img: string) {

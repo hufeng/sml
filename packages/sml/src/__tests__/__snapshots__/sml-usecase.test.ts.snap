@@ -1,97 +1,114 @@
 // Vitest Snapshot v1
 
-exports[`sml usercase test suites > only actor 1`] = `
+exports[`sml usecase test suites > only actor 2`] = `
 "@startuml
 !theme sketchy-outline
-actor :first actor: as user1
-actor :another actor: as user2
-actor :Last actor: as user3
+left to right direction
+
+actor :first actor: as a_dd79c149
+actor :another actor: as a_fc3baf5b
+actor :Last actor: as a_8b705053
 
 @enduml"
 `;
 
-exports[`sml usercase test suites > test actor awesome style 1`] = `
+exports[`sml usecase test suites > test actor awesome style 1`] = `
 "@startuml
 !theme sketchy-outline
-actor :User: as a1
+left to right direction
 
-usecase (Learn JavaScript) as u1
+actor :User: as a_8f9bfe9d
 
-a1 --> u1
+usecase (Learn JavaScript) as uc_5d686b2e
+
+a_8f9bfe9d --> uc_5d686b2e
 @enduml"
 `;
 
-exports[`sml usercase test suites > test actor style 1`] = `
+exports[`sml usecase test suites > test actor style 1`] = `
 "@startuml
 !theme sketchy-outline
-actor :user: as u1
+left to right direction
 
-usecase (Write Blog) as c1
+actor :user: as a_ee11cbb1
 
-u1 --> c1
+usecase (Write Blog) as uc_0cce1966
+
+a_ee11cbb1 --> uc_0cce1966
 @enduml"
 `;
 
-exports[`sml usercase test suites > test note on simple actor or usecase 1`] = `
+exports[`sml usecase test suites > test note on simple actor or usecase 1`] = `
 "@startuml
 !theme sketchy-outline
-actor :User: as a1
+left to right direction
 
-usecase (Coding) as u1
+actor :User: as a_8f9bfe9d
 
-note right of (a1)
+usecase (Coding) as uc_cddcade0
+
+note right of (a_8f9bfe9d)
   a student user
 end note
-note right of (u1)
+note right of (uc_cddcade0)
   Coding Rust
 end note
 
 @enduml"
 `;
 
-exports[`sml usercase test suites > test only usercases 1`] = `
+exports[`sml usecase test suites > test only usecases 2`] = `
 "@startuml
 !theme sketchy-outline
-usecase (blog) as u1
-usecase (music) as u2
-usecase (play) as u3
+left to right direction
+
+usecase (blog) as uc_126ac9f6
+usecase (music) as uc_18d67699
+usecase (play) as uc_a3b34c08
 
 @enduml"
 `;
 
-exports[`sml usercase test suites > test packages 1`] = `
+exports[`sml usecase test suites > test packages 1`] = `
 "@startuml
 !theme sketchy-outline
-actor :guest: as g
+left to right direction
+
+actor :guest: as a_084e0343
 
 rectangle Restaurant {
-  usecase \\"Eat Food\\" as uc1
-  usecase \\"Pay for food\\" as uc2
+  usecase \\"Eat Food\\" as uc_a6709cd3
+  usecase \\"Pay for food\\" as uc_f870119e
 }
 rectangle Professional {
-actor :Chef: as a
+actor :Chef: as a_8fd82b88
 }
 
-g --> uc1
-g --> uc2
-g --> uc3
-a --> uc1
+note \\"guest note\\" as N0
+(a_084e0343) -- N0
+N0 --> (uc_a6709cd3)
+note \\"guest note\\" as N1
+(a_084e0343) -- N1
+N1 --> (uc_f870119e)
+a_8fd82b88 --> uc_a6709cd3
 @enduml"
 `;
 
-exports[`sml usercase test suites > test rect 1`] = `
+exports[`sml usecase test suites > test rect 2`] = `
 "@startuml
 !theme sketchy-outline
-actor :Food Critic: as fc
+left to right direction
+
+actor :Food Critic: as a_8781da4a
 
 rectangle Restaurant {
-  usecase \\"Eat Food\\" as uc1
-  usecase \\"Pay for food\\" as uc2
-  usecase \\"Drink\\" as uc3
+  usecase \\"Eat Food\\" as uc_a6709cd3
+  usecase \\"Pay for food\\" as uc_f870119e
+  usecase \\"Drink\\" as uc_40491db1
 }
 
-fc --> uc1
-fc --> uc2
-fc --> uc3
+a_8781da4a --> uc_a6709cd3
+a_8781da4a --> uc_f870119e
+a_8781da4a --> uc_40491db1
 @enduml"
 `;

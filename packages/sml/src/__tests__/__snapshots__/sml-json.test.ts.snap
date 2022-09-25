@@ -3,6 +3,8 @@
 exports[`sml json test suites > test syntax api 1`] = `
 "@startjson
 !theme sketchy-outline
+left to right direction
+
 #highlight \\"lastName\\"
 #highlight \\"address\\" / \\"city\\"
 #highlight \\"phoneNumbers\\" / \\"0\\" / \\"number\\"

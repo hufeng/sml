@@ -10,7 +10,7 @@ export function UsecaseDiagram(
     title: title,
     actors: [],
     usecases: [],
-    packages: [],
+    zones: [],
     links: [],
     notes: [],
   }

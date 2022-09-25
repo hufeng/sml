@@ -5,7 +5,7 @@ import type { VisibleType } from './sml-class/syntax'
 /**
  * package style
  */
-export type PackageStyle =
+export type ZoneStyle =
   | 'Node'
   | 'Rectangle'
   | 'Folder'
@@ -23,7 +23,7 @@ export type DirectionType = 'left->right' | 'top->down'
 export type ID = string
 export type Actor = { label: string; name: string }
 export type UseCase = { label: string; name: string }
-export type Postion = 'top' | 'right' | 'bottom' | 'left'
+export type Position = 'top' | 'right' | 'bottom' | 'left'
 export type DataType = string
 
 export type ParamType = { name: string; type: DataType }
@@ -33,7 +33,7 @@ export type ParamType = { name: string; type: DataType }
 export type GlobalConfigType = {
   actorStyle: ActorStyleType
   direction: DirectionType
-  packageStyle: PackageStyle
+  packageStyle: ZoneStyle
   theme: 'sketchy-outline' | 'cerulean-outline' | 'black-knight'
 }
 
@@ -43,10 +43,26 @@ export interface BaseAst {
   title: string
   config?: GlobalConfigType
 }
+
+export type ActorBuilderMeta = {
+  actors: Array<Actor>
+  links: Array<LinkAst>
+  notes: Array<NoteAst>
+}
+export type UsecaseMeta = {
+  usecases: Array<UseCase>
+  notes: Array<NoteAst>
+}
+export type ZoneMeta = {
+  actors: Array<Actor>
+  usecases: Array<UseCase>
+  zones: Array<Zone>
+}
 export interface UseCaseDiagramAst extends BaseAst {
   actors: Array<Actor>
   usecases: Array<UseCase>
-  packages: Array<PackageAst>
+  zones: Array<Zone>
+
   links: Array<LinkAst>
   notes: Array<NoteAst>
 }
@@ -72,11 +88,15 @@ export interface ClassDiagramAst extends BaseAst {
 export type LinkAst = {
   from: string
   to: Array<string>
+  link?: {
+    label: string
+    position?: Position
+  }
 }
 export type NoteAst = {
   label: string
-  position: Postion
-  on: ID | { from: ID; to: ID }
+  position: Position
+  on: ID
 }
 
 export type FiledAst = {
@@ -106,12 +126,14 @@ export type EnumType = {
 }
 export type StructAst = ClazzAst
 export type ProtocolAst = InfAst
-export interface PackageAst {
+
+export interface Zone {
   label: string
-  type: PackageStyle
+  type: ZoneStyle
   actors: Array<Actor>
   usecases: Array<UseCase>
 }
+
 export type ClazzAst = {
   name: string
   abstract: boolean
