@@ -1,6 +1,6 @@
 import path from 'node:path'
 import { exec } from 'node:child_process'
-import Builder from '../common/builder'
+import S from '../common/s'
 import {
   ActorStyleType,
   BaseAst,
@@ -84,37 +84,34 @@ export class Lang<T extends { title: string; config?: GlobalConfigType }> {
  */
 export abstract class Emitter<T extends BaseAst> {
   protected meta: T
-  protected s: Builder
+  protected s: S
 
   constructor(meta: T) {
     this.meta = meta
-    this.s = new Builder()
+    this.s = new S()
   }
 
   abstract emitCode(): string
 
-  protected buildConfig = (s: Builder) => {
+  protected buildConfig = (s: S) => {
     const { config } = this.meta
     s
       // setting theme
-      .str(`!theme ${config!.theme}`)
+      .$s(`!theme ${config!.theme}`)
       // setting actor style
-      .ifStr(
+      .$if(
         config!.actorStyle !== 'default',
         `skinparam actorStyle ${config!.actorStyle}`,
       )
-      .str(`skinparam packageStyle ${config?.packageStyle}`)
+      .$s(`skinparam packageStyle ${config?.packageStyle}`)
       // setting direction
-      .str(`${config!.direction.replace('->', ' to ')} direction\n`)
+      .$s(`${config!.direction.replace('->', ' to ')} direction\n`)
     return s
   }
 
-  protected buildTheme = (s: Builder) => {
+  protected buildTheme = (s: S) => {
     const { config } = this.meta
-    s
-      // setting theme
-      .str(`!theme ${config!.theme}`)
-      .str(`${config!.direction.replace('->', ' to ')} direction\n`)
+    s.$s(`!theme ${config!.theme}`)
   }
 
   plantUML(img: string) {

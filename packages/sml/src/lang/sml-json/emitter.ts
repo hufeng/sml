@@ -5,21 +5,18 @@ export class PumlJsonEmitter extends Emitter<JsonDiagramAst> {
   emitCode() {
     const { highlights, json } = this.meta
     return this.s
-      .str(`@startjson`)
-      .thunk(this.buildTheme)
-      .forStr(
-        highlights,
-        (s, highlight) =>
-          s.str(
-            `#highlight ${highlight
-              .split('.')
-              .map((str) => JSON.stringify(str))
-              .join(' / ')}`,
-          ),
-        highlights.length > 0 ? '\n' : '',
+      .$s(`@startjson`)
+      .$fn(this.buildTheme)
+      .$fors(highlights, (s, highlight) =>
+        s.$s(
+          `#highlight ${highlight
+            .split('.')
+            .map((str) => JSON.stringify(str))
+            .join(' / ')}`,
+        ),
       )
-      .str(JSON.stringify(json, null, 2))
-      .str('@endjson')
+      .$s(JSON.stringify(json, null, 2))
+      .$s('@endjson')
       .toString('\n')
   }
 }

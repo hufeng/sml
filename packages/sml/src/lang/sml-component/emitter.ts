@@ -1,4 +1,4 @@
-import Builder from '../../common/builder'
+import S from '../../common/s'
 import { Emitter } from '../base'
 import { SmlComponentAst } from '../types'
 
@@ -17,60 +17,48 @@ export class PumlComponentEmitter extends Emitter<SmlComponentAst> {
     } = this.meta
 
     return this.s
-      .str('@startuml')
-      .thunk(this.buildConfig)
-      .str('')
-      .forStr(
-        packages,
-        (s, v) =>
-          s
-            .str(`package "${v.label}" {`)
-            .forStr(v.components, this.container('component'))
-            .forStr(v.infs, this.container('interface'))
-            .str('}'),
-        packages.length > 0 ? '\n' : '',
+      .$s('@startuml')
+      .$fn(this.buildConfig)
+      .$s('')
+      .$for(packages, (s, v) =>
+        s
+          .$s(`package "${v.label}" {`)
+          .$for(v.components, this.container('component'))
+          .$for(v.infs, this.container('interface'))
+          .$s('}'),
       )
-      .forStr(
-        nodes,
-        (s, v) =>
-          s
-            .str(`node "${v.label}" {`)
-            .forStr(v.components, this.container('component'))
-            .forStr(v.infs, this.container('interface'))
-            .str('}'),
-        nodes.length > 0 ? '\n' : '',
+      .$for(nodes, (s, v) =>
+        s
+          .$s(`node "${v.label}" {`)
+          .$for(v.components, this.container('component'))
+          .$for(v.infs, this.container('interface'))
+          .$s('}'),
       )
-      .forStr(
-        clouds,
-        (s, v) =>
-          s
-            .str(`cloud "${v.label}" {`)
-            .forStr(v.components, this.container('component'))
-            .forStr(v.infs, this.container('interface'))
-            .str('}'),
-        clouds.length > 0 ? '\n' : '',
+      .$for(clouds, (s, v) =>
+        s
+          .$s(`cloud "${v.label}" {`)
+          .$for(v.components, this.container('component'))
+          .$for(v.infs, this.container('interface'))
+          .$s('}'),
       )
-      .forStr(
-        databases,
-        (s, v) =>
-          s
-            .str(`database "${v.label}" {`)
-            .forStr(v.components, this.container('component'))
-            .forStr(v.infs, this.container('interface'))
-            .str('}'),
-        databases.length > 0 ? '\n' : '',
+      .$for(databases, (s, v) =>
+        s
+          .$s(`database "${v.label}" {`)
+          .$for(v.components, this.container('component'))
+          .$for(v.infs, this.container('interface'))
+          .$s('}'),
       )
-      .forStr(components, this.container(`component`))
-      .forStr(infs, this.container(`interface`), infs.length > 0 ? '\n' : '')
-      .forStr(links, (s, v) => s.str(`${v.from} --> ${v.to}`))
-      .forStr(vlinks, (s, v) => s.str(`${v.from} ..> ${v.to}`))
-      .forStr(rels, (s, v) => s.str(`${v.from} - ${v.to}`))
-      .str('@enduml')
+      .$for(components, this.container(`component`))
+      .$for(infs, this.container(`interface`))
+      .$for(links, (s, v) => s.$s(`${v.from} --> ${v.to}`))
+      .$for(vlinks, (s, v) => s.$s(`${v.from} ..> ${v.to}`))
+      .$for(rels, (s, v) => s.$s(`${v.from} - ${v.to}`))
+      .$s('@enduml')
       .toString('\n')
   }
 
   container(name: 'component' | 'interface') {
-    return (s: Builder, v: { label: string; id?: string }) =>
-      s.str(`  ${name} "${v.label}"${v.id ? '  as ' + v.id : ''}`)
+    return (s: S, v: { label: string; id?: string }) =>
+      s.$s(`  ${name} "${v.label}"${v.id ? '  as ' + v.id : ''}`)
   }
 }

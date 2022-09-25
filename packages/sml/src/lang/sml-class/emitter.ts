@@ -23,12 +23,12 @@ export class PumlClassEmitter extends Emitter<ClassDiagramAst> {
   }
 
   private emitStart() {
-    this.s.str('@startuml').thunk(this.buildConfig)
+    this.s.$s('@startuml').$fn(this.buildConfig)
     return this
   }
 
   private emitEnd() {
-    this.s.str('@enduml')
+    this.s.$s('@enduml')
     return this
   }
 
@@ -38,50 +38,42 @@ export class PumlClassEmitter extends Emitter<ClassDiagramAst> {
    * @param clazzes
    */
   private emitClazz(clazzes: ClassDiagramAst['clazzes']) {
-    this.s.forStr(
-      clazzes,
-      (s, clazz) => {
-        // extends and implements
-        if (clazz.extends.length > 0 || clazz.implements.length > 0) {
-          s.str(
-            `class ${clazz.name}${
-              clazz.extends.length > 0
-                ? ' extends ' + clazz.extends.join(', ')
-                : ' '
-            }${
-              clazz.implements.length > 0
-                ? ' implements ' + clazz.implements.join(', ')
-                : ' '
-            }`,
-          )
-        }
-
-        // class start
-        s.str(`${clazz.abstract ? 'abstract' : ''} class ${clazz.name} {`)
-        // fields
-        s.forStr(
-          clazz.fields,
-          (s, field) => {
-            const visible = PumlClassEmitter.visibleMap[field.visible]
-            s.str(`  ${visible} ${field.name}: ${field.type};`)
-          },
-          clazz.fields.length > 0 ? '\n' : '',
+    this.s.$for(clazzes, (s, clazz) => {
+      // extends and implements
+      if (clazz.extends.length > 0 || clazz.implements.length > 0) {
+        s.$s(
+          `class ${clazz.name}${
+            clazz.extends.length > 0
+              ? ' extends ' + clazz.extends.join(', ')
+              : ' '
+          }${
+            clazz.implements.length > 0
+              ? ' implements ' + clazz.implements.join(', ')
+              : ' '
+          }`,
         )
-        // methods
-        s.forStr(clazz.methods, (s, method) => {
-          const visible = PumlClassEmitter.visibleMap[method.visible]
-          s.str(
-            `  ${visible} ${method.abstract ? 'abstract ' : ''}${
-              method.name
-            }(${method.params.map((p) => `${p.name}: ${p.type}`).join(',')}): ${
-              method.ret
-            }`,
-          )
-        })
-        s.str('}')
-      },
-      clazzes.length > 0 ? '\n' : '',
-    )
+      }
+
+      // class start
+      s.$s(`${clazz.abstract ? 'abstract' : ''} class ${clazz.name} {`)
+      // fields
+      s.$for(clazz.fields, (s, field) => {
+        const visible = PumlClassEmitter.visibleMap[field.visible]
+        s.$s(`  ${visible} ${field.name}: ${field.type};`)
+      })
+      // methods
+      s.$for(clazz.methods, (s, method) => {
+        const visible = PumlClassEmitter.visibleMap[method.visible]
+        s.$s(
+          `  ${visible} ${method.abstract ? 'abstract ' : ''}${
+            method.name
+          }(${method.params.map((p) => `${p.name}: ${p.type}`).join(',')}): ${
+            method.ret
+          }`,
+        )
+      })
+      s.$s('}')
+    })
     return this
   }
 
@@ -91,116 +83,95 @@ export class PumlClassEmitter extends Emitter<ClassDiagramAst> {
    * @param enums
    */
   private emitEnum(enums: ClassDiagramAst['enums']) {
-    this.s.forStr(
-      enums,
-      (s, e) => {
-        s.str(`enum ${e.name} {`)
-          .forStr(e.fields, (s, field) =>
-            s.str(
-              `  ${field.name}${
-                field.value !== 'undefined' ? ': ' + field.value : ''
-              }`,
-            ),
-          )
-          .str('}')
-      },
-      enums.length > 0 ? '\n' : '',
-    )
+    this.s.$for(enums, (s, e) => {
+      s.$s(`enum ${e.name} {`)
+        .$for(e.fields, (s, field) =>
+          s.$s(
+            `  ${field.name}${
+              field.value !== 'undefined' ? ': ' + field.value : ''
+            }`,
+          ),
+        )
+        .$s('}')
+    })
 
     return this
   }
 
   private emitInf(infs: ClassDiagramAst['interfaces']) {
-    this.s.forStr(
-      infs,
-      (s, i) => {
-        // implements other interfaces
-        if (i.implements.length > 0) {
-          s.str(`interface ${i.name} implements ${i.implements.join(', ')}`)
-        }
-        // start interface
-        s.str(`interface ${i.name} {`)
-          .forStr(i.methods, (s, method) => {
-            const params = method.params
-              .map((p) => `${p.name}: ${p.type}`)
-              .join(',')
-            s.str(`  + ${method.name}(${params}): ${method.ret}`)
-          })
-          .str('}')
-      },
-      infs.length > 0 ? '\n' : '',
-    )
+    this.s.$for(infs, (s, i) => {
+      // implements other interfaces
+      if (i.implements.length > 0) {
+        s.$s(`interface ${i.name} implements ${i.implements.join(', ')}`)
+      }
+      // start interface
+      s.$s(`interface ${i.name} {`)
+        .$for(i.methods, (s, method) => {
+          const params = method.params
+            .map((p) => `${p.name}: ${p.type}`)
+            .join(',')
+          s.$s(`  + ${method.name}(${params}): ${method.ret}`)
+        })
+        .$s('}')
+    })
     return this
   }
 
   private emitProtocol(prots: ClassDiagramAst['protocols']) {
-    this.s.forStr(
-      prots,
-      (s, prot) => {
-        // implements other interfaces
-        if (prot.implements.length > 0) {
-          s.str(
-            `interface ${prot.name} implements ${prot.implements.join(', ')}`,
-          )
-        }
-        s.str(`protocol ${prot.name} {`)
-          .forStr(prot.methods, (s, method) => {
-            const params = method.params
-              .map((p) => `${p.name}: ${p.type}`)
-              .join(',')
-            s.str(`   + ${method.name}(${params}): ${method.ret}`)
-          })
-          .str('}')
-      },
-      prots.length > 0 ? '\n' : '',
-    )
+    this.s.$for(prots, (s, prot) => {
+      // implements other interfaces
+      if (prot.implements.length > 0) {
+        s.$s(`interface ${prot.name} implements ${prot.implements.join(', ')}`)
+      }
+      s.$s(`protocol ${prot.name} {`)
+        .$for(prot.methods, (s, method) => {
+          const params = method.params
+            .map((p) => `${p.name}: ${p.type}`)
+            .join(',')
+          s.$s(`   + ${method.name}(${params}): ${method.ret}`)
+        })
+        .$s('}')
+    })
     return this
   }
 
   private emitStruct(structs: ClassDiagramAst['structs']) {
-    this.s.forStr(
-      structs,
-      (s, struct) => {
-        // extends and implements
-        if (struct.extends.length > 0 || struct.implements.length > 0) {
-          s.str(
-            `class ${struct.name}${
-              struct.extends.length > 0
-                ? ' extends ' + struct.extends.join(', ')
-                : ' '
-            }${
-              struct.implements.length > 0
-                ? ' implements ' + struct.implements.join(', ')
-                : ' '
-            }`,
-          )
-        }
-        // struct start
-        s.str(`struct ${struct.name} {`)
-        // fields
-        s.forStr(
-          struct.fields,
-          (s, field) => {
-            const visible = PumlClassEmitter.visibleMap[field.visible]
-            s.str(`  ${visible} ${field.name}: ${field.type};`)
-          },
-          struct.fields.length > 0 ? '\n' : '',
+    this.s.$for(structs, (s, struct) => {
+      // extends and implements
+      if (struct.extends.length > 0 || struct.implements.length > 0) {
+        s.$s(
+          `class ${struct.name}${
+            struct.extends.length > 0
+              ? ' extends ' + struct.extends.join(', ')
+              : ' '
+          }${
+            struct.implements.length > 0
+              ? ' implements ' + struct.implements.join(', ')
+              : ' '
+          }`,
         )
-        // methods
-        s.forStr(struct.methods, (s, method) => {
-          const visible = PumlClassEmitter.visibleMap[method.visible]
-          s.str(
-            `  ${visible} ${method.abstract ? 'abstract ' : ''}${
-              method.name
-            }(${method.params.map((p) => `${p.name}: ${p.type}`).join(',')}): ${
-              method.ret
-            }`,
-          )
-        })
-        s.str('}')
-      },
-      structs.length > 0 ? '\n' : '',
-    )
+      }
+      // struct start
+      s.$s(`struct ${struct.name} {`)
+      // fields
+      s.$for(struct.fields, (s, field) => {
+        const visible = PumlClassEmitter.visibleMap[field.visible]
+        s.$s(`  ${visible} ${field.name}: ${field.type};`)
+      })
+      // methods
+      s.$for(struct.methods, (s, method) => {
+        const visible = PumlClassEmitter.visibleMap[method.visible]
+        s.$s(
+          `  ${visible} ${method.abstract ? 'abstract ' : ''}${
+            method.name
+          }(${method.params.map((p) => `${p.name}: ${p.type}`).join(',')}): ${
+            method.ret
+          }`,
+        )
+      })
+      s.$s('}')
+    })
+
     return this
   }
 }

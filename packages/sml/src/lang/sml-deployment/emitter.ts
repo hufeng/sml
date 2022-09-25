@@ -1,4 +1,4 @@
-import Builder from '../../common/builder'
+import S from '../../common/s'
 import { Emitter } from '../base'
 import { DeploymentBase, DeploymentLangAst } from '../types'
 
@@ -23,37 +23,25 @@ export class PumlDeploymentEmitter extends Emitter<DeploymentLangAst> {
     } = this.meta
 
     return this.s
-      .str('@startuml')
-      .thunk(this.buildConfig)
-      .str('')
-      .forStr(actors, this.build('actor'), actors.length > 0 ? '\n' : '')
-      .forStr(
-        artifacts,
-        this.build('artifact'),
-        artifacts.length > 0 ? '\n' : '',
-      )
-      .forStr(
-        databases,
-        this.build('database'),
-        databases.length > 0 ? '\n' : '',
-      )
-      .forStr(queues, this.build('queue'), queues.length > 0 ? '\n' : '')
-      .forStr(stacks, this.build('stack'), stacks.length > 0 ? '\n' : '')
-      .forStr(boundary, this.build('boundary'), stacks.length > 0 ? '\n' : '')
-      .forStr(infs, this.build('interface'), infs.length > 0 ? '\n' : '')
-      .forStr(hexagons, this.build('hexagon'), hexagons.length > 0 ? '\n' : '')
-      .forStr(controls, this.build('control'), controls.length > 0 ? '\n' : '')
-      .forStr(
-        components,
-        this.build('component'),
-        components.length > 0 ? '\n' : '',
-      )
-      .forStr(clouds, this.build('cloud'), clouds.length > 0 ? '\n' : '')
-      .forStr(nodes, this.build('node'), nodes.length > 0 ? '\n' : '')
-      .forStr(links, (s, v) => s.str(`${v.from} --> ${v.to}`))
-      .forStr(vlinks, (s, v) => s.str(`${v.from} ..> ${v.to}`))
-      .forStr(rels, (s, v) => s.str(`${v.from} - ${v.to}`))
-      .str('@enduml')
+      .$s('@startuml')
+      .$fn(this.buildConfig)
+      .$s('')
+      .$for(actors, this.build('actor'))
+      .$for(artifacts, this.build('artifact'))
+      .$for(databases, this.build('database'))
+      .$for(queues, this.build('queue'))
+      .$for(stacks, this.build('stack'))
+      .$for(boundary, this.build('boundary'))
+      .$for(infs, this.build('interface'))
+      .$for(hexagons, this.build('hexagon'))
+      .$for(controls, this.build('control'))
+      .$for(components, this.build('component'))
+      .$for(clouds, this.build('cloud'))
+      .$for(nodes, this.build('node'))
+      .$for(links, (s, v) => s.$s(`${v.from} --> ${v.to}`))
+      .$for(vlinks, (s, v) => s.$s(`${v.from} ..> ${v.to}`))
+      .$for(rels, (s, v) => s.$s(`${v.from} - ${v.to}`))
+      .$s('@enduml')
       .toString('\n')
   }
 
@@ -72,7 +60,7 @@ export class PumlDeploymentEmitter extends Emitter<DeploymentLangAst> {
       | 'artifact'
       | 'database',
   ) {
-    return (s: Builder, v: DeploymentBase) =>
-      s.str(`${name} "${v.label}"${v.id ? ' as ' + v.id : ''} <<${v.title}>>`)
+    return (s: S, v: DeploymentBase) =>
+      s.$s(`${name} "${v.label}"${v.id ? ' as ' + v.id : ''} <<${v.title}>>`)
   }
 }

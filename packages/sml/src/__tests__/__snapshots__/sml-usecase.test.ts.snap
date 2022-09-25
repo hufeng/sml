@@ -3,48 +3,51 @@
 exports[`sml usecase test suites > only actor 2`] = `
 "@startuml
 !theme sketchy-outline
+skinparam packageStyle Rectangle
 left to right direction
 
 actor :first actor: as a_dd79c149
 actor :another actor: as a_fc3baf5b
 actor :Last actor: as a_8b705053
-
 @enduml"
 `;
 
 exports[`sml usecase test suites > test actor awesome style 1`] = `
 "@startuml
 !theme sketchy-outline
+skinparam actorStyle awesome
+skinparam packageStyle Rectangle
 left to right direction
 
 actor :User: as a_8f9bfe9d
-
 usecase (Learn JavaScript) as uc_5d686b2e
 
 a_8f9bfe9d --> uc_5d686b2e
+
 @enduml"
 `;
 
 exports[`sml usecase test suites > test actor style 1`] = `
 "@startuml
 !theme sketchy-outline
+skinparam packageStyle Rectangle
 left to right direction
 
 actor :user: as a_ee11cbb1
-
 usecase (Write Blog) as uc_0cce1966
 
 a_ee11cbb1 --> uc_0cce1966
+
 @enduml"
 `;
 
 exports[`sml usecase test suites > test note on simple actor or usecase 1`] = `
 "@startuml
 !theme sketchy-outline
+skinparam packageStyle Rectangle
 left to right direction
 
 actor :User: as a_8f9bfe9d
-
 usecase (Coding) as uc_cddcade0
 
 note right of (a_8f9bfe9d)
@@ -60,22 +63,22 @@ end note
 exports[`sml usecase test suites > test only usecases 2`] = `
 "@startuml
 !theme sketchy-outline
+skinparam packageStyle Rectangle
 left to right direction
 
 usecase (blog) as uc_126ac9f6
 usecase (music) as uc_18d67699
 usecase (play) as uc_a3b34c08
-
 @enduml"
 `;
 
 exports[`sml usecase test suites > test packages 1`] = `
 "@startuml
 !theme sketchy-outline
+skinparam packageStyle Rectangle
 left to right direction
 
 actor :guest: as a_084e0343
-
 rectangle Restaurant {
   usecase \\"Eat Food\\" as uc_a6709cd3
   usecase \\"Pay for food\\" as uc_f870119e
@@ -91,16 +94,17 @@ note \\"guest note\\" as N1
 (a_084e0343) -- N1
 N1 --> (uc_f870119e)
 a_8fd82b88 --> uc_a6709cd3
+
 @enduml"
 `;
 
 exports[`sml usecase test suites > test rect 2`] = `
 "@startuml
 !theme sketchy-outline
+skinparam packageStyle Rectangle
 left to right direction
 
 actor :Food Critic: as a_8781da4a
-
 rectangle Restaurant {
   usecase \\"Eat Food\\" as uc_a6709cd3
   usecase \\"Pay for food\\" as uc_f870119e
@@ -110,5 +114,6 @@ rectangle Restaurant {
 a_8781da4a --> uc_a6709cd3
 a_8781da4a --> uc_f870119e
 a_8781da4a --> uc_40491db1
+
 @enduml"
 `;

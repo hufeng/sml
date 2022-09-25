@@ -8,60 +8,42 @@ export class PumlUseCaseEmitter extends Emitter<UseCaseDiagramAst> {
     return (
       this.s
         // start
-        .str('@startuml')
-        .thunk(this.buildTheme)
+        .$s('@startuml')
+        .$fn(this.buildConfig)
         // actors
-        .forStr(
-          actors,
-          (s, v) => s.str(`actor :${v.label}: as ${v.name}`),
-          actors.length > 0 ? '\n' : '',
-        )
+        .$for(actors, (s, v) => s.$s(`actor :${v.label}: as ${v.name}`))
         // usecases
-        .forStr(
-          usecases,
-          (s, v) => s.str(`usecase (${v.label}) as ${v.name}`).str,
-          usecases.length > 0 ? '\n' : '',
-        )
+        .$for(usecases, (s, v) => s.$s(`usecase (${v.label}) as ${v.name}`).$s)
         // domains
-        .forStr(
-          zones,
-          (s, r) => {
-            s.str(`rectangle ${r.label.replace(/ /g, '_')} {`)
-            s.forStr(r.usecases, (s, uc) =>
-              s.str(`  usecase "${uc.label}" as ${uc.name}`),
-            ).forStr(r.actors, (s, actor) =>
-              s.str(`actor :${actor.label}: as ${actor.name}`),
-            )
-            s.str('}')
-          },
-          zones.length > 0 ? '\n' : '',
-        )
+        .$for(zones, (s, r) => {
+          s.$s(`rectangle ${r.label.replace(/ /g, '_')} {`)
+          s.$for(r.usecases, (s, uc) =>
+            s.$s(`  usecase "${uc.label}" as ${uc.name}`),
+          ).$for(r.actors, (s, actor) =>
+            s.$s(`actor :${actor.label}: as ${actor.name}`),
+          )
+          s.$s('}')
+        })
         // notes
-        .forStr(
-          notes,
-          (s, note) => {
-            const { label, position, on } = note
-            s.str(`note ${position} of (${on})`)
-              .str(`  ${label}`)
-              .str('end note')
-          },
-          notes.length > 0 ? '\n' : '',
-        )
+        .$fors(notes, (s, note) => {
+          const { label, position, on } = note
+          s.$s(`note ${position} of (${on})`).$s(`  ${label}`).$s('end note')
+        })
         //links
-        .forStr(links, (s, { from, to, link }) => {
+        .$fors(links, (s, { from, to, link }) => {
           if (typeof link !== 'undefined') {
-            s.forStr(to, (s, to, i) =>
+            s.$for(to, (s, to, i) =>
               s
-                .str(`note "${link.label}" as N${i}`)
-                .str(`(${from}) -- N${i}`)
-                .str(`N${i} --> (${to})`),
+                .$s(`note "${link.label}" as N${i}`)
+                .$s(`(${from}) -- N${i}`)
+                .$s(`N${i} --> (${to})`),
             )
           } else {
-            s.forStr(to, (s, to) => s.str(`${from} --> ${to}`))
+            s.$for(to, (s, to) => s.$s(`${from} --> ${to}`))
           }
         })
         //end
-        .str('@enduml')
+        .$s('@enduml')
         .toString('\n')
     )
   }

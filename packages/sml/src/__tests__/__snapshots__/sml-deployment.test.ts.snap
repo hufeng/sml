@@ -9,28 +9,17 @@ left to right direction
 
 actor \\"Customer\\" as a1 <<actor>>
 actor \\"Guest\\" as a2 <<actor>>
-
 artifact \\"beehive-service\\" as a3 <<aritfact>>
 artifact \\"beehive-consumer\\" as a4 <<aritfact>>
-
 database \\"mysql\\" <<database>>
-
 queue \\"queue\\" <<queue>>
-
 stack \\"mem\\" <<stack>>
-
 boundary \\"end\\" as a5 <<boundary>>
-
 interface \\"invoke-service\\" <<interface>>
-
 control \\"control\\" <<control>>
-
 component \\"beehive-registry\\" <<component>>
-
 cloud \\"Network\\" <<cloud>>
-
 node \\"127.0.0.1\\" <<node>>
-
 a1 --> a3
 a2 ..> a4
 @enduml"

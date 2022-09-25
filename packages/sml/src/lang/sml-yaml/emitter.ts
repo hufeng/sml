@@ -6,21 +6,18 @@ export default class PumlYamlEmitter extends Emitter<YamlDiagramAst> {
     const { highlights, yaml } = this.meta
 
     return this.s
-      .str(`@startyaml`)
-      .thunk(this.buildTheme)
-      .forStr(
-        highlights,
-        (s, highlight) =>
-          s.str(
-            `#highlight ${highlight
-              .split('.')
-              .map((str) => JSON.stringify(str))
-              .join(' / ')}`,
-          ),
-        highlights.length > 0 ? '\n' : '',
+      .$s(`@startyaml`)
+      .$fn(this.buildTheme)
+      .$for(highlights, (s, highlight) =>
+        s.$s(
+          `#highlight ${highlight
+            .split('.')
+            .map((str) => JSON.stringify(str))
+            .join(' / ')}`,
+        ),
       )
-      .str(yaml)
-      .str('@endyaml')
+      .$s(yaml)
+      .$s('@endyaml')
       .toString('\n')
   }
 }

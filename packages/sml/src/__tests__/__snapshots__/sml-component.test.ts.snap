@@ -12,21 +12,17 @@ package \\"bff\\" {
   component \\"service-b\\"  as c3
   interface \\"http\\"  as i2
 }
-
 node \\"Node\\" {
   component \\"Go\\"  as c6
 }
-
 cloud \\"cloud\\" {
   component \\"Nodejs\\"  as c1
   interface \\"http\\"  as i1
 }
-
 database \\"Database\\" {
   component \\"mysql\\"  as c4
   component \\"redis\\"  as c5
 }
-
 c1 --> c2
 c2 --> c3
 c3 ..> c4
