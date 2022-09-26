@@ -1,12 +1,14 @@
 import { Builder } from '../../base'
 import { ComponentBuilder, componentWeakMap } from './component'
 import { InterfaceBuilderMeta, Position } from '../../types'
+import { ZoneBuilder, zoneWeakMap } from './zone'
 
 export const interfaceWeakMap: WeakMap<InterfaceBuilder, string> = new WeakMap()
 
 export class InterfaceBuilder extends Builder {
   #meta: InterfaceBuilderMeta
   #id: string
+  #inf: { label: string; id: string }
 
   constructor(meta: InterfaceBuilderMeta, label: string) {
     super()
@@ -14,11 +16,11 @@ export class InterfaceBuilder extends Builder {
     this.#id = `i_` + this.id(label)
     interfaceWeakMap.set(this, this.#id)
 
-    const inf = {
+    this.#inf = {
       label,
       id: this.#id,
     }
-    this.#meta.infs.push(inf)
+    this.#meta.infs.push(this.#inf)
   }
 
   /**
@@ -50,6 +52,17 @@ export class InterfaceBuilder extends Builder {
    */
   note(label: string, position: Position = 'right') {
     this.#meta.notes.push({ label, position, on: this.#id })
+    return this
+  }
+
+  belongTo(z: ZoneBuilder) {
+    const name = zoneWeakMap.get(z)!
+    const zone = this.#meta.zones.find((zone) => zone.name === name)
+    zone?.components.push(this.#inf)
+
+    const index = this.#meta.infs.findIndex((c) => c.id === this.#id)
+    this.#meta.infs.splice(index, 1)
+
     return this
   }
 }

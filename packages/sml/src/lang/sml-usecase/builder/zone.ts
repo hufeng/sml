@@ -1,6 +1,6 @@
 import { ActorBuilder, actorWeakMap } from './actor'
 import { UsecaseBuilder, usecaseWeakMap } from './usecase'
-import { Zone, ZoneMeta, ZoneStyle } from '../../types'
+import { ComponentZoneStyle, Zone, ZoneMeta } from '../../types'
 import { Builder } from '../../base'
 
 export const zoneWeakMap: WeakMap<ZoneBuilder, string> = new WeakMap()
@@ -19,7 +19,7 @@ export class ZoneBuilder extends Builder {
     this.#zone = {
       label,
       name: this.#name,
-      type: 'Rectangle',
+      type: 'package',
       actors: [],
       usecases: [],
     }
@@ -27,11 +27,12 @@ export class ZoneBuilder extends Builder {
   }
 
   /**
-   * setting zone style, include 'Node' 'Rectangle' 'Folder' 'Frame' 'Cloud' 'DataBase'
+   * setting zone style, include 'package' | 'node' | 'cloud' | 'database'
    * @param type
    */
-  style(type: ZoneStyle = 'Rectangle') {
+  style(type: ComponentZoneStyle = 'package') {
     this.#zone.type = type
+    return this
   }
 
   /**

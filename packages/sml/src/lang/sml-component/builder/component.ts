@@ -2,12 +2,14 @@ import { Builder } from '../../base'
 import { Position, ComponentBuilderMeta } from '../../types'
 import { InterfaceBuilder, interfaceWeakMap } from './interface'
 import { LinkBuilder } from './link'
+import { ZoneBuilder, zoneWeakMap } from './zone'
 
 export const componentWeakMap: WeakMap<ComponentBuilder, string> = new WeakMap()
 
 export class ComponentBuilder extends Builder {
   #meta: ComponentBuilderMeta
   #id: string
+  #component: { label: string; id: string }
 
   constructor(meta: ComponentBuilderMeta, label: string) {
     super()
@@ -15,11 +17,11 @@ export class ComponentBuilder extends Builder {
     this.#id = `c_` + this.id(label)
     componentWeakMap.set(this, this.#id)
 
-    const component = {
+    this.#component = {
       label,
       id: this.#id,
     }
-    this.#meta.components.push(component)
+    this.#meta.components.push(this.#component)
   }
 
   /**
@@ -84,6 +86,17 @@ export class ComponentBuilder extends Builder {
    */
   note(label: string, position: Position = 'right') {
     this.#meta.notes.push({ label, position, on: this.#id })
+    return this
+  }
+
+  belongTo(z: ZoneBuilder) {
+    const name = zoneWeakMap.get(z)!
+    const zone = this.#meta.zones.find((zone) => zone.name === name)
+    zone?.components.push(this.#component)
+
+    const index = this.#meta.components.findIndex((c) => c.id === this.#id)
+    this.#meta.components.splice(index, 1)
+
     return this
   }
 

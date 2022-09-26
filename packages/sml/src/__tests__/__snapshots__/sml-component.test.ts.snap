@@ -1,27 +1,27 @@
 // Vitest Snapshot v1
 
-exports[`component diagram test suites > test all components 1`] = `
+exports[`component diagram test suites > test all components 2`] = `
 "@startuml
 !theme sketchy-outline
 skinparam packageStyle Rectangle
 left to right direction
 
 
+cloud \\"cloud\\" {
+  component \\"Nodejs\\"  as c_4b00bbf4
+  component \\"http\\"  as i_80791b3a
+}
 package \\"bff\\" {
   component \\"service-a\\"  as c_7fdd65ec
   component \\"service-b\\"  as c_d77ba138
-  interface \\"rpc\\"  as i_da0fb2ac
-}
-node \\"Node\\" {
-  component \\"Go\\"  as c_5f075ae3
-}
-cloud \\"cloud\\" {
-  component \\"Nodejs\\"  as c_4b00bbf4
-  interface \\"http\\"  as i_80791b3a
+  component \\"rpc\\"  as i_da0fb2ac
 }
 database \\"DataBase\\" {
   component \\"mysql\\"  as c_81c3b080
   component \\"redis\\"  as c_86a1b907
+}
+node \\"Node\\" {
+  component \\"Go\\"  as c_5f075ae3
 }
 note \\"connected\\" as N0
 (c_4b00bbf4) -- N0

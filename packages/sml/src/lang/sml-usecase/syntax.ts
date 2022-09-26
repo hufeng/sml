@@ -1,5 +1,5 @@
 import { Lang } from '../base'
-import { UseCaseDiagramAst, ZoneStyle } from '../types'
+import { UseCaseDiagramAst } from '../types'
 import { ActorBuilder } from './builder/actor'
 import { UsecaseBuilder } from './builder/usecase'
 import { ZoneBuilder } from './builder/zone'

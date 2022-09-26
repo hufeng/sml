@@ -15,38 +15,7 @@ export class SmlComponentLang extends Lang<SmlComponentAst> {
    * @returns
    */
   zone(label: string) {
-    const { zones, components, infs } = this.meta
-    return new ZoneBuilder(zones, components, infs, label)
-  }
-
-  /**
-   * 设置node节点
-   * @param label
-   * @returns
-   */
-  zoneNode(label: string) {
-    const { nodes, components, infs } = this.meta
-    return new ZoneBuilder(nodes, components, infs, label)
-  }
-
-  /**
-   * 设置数据库节点
-   * @param label
-   * @returns
-   */
-  zoneDatabase(label: string) {
-    const { databases, components, infs } = this.meta
-    return new ZoneBuilder(databases, components, infs, label)
-  }
-
-  /**
-   * 生成一个☁️包裹的作用域
-   * @param label
-   * @returns
-   */
-  zoneCloud(label: string) {
-    const { clouds, components, infs } = this.meta
-    return new ZoneBuilder(clouds, components, infs, label)
+    return new ZoneBuilder(this.meta, label)
   }
 
   /**

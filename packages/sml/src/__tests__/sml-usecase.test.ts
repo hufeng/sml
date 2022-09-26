@@ -103,7 +103,7 @@ describe('sml usecase test suites', () => {
             "actors": [],
             "label": "Restaurant",
             "name": "z_e197a9cc",
-            "type": "Rectangle",
+            "type": "package",
             "usecases": [
               {
                 "label": "Eat Food",

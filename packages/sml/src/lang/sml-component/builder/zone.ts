@@ -1,33 +1,39 @@
 import { Builder } from '../../base'
-import { ComponentContainer } from '../../types'
+import {
+  ComponentContainer,
+  ComponentZoneStyle,
+  ZoneBuilderMeta,
+} from '../../types'
 import { ComponentBuilder, componentWeakMap } from './component'
 import { InterfaceBuilder, interfaceWeakMap } from './interface'
 
 export const zoneWeakMap: WeakMap<ZoneBuilder, string> = new WeakMap()
 
 export class ZoneBuilder extends Builder {
-  #meta: Array<ComponentContainer>
-  #components: Array<{ label: string; id: string }>
-  #infs: Array<{ label: string; id: string }>
+  #meta: ZoneBuilderMeta
+  #name: string
   #zone: ComponentContainer
 
-  constructor(
-    meta: Array<ComponentContainer>,
-    components: Array<{ label: string; id: string }>,
-    infs: Array<{ label: string; id: string }>,
-    label: string,
-  ) {
+  constructor(meta: ZoneBuilderMeta, label: string) {
     super()
     this.#meta = meta
-    this.#components = components
-    this.#infs = infs
+    this.#name = 'z_' + this.id(label)
+    zoneWeakMap.set(this, this.#name)
 
     this.#zone = {
       label,
+      name: this.#name,
+      type: 'package',
       components: [],
       infs: [],
     }
-    this.#meta.push(this.#zone)
+
+    this.#meta.zones.push(this.#zone)
+  }
+
+  style(type: ComponentZoneStyle) {
+    this.#zone.type = type
+    return this
   }
 
   /**
@@ -39,19 +45,19 @@ export class ZoneBuilder extends Builder {
       // update component
       if (builder instanceof ComponentBuilder) {
         const name = componentWeakMap.get(builder)!
-        const index = this.#components.findIndex(
+        const index = this.#meta.components.findIndex(
           (component) => component.id === name,
         )
-        this.#zone.components.push(this.#components[index]!)
-        this.#components.splice(index, 1)
+        this.#zone.components.push(this.#meta.components[index]!)
+        this.#meta.components.splice(index, 1)
       }
 
       // update interface
       else if (builder instanceof InterfaceBuilder) {
         const name = interfaceWeakMap.get(builder)!
-        const index = this.#infs.findIndex((inf) => inf.id === name)
-        this.#zone.infs.push(this.#infs[index]!)
-        this.#infs.splice(index, 1)
+        const index = this.#meta.infs.findIndex((inf) => inf.id === name)
+        this.#zone.infs.push(this.#meta.infs[index]!)
+        this.#meta.infs.splice(index, 1)
       }
     })
   }

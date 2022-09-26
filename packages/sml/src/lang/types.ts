@@ -13,6 +13,8 @@ export type ZoneStyle =
   | 'Cloud'
   | 'DataBase'
 
+export type ComponentZoneStyle = 'package' | 'node' | 'cloud' | 'database'
+
 /**
  * JsonPath 表达json的路径
  * 如：users.0.address.province
@@ -132,7 +134,7 @@ export type ProtocolAst = InfAst
 export interface Zone {
   label: string
   name: string
-  type: ZoneStyle
+  type: ComponentZoneStyle
   actors: Array<Actor>
   usecases: Array<UseCase>
 }
@@ -190,14 +192,20 @@ export interface DeploymentLangAst extends BaseAst {
 
 export type ComponentBuilderMeta = Pick<
   SmlComponentAst,
-  'components' | 'notes' | 'links' | 'vlinks' | 'rels'
+  'components' | 'notes' | 'links' | 'vlinks' | 'rels' | 'zones'
 >
 export type InterfaceBuilderMeta = Pick<
   SmlComponentAst,
-  'infs' | 'rels' | 'notes'
+  'infs' | 'rels' | 'notes' | 'zones'
+>
+export type ZoneBuilderMeta = Pick<
+  SmlComponentAst,
+  'zones' | 'components' | 'infs'
 >
 export interface ComponentContainer {
   label: string
+  name: string
+  type: ComponentZoneStyle
   components: Array<{ label: string; id: string }>
   infs: Array<{ label: string; id: string }>
 }
@@ -209,9 +217,6 @@ export interface SmlComponentAst extends BaseAst {
   notes: Array<{ label: string; position: Position; on: ID }>
 
   zones: Array<ComponentContainer>
-  nodes: Array<ComponentContainer>
-  databases: Array<ComponentContainer>
-  clouds: Array<ComponentContainer>
 
   components: Array<{ label: string; id: string }>
   infs: Array<{ label: string; id: string }>

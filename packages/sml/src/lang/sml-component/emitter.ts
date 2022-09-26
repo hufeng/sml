@@ -22,28 +22,7 @@ export class PumlComponentEmitter extends Emitter<SmlComponentAst> {
       .$s('')
       .$for(zones, (s, v) =>
         s
-          .$s(`package "${v.label}" {`)
-          .$for(v.components, this.container('component'))
-          .$for(v.infs, this.container('interface'))
-          .$s('}'),
-      )
-      .$for(nodes, (s, v) =>
-        s
-          .$s(`node "${v.label}" {`)
-          .$for(v.components, this.container('component'))
-          .$for(v.infs, this.container('interface'))
-          .$s('}'),
-      )
-      .$for(clouds, (s, v) =>
-        s
-          .$s(`cloud "${v.label}" {`)
-          .$for(v.components, this.container('component'))
-          .$for(v.infs, this.container('interface'))
-          .$s('}'),
-      )
-      .$for(databases, (s, v) =>
-        s
-          .$s(`database "${v.label}" {`)
+          .$s(`${v.type} "${v.label}" {`)
           .$for(v.components, this.container('component'))
           .$for(v.infs, this.container('interface'))
           .$s('}'),

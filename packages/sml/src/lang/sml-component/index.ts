@@ -9,9 +9,6 @@ export function ComponentDiagram(
     title,
 
     zones: [],
-    nodes: [],
-    databases: [],
-    clouds: [],
 
     components: [],
     infs: [],
