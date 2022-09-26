@@ -1,8 +1,8 @@
-import { Builder } from '../../base'
-import { Position, ComponentBuilderMeta } from '../../types'
-import { InterfaceBuilder, interfaceWeakMap } from './interface'
-import { LinkBuilder } from './link'
+import { Builder, LinkBuilder } from '../../base'
 import { ZoneBuilder, zoneWeakMap } from './zone'
+import { InterfaceBuilder, interfaceWeakMap } from './interface'
+import { Position } from '../../types'
+import { ComponentBuilderMeta } from '../types'
 
 export const componentWeakMap: WeakMap<ComponentBuilder, string> = new WeakMap()
 

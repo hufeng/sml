@@ -1,8 +1,8 @@
 import { Lang } from '../base'
-import { SmlComponentAst } from '../types'
+import { ZoneBuilder } from './builder/zone'
 import { ComponentBuilder } from './builder/component'
 import { InterfaceBuilder } from './builder/interface'
-import { ZoneBuilder } from './builder/zone'
+import { SmlComponentAst } from './types'
 
 export class SmlComponentLang extends Lang<SmlComponentAst> {
   constructor(meta: SmlComponentAst) {

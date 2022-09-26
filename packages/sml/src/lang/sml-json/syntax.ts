@@ -1,5 +1,6 @@
 import { Lang } from '../base'
-import { JsonDiagramAst, JsonPath } from '../types'
+import { JsonPath } from '../types'
+import { JsonDiagramAst } from './types'
 
 // ~~~~~~~~~~~` define json lang modeling ~~~~~~~~~~~~~~`
 export class SmlJsonLang extends Lang<JsonDiagramAst> {

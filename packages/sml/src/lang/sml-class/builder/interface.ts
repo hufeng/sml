@@ -1,6 +1,7 @@
 import { VisibleType } from '../syntax'
 import { MethodBuilder } from './method'
-import { InfAst, ParamType, DataType } from '../../types'
+import { ParamType, DataType } from '../../types'
+import { InfAst } from '../types'
 
 export class InfBuilder {
   constructor(private interfaces: InfAst) {}

@@ -1,5 +1,5 @@
 import { Emitter } from '../base'
-import { JsonDiagramAst } from '../types'
+import { JsonDiagramAst } from './types'
 
 export class PumlJsonEmitter extends Emitter<JsonDiagramAst> {
   emitCode() {

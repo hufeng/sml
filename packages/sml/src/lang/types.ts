@@ -1,6 +1,5 @@
-import type { VisibleType } from './sml-class/syntax'
-
 // ~~~~~~~~~~basic type~~~~~~~~~~~~~
+export type ID = string
 
 /**
  * package style
@@ -13,8 +12,6 @@ export type ZoneStyle =
   | 'Cloud'
   | 'DataBase'
 
-export type ComponentZoneStyle = 'package' | 'node' | 'cloud' | 'database'
-
 /**
  * JsonPath 表达json的路径
  * 如：users.0.address.province
@@ -22,9 +19,7 @@ export type ComponentZoneStyle = 'package' | 'node' | 'cloud' | 'database'
 export type JsonPath = string
 export type ActorStyleType = 'default' | 'awesome' | 'Hollow'
 export type DirectionType = 'left->right' | 'top->down'
-export type ID = string
-export type Actor = { label: string; name: string }
-export type UseCase = { label: string; name: string }
+
 export type Position = 'top' | 'right' | 'bottom' | 'left'
 export type DataType = string
 
@@ -46,47 +41,6 @@ export interface BaseAst {
   config?: GlobalConfigType
 }
 
-export type ActorBuilderMeta = {
-  actors: Array<Actor>
-  links: Array<LinkAst>
-  notes: Array<NoteAst>
-  zones: Array<Zone>
-}
-export type UsecaseMeta = {
-  usecases: Array<UseCase>
-  notes: Array<NoteAst>
-  zones: Array<Zone>
-}
-export type ZoneMeta = {
-  actors: Array<Actor>
-  usecases: Array<UseCase>
-  zones: Array<Zone>
-}
-export interface UseCaseDiagramAst extends BaseAst {
-  actors: Array<Actor>
-  usecases: Array<UseCase>
-  zones: Array<Zone>
-
-  links: Array<LinkAst>
-  notes: Array<NoteAst>
-}
-export interface YamlDiagramAst extends BaseAst {
-  title: string
-  yaml: string
-  highlights: Array<JsonPath>
-}
-export interface JsonDiagramAst extends BaseAst {
-  json: any
-  highlights: Array<JsonPath>
-}
-export interface ClassDiagramAst extends BaseAst {
-  clazzes: Array<ClazzAst>
-  interfaces: Array<InfAst>
-  enums: Array<EnumType>
-  structs: Array<StructAst>
-  protocols: Array<ProtocolAst>
-}
-
 // ~~~~~~~~~~~ Field Ast ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 export type LinkAst = {
@@ -97,127 +51,24 @@ export type LinkAst = {
     position?: Position
   }
 }
+
 export type NoteAst = {
   label: string
   position: Position
   on: ID
 }
 
-export type FiledAst = {
-  name: string
-  type: DataType
-  visible: VisibleType
-}
-export type MethodAst = {
-  abstract: boolean
-  visible: VisibleType
-  name: string
-  params: Array<ParamType>
-  ret: DataType
-}
-export type InfAst = {
-  name: string
-  implements: Array<string>
-  methods: Array<MethodAst>
-}
-export type EnumFieldAst = {
-  name: string
-  value?: number | string
-}
-export type EnumType = {
-  name: string
-  fields: Array<EnumFieldAst>
-}
-export type StructAst = ClazzAst
-export type ProtocolAst = InfAst
-
-export interface Zone {
-  label: string
-  name: string
-  type: ComponentZoneStyle
-  actors: Array<Actor>
-  usecases: Array<UseCase>
-}
-
-export type ClazzAst = {
-  name: string
-  abstract: boolean
-  fields: Array<FiledAst>
-  methods: Array<MethodAst>
-  extends: Array<string>
-  implements: Array<string>
-}
-
-export interface DeploymentBase {
-  id: string
-  head: string
-  label: string
-  type: string
-}
-export interface DeploymentContainer {
-  id: string
-  head: string
-  label: string
-  type: DeploymentZoneStyle
-  children: Array<DeploymentBase>
-}
-
-export type DeploymentZoneStyle =
-  | 'artifact'
-  | 'cloud'
-  | 'component'
-  | 'database'
-  | 'node'
-
-export interface DeploymentLangAst extends BaseAst {
-  actors: Array<DeploymentBase>
-  // container
-  zones: Array<DeploymentContainer>
-
-  // base
-  components: Array<DeploymentBase>
-
+export interface LinkContaniner {
   links: Array<{
     from: string
     to: string[]
     note?: { label: string; position: Position }
   }>
-  vlinks: Array<{
+  vlinks?: Array<{
     from: string
     to: string[]
     note?: { label: string; position: Position }
   }>
-  rels: Array<{ from: string; to: string[] }>
-}
-
-export type ComponentBuilderMeta = Pick<
-  SmlComponentAst,
-  'components' | 'notes' | 'links' | 'vlinks' | 'rels' | 'zones'
->
-export type InterfaceBuilderMeta = Pick<
-  SmlComponentAst,
-  'infs' | 'rels' | 'notes' | 'zones'
->
-export type ZoneBuilderMeta = Pick<
-  SmlComponentAst,
-  'zones' | 'components' | 'infs'
->
-export interface ComponentContainer {
-  label: string
-  name: string
-  type: ComponentZoneStyle
-  components: Array<{ label: string; id: string }>
-  infs: Array<{ label: string; id: string }>
-}
-
-export interface SmlComponentAst extends BaseAst {
-  links: Array<LinkAst>
-  vlinks: Array<LinkAst>
-  rels: Array<{ from: string; to: Array<string> }>
-  notes: Array<{ label: string; position: Position; on: ID }>
-
-  zones: Array<ComponentContainer>
-
-  components: Array<{ label: string; id: string }>
-  infs: Array<{ label: string; id: string }>
+  rels?: Array<{ from: string; to: string[] }>
+  notes: Array<NoteAst>
 }

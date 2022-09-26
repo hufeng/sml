@@ -1,5 +1,5 @@
 import { Builder } from '../../base'
-import { DeploymentBase, DeploymentLangAst } from '../../types'
+import { DeploymentBase, DeploymentLangAst } from '../types'
 import { ComponentBuilder, componentWeakMap } from './component'
 
 export type InterfaceBuilderMeta = Pick<

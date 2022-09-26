@@ -1,4 +1,4 @@
-import { EnumType } from '../../types'
+import { EnumType } from '../types'
 
 export class EnumBuilder {
   constructor(private e: EnumType) {}

@@ -1,10 +1,6 @@
 import S from '../s'
 import { Emitter } from '../base'
-import {
-  DeploymentBase,
-  DeploymentContainer,
-  DeploymentLangAst,
-} from '../types'
+import { DeploymentLangAst, DeploymentBase, DeploymentContainer } from './types'
 
 export class PumlDeploymentEmitter extends Emitter<DeploymentLangAst> {
   emitCode() {

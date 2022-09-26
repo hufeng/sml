@@ -1,4 +1,4 @@
-import { MethodAst } from '../../types'
+import { MethodAst } from '../types'
 import { VisibleType } from '../syntax'
 
 export class MethodBuilder {

@@ -1,6 +1,7 @@
 import S from '../s'
 import { Emitter } from '../base'
-import { LinkAst, SmlComponentAst } from '../types'
+import { LinkAst } from '../types'
+import { SmlComponentAst } from './types'
 
 export class PumlComponentEmitter extends Emitter<SmlComponentAst> {
   emitCode() {

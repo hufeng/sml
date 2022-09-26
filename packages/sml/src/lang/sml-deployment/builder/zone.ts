@@ -1,10 +1,10 @@
 import { Builder } from '../../base'
-import {
-  DeploymentContainer,
-  DeploymentLangAst,
-  DeploymentZoneStyle,
-} from '../../types'
 import { ComponentBuilder, componentWeakMap } from './component'
+import {
+  DeploymentLangAst,
+  DeploymentContainer,
+  DeploymentZoneStyle,
+} from '../types'
 
 export type ZoneBuilderMeta = Pick<DeploymentLangAst, 'zones' | 'components'>
 export const zoneWeakMap: WeakMap<ZoneBuilder, string> = new WeakMap()

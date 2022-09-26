@@ -1,11 +1,11 @@
 import { Builder } from '../../base'
+import { ComponentBuilder, componentWeakMap } from './component'
+import { InterfaceBuilder, interfaceWeakMap } from './interface'
 import {
   ComponentContainer,
   ComponentZoneStyle,
   ZoneBuilderMeta,
-} from '../../types'
-import { ComponentBuilder, componentWeakMap } from './component'
-import { InterfaceBuilder, interfaceWeakMap } from './interface'
+} from '../types'
 
 export const zoneWeakMap: WeakMap<ZoneBuilder, string> = new WeakMap()
 
@@ -31,7 +31,12 @@ export class ZoneBuilder extends Builder {
     this.#meta.zones.push(this.#zone)
   }
 
-  style(type: ComponentZoneStyle) {
+  /**
+   * setting type
+   * @param type
+   * @returns
+   */
+  type(type: ComponentZoneStyle) {
     this.#zone.type = type
     return this
   }

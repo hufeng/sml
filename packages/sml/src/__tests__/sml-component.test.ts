@@ -4,7 +4,7 @@ describe('component diagram test suites', () => {
   it('test all components', () => {
     const { ast, emitter } = ComponentDiagram('component title', (ml) => {
       // elements
-      const cloud = ml.zone('cloud').style('cloud')
+      const cloud = ml.zone('cloud').type('cloud')
       const c1 = ml.component('Nodejs').belongTo(cloud)
       const i1 = ml.interface('http').belongTo(cloud)
 
@@ -13,12 +13,12 @@ describe('component diagram test suites', () => {
       const c3 = ml.component('service-b').belongTo(zone)
       const i2 = ml.interface('rpc').belongTo(zone)
 
-      const db = ml.zone('DataBase').style('database')
+      const db = ml.zone('DataBase').type('database')
       const c4 = ml.component('mysql')
       const c5 = ml.component('redis')
       db.has(c4, c5)
 
-      const node = ml.zone('Node').style('node')
+      const node = ml.zone('Node').type('node')
       const c6 = ml.component('Go')
       node.has(c6)
 

@@ -1,8 +1,8 @@
-import { LinkBuilder } from './link'
-import { UsecaseBuilder, usecaseWeakMap } from './usecase'
-import { Actor, ActorBuilderMeta, Position } from '../../types'
-import { Builder } from '../../base'
+import { Builder, LinkBuilder } from '../../base'
 import { ZoneBuilder, zoneWeakMap } from './zone'
+import { UsecaseBuilder, usecaseWeakMap } from './usecase'
+import { Actor, ActorBuilderMeta } from '../types'
+import { Position } from '../../types'
 
 export const actorWeakMap: WeakMap<ActorBuilder, string> = new WeakMap()
 

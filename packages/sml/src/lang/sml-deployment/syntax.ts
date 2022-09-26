@@ -1,8 +1,8 @@
 import { Lang } from '../base'
-import { DeploymentLangAst } from '../types'
 import { ComponentBuilder } from './builder/component'
 import { InterfaceBuilder } from './builder/interface'
 import { ZoneBuilder } from './builder/zone'
+import { DeploymentLangAst } from './types'
 
 /**
  * lang

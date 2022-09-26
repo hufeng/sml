@@ -1,5 +1,5 @@
 import { Emitter } from '../base'
-import { UseCaseDiagramAst } from '../types'
+import { UseCaseDiagramAst } from './types'
 
 export class PumlUseCaseEmitter extends Emitter<UseCaseDiagramAst> {
   emitCode() {
@@ -30,18 +30,7 @@ export class PumlUseCaseEmitter extends Emitter<UseCaseDiagramAst> {
           s.$s(`note ${position} of (${on})`).$s(`  ${label}`).$s('end note')
         })
         //links
-        .$fors(links, (s, { from, to, note: link }) => {
-          if (typeof link !== 'undefined') {
-            s.$for(to, (s, to, i) =>
-              s
-                .$s(`note "${link.label}" as N${i}`)
-                .$s(`(${from}) -- N${i}`)
-                .$s(`N${i} --> (${to})`),
-            )
-          } else {
-            s.$for(to, (s, to) => s.$s(`${from} --> ${to}`))
-          }
-        })
+        .$fors(links, this.buildLink)
         //end
         .$s('@enduml')
         .toString('\n')

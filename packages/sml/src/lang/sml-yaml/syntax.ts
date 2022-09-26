@@ -1,5 +1,6 @@
 import { Lang } from '../base'
-import { YamlDiagramAst, JsonPath } from '../types'
+import { JsonPath } from '../types'
+import { YamlDiagramAst } from './types'
 
 // ~~~~~~~~~~~~~ define sml yaml lang modeling ~~~~~~~~~~~
 export class SmlYamlLang extends Lang<YamlDiagramAst> {

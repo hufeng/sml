@@ -1,6 +1,7 @@
 import { VisibleType } from '../syntax'
 import { MethodBuilder } from './method'
-import { ClazzAst, DataType, ParamType, MethodAst } from '../../types'
+import { ClazzAst, MethodAst } from '../types'
+import { DataType, ParamType } from '../../types'
 
 export class ClazzBuilder {
   constructor(private clazz: ClazzAst) {}

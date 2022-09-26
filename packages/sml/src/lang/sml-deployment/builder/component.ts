@@ -1,8 +1,7 @@
-import { Builder } from '../../base'
-import { DeploymentBase, DeploymentLangAst } from '../../types'
-import { InterfaceBuilder, interfaceWeakMap } from './interface'
-import { LinkBuilder } from './link'
+import { Builder, LinkBuilder } from '../../base'
 import { ZoneBuilder, zoneWeakMap } from './zone'
+import { InterfaceBuilder, interfaceWeakMap } from './interface'
+import { DeploymentBase, DeploymentLangAst } from '../types'
 
 export type ComponentBuilderMeta = Pick<
   DeploymentLangAst,

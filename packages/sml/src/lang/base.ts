@@ -1,20 +1,40 @@
 import path from 'node:path'
 import crypto from 'node:crypto'
 import { exec } from 'node:child_process'
-
 import S from './s'
+
 import {
   ActorStyleType,
   BaseAst,
   DirectionType,
   GlobalConfigType,
   LinkAst,
+  Position,
   ZoneStyle,
 } from './types'
 
-export const noop = () => {}
-
 // ~~~~~~~~~~ builder ~~~~~~~~~~~~~~~~~~~~~~
+
+export class LinkBuilder {
+  #link: LinkAst
+
+  constructor(link: LinkAst) {
+    this.#link = link
+  }
+
+  /**
+   * setting note of link
+   * @param label
+   * @param position
+   */
+  noteOf(label: string, position: Position = 'right') {
+    this.#link.note = {
+      label,
+      position,
+    }
+  }
+}
+
 export class Builder {
   protected id(s: string) {
     const md5 = crypto.createHash('md5')

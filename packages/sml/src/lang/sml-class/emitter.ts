@@ -1,5 +1,5 @@
 import { Emitter } from '../base'
-import { ClassDiagramAst } from '../types'
+import { ClassDiagramAst } from './types'
 
 export class PumlClassEmitter extends Emitter<ClassDiagramAst> {
   static visibleMap = {

@@ -19,8 +19,8 @@ cloud \\"web-service\\" as z_82daadfb <<cloud>> {
   queue \\"request queue\\" as c_9ad4f252 <<queue>>
 }
 cloud \\"User-Center\\" as z_42fac19d <<cloud>> {
-  collection \\"login-service\\" as c_b615bcf7 <<RpcService>>
-  collection \\"registry-service\\" as c_11289165 <<RpcService>>
+  collections \\"login-service\\" as c_b615bcf7 <<RpcService>>
+  collections \\"registry-service\\" as c_11289165 <<RpcService>>
 }
 database \\"persistence\\" as z_3a6988a0 <<database>> {
   component \\"mysql\\" as c_81c3b080 <<component>>

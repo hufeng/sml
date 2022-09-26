@@ -1,7 +1,8 @@
 import { Builder } from '../../base'
-import { ComponentBuilder, componentWeakMap } from './component'
-import { InterfaceBuilderMeta, Position } from '../../types'
 import { ZoneBuilder, zoneWeakMap } from './zone'
+import { ComponentBuilder, componentWeakMap } from './component'
+import { Position } from '../../types'
+import { InterfaceBuilderMeta } from '../types'
 
 export const interfaceWeakMap: WeakMap<InterfaceBuilder, string> = new WeakMap()
 
@@ -55,6 +56,11 @@ export class InterfaceBuilder extends Builder {
     return this
   }
 
+  /**
+   * setting belongto zone
+   * @param z
+   * @returns
+   */
   belongTo(z: ZoneBuilder) {
     const name = zoneWeakMap.get(z)!
     const zone = this.#meta.zones.find((zone) => zone.name === name)

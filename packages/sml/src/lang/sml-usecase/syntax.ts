@@ -1,8 +1,8 @@
 import { Lang } from '../base'
-import { UseCaseDiagramAst } from '../types'
 import { ActorBuilder } from './builder/actor'
 import { UsecaseBuilder } from './builder/usecase'
 import { ZoneBuilder } from './builder/zone'
+import { UseCaseDiagramAst } from './types'
 
 // ~~~~~~~~~ define usecase lang modeling ~~~~~~~~~~~~~~~
 export class SmlUseCaseLang extends Lang<UseCaseDiagramAst> {

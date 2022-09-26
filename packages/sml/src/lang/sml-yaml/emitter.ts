@@ -1,5 +1,5 @@
 import { Emitter } from '../base'
-import { YamlDiagramAst } from '../types'
+import { YamlDiagramAst } from './types'
 
 export default class PumlYamlEmitter extends Emitter<YamlDiagramAst> {
   emitCode() {

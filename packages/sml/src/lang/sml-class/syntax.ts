@@ -2,7 +2,7 @@ import { Lang } from '../base'
 import { ClazzBuilder } from './builder/clazz'
 import { EnumBuilder } from './builder/enum'
 import { InfBuilder } from './builder/interface'
-import { InfAst, ClassDiagramAst } from '../types'
+import { ClassDiagramAst, InfAst } from './types'
 
 export enum VisibleType {
   private = 'private',

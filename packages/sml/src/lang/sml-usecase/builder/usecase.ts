@@ -1,5 +1,6 @@
 import { Builder } from '../../base'
-import { Position, UseCase, UsecaseMeta } from '../../types'
+import { Position } from '../../types'
+import { UsecaseMeta, UseCase } from '../types'
 import { ZoneBuilder, zoneWeakMap } from './zone'
 
 export const usecaseWeakMap: WeakMap<UsecaseBuilder, string> = new WeakMap()
