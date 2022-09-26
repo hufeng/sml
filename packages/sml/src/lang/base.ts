@@ -11,6 +11,7 @@ import {
   LinkAst,
   NoteAst,
   Position,
+  RelAst,
   ZoneStyle,
 } from './types'
 
@@ -174,7 +175,7 @@ export abstract class Emitter<T extends BaseAst> {
     const { label, position, on } = note
     s.$s(`note ${position} of (${on})`).$s(`  ${label}`).$s('end note')
   }
-  protected buildRels = (s: S, v: Rel) => s.$s(`${v.from} - ${v.to}`)
+  protected buildRels = (s: S, v: RelAst) => s.$s(`${v.from} - ${v.to}`)
 
   plantUML(img: string) {
     const jar = path.join(__dirname, '../../bin/plantuml-1.2022.7.jar')

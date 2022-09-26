@@ -58,6 +58,11 @@ export type NoteAst = {
   on: ID
 }
 
+export type RelAst = {
+  from: string
+  to: string[]
+}
+
 export interface LinkContaniner {
   links: Array<{
     from: string
@@ -69,6 +74,6 @@ export interface LinkContaniner {
     to: string[]
     note?: { label: string; position: Position }
   }>
-  rels?: Array<{ from: string; to: string[] }>
+  rels?: Array<RelAst>
   notes: Array<NoteAst>
 }
