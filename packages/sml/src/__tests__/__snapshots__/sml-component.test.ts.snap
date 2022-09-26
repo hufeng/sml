@@ -8,27 +8,29 @@ left to right direction
 
 
 package \\"bff\\" {
-  component \\"service-a\\"  as c2
-  component \\"service-b\\"  as c3
-  interface \\"http\\"  as i2
+  component \\"service-a\\"  as c_7fdd65ec
+  component \\"service-b\\"  as c_d77ba138
+  interface \\"rpc\\"  as i_da0fb2ac
 }
 node \\"Node\\" {
-  component \\"Go\\"  as c6
+  component \\"Go\\"  as c_5f075ae3
 }
 cloud \\"cloud\\" {
-  component \\"Nodejs\\"  as c1
-  interface \\"http\\"  as i1
+  component \\"Nodejs\\"  as c_4b00bbf4
+  interface \\"http\\"  as i_80791b3a
 }
-database \\"Database\\" {
-  component \\"mysql\\"  as c4
-  component \\"redis\\"  as c5
+database \\"DataBase\\" {
+  component \\"mysql\\"  as c_81c3b080
+  component \\"redis\\"  as c_86a1b907
 }
-c1 --> c2
-c2 --> c3
-c3 ..> c4
-c4 ..> c5
-c5 ..> c6
-i1 - c1
-i2 - c3
+note \\"connected\\" as N0
+(c_4b00bbf4) -- N0
+N0 --> (c_7fdd65ec)
+c_7fdd65ec --> c_d77ba138
+c_d77ba138 --> c_81c3b080
+c_81c3b080 --> c_86a1b907
+c_86a1b907 --> c_5f075ae3
+i_80791b3a - c_4b00bbf4
+i_da0fb2ac - c_d77ba138
 @enduml"
 `;

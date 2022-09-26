@@ -88,7 +88,7 @@ export interface ClassDiagramAst extends BaseAst {
 export type LinkAst = {
   from: string
   to: Array<string>
-  link?: {
+  note?: {
     label: string
     position?: Position
   }
@@ -185,22 +185,31 @@ export interface DeploymentLangAst extends BaseAst {
   rels: Array<{ from: string; to: string }>
 }
 
+export type ComponentBuilderMeta = Pick<
+  SmlComponentAst,
+  'components' | 'notes' | 'links' | 'vlinks' | 'rels'
+>
+export type InterfaceBuilderMeta = Pick<
+  SmlComponentAst,
+  'infs' | 'rels' | 'notes'
+>
 export interface ComponentContainer {
   label: string
-  components: Array<{ label: string; id?: string }>
-  infs: Array<{ label: string; id?: string }>
+  components: Array<{ label: string; id: string }>
+  infs: Array<{ label: string; id: string }>
 }
 
 export interface SmlComponentAst extends BaseAst {
-  links: Array<{ from: string; to: string }>
-  vlinks: Array<{ from: string; to: string }>
-  rels: Array<{ from: string; to: string }>
+  links: Array<LinkAst>
+  vlinks: Array<LinkAst>
+  rels: Array<{ from: string; to: Array<string> }>
+  notes: Array<{ label: string; position: Position; on: ID }>
 
-  packages: Array<ComponentContainer>
+  zones: Array<ComponentContainer>
   nodes: Array<ComponentContainer>
   databases: Array<ComponentContainer>
   clouds: Array<ComponentContainer>
 
-  components: Array<{ label: string; id?: string }>
-  infs: Array<{ label: string; id?: string }>
+  components: Array<{ label: string; id: string }>
+  infs: Array<{ label: string; id: string }>
 }

@@ -23,6 +23,10 @@ export default class S {
   }
 
   $for<T>(arr: Array<T> = [], fn: (s: S, v: T, i?: number) => void) {
+    if (arr.length === 0) {
+      return this
+    }
+
     arr.forEach((v, i) => {
       fn(this, v, i)
     })

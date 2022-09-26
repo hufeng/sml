@@ -30,7 +30,7 @@ export class PumlUseCaseEmitter extends Emitter<UseCaseDiagramAst> {
           s.$s(`note ${position} of (${on})`).$s(`  ${label}`).$s('end note')
         })
         //links
-        .$fors(links, (s, { from, to, link }) => {
+        .$fors(links, (s, { from, to, note: link }) => {
           if (typeof link !== 'undefined') {
             s.$for(to, (s, to, i) =>
               s

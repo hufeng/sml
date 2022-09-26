@@ -7,21 +7,20 @@ export function ComponentDiagram(
 ) {
   const ast = {
     title,
-    packages: [],
+
+    zones: [],
     nodes: [],
     databases: [],
     clouds: [],
+
     components: [],
     infs: [],
+
+    notes: [],
     vlinks: [],
     links: [],
     rels: [],
   }
   fn(new SmlComponentLang(ast))
-
-  // @ts-ignore
-
-  console.log(ast.meta)
-
   return { ast, emitter: new PumlComponentEmitter(ast) }
 }
