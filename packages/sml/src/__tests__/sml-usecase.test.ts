@@ -102,6 +102,7 @@ describe('sml usecase test suites', () => {
           {
             "actors": [],
             "label": "Restaurant",
+            "name": "z_e197a9cc",
             "type": "Rectangle",
             "usecases": [
               {
@@ -129,13 +130,11 @@ describe('sml usecase test suites', () => {
       const g = ml.actor('guest')
 
       const z1 = ml.zone(`Restaurant`)
-      const u1 = ml.usecase('Eat Food')
-      const u2 = ml.usecase('Pay for food')
-      z1.has(u1, u2)
+      const u1 = ml.usecase('Eat Food').belongTo(z1)
+      const u2 = ml.usecase('Pay for food').belongTo(z1)
 
       const z2 = ml.zone('Professional')
-      const a1 = ml.actor('Chef')
-      z2.has(a1)
+      const a1 = ml.actor('Chef').belongTo(z2)
 
       g.link([u1, u2], (l) => l.noteOf('guest note'))
       a1.link(u1)

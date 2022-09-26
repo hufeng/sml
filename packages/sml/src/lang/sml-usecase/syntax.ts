@@ -34,7 +34,7 @@ export class SmlUseCaseLang extends Lang<UseCaseDiagramAst> {
    * @param type
    * @returns
    */
-  zone(label: string, type: ZoneStyle = 'Rectangle') {
-    return new ZoneBuilder(this.meta, label, type)
+  zone(label: string) {
+    return new ZoneBuilder(this.meta, label)
   }
 }

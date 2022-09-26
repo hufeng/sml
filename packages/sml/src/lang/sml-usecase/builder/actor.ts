@@ -1,13 +1,15 @@
 import { LinkBuilder } from './link'
 import { UsecaseBuilder, usecaseWeakMap } from './usecase'
-import { ActorBuilderMeta, Position } from '../../types'
+import { Actor, ActorBuilderMeta, Position } from '../../types'
 import { Builder } from '../../base'
+import { ZoneBuilder, zoneWeakMap } from './zone'
 
 export const actorWeakMap: WeakMap<ActorBuilder, string> = new WeakMap()
 
 export class ActorBuilder extends Builder {
   #name: string
   #meta: ActorBuilderMeta
+  #actor: Actor
 
   constructor(meta: ActorBuilderMeta, label: string) {
     super()
@@ -15,11 +17,11 @@ export class ActorBuilder extends Builder {
     this.#name = `a_${this.id(label)}`
     actorWeakMap.set(this, this.#name)
 
-    const actor = {
+    this.#actor = {
       name: this.#name,
       label,
     }
-    this.#meta.actors.push(actor)
+    this.#meta.actors.push(this.#actor)
   }
 
   /**
@@ -53,6 +55,25 @@ export class ActorBuilder extends Builder {
    */
   noteOf(label: string, position: Position = 'right') {
     this.#meta.notes.push({ label, position, on: this.#name })
+    return this
+  }
+
+  /**
+   * seting belongTo zone
+   * @param z
+   * @returns
+   */
+  belongTo(z: ZoneBuilder) {
+    const name = zoneWeakMap.get(z)!
+    const zone = this.#meta.zones.find((zone) => zone.name === name)
+    zone?.actors.push(this.#actor)
+
+    // remove from actors
+    const index = this.#meta.actors.findIndex(
+      (actor) => actor.name === this.#name,
+    )
+    this.#meta.actors.splice(index, 1)
+
     return this
   }
 }

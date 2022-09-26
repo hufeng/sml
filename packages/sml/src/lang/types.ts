@@ -48,10 +48,12 @@ export type ActorBuilderMeta = {
   actors: Array<Actor>
   links: Array<LinkAst>
   notes: Array<NoteAst>
+  zones: Array<Zone>
 }
 export type UsecaseMeta = {
   usecases: Array<UseCase>
   notes: Array<NoteAst>
+  zones: Array<Zone>
 }
 export type ZoneMeta = {
   actors: Array<Actor>
@@ -129,6 +131,7 @@ export type ProtocolAst = InfAst
 
 export interface Zone {
   label: string
+  name: string
   type: ZoneStyle
   actors: Array<Actor>
   usecases: Array<UseCase>
