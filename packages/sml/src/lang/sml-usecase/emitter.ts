@@ -25,12 +25,9 @@ export class PumlUseCaseEmitter extends Emitter<UseCaseDiagramAst> {
           s.$s('}')
         })
         // notes
-        .$fors(notes, (s, note) => {
-          const { label, position, on } = note
-          s.$s(`note ${position} of (${on})`).$s(`  ${label}`).$s('end note')
-        })
+        .$fors(notes, this.buildNotes)
         //links
-        .$fors(links, this.buildLink)
+        .$fors(links, this.buildLinks)
         //end
         .$s('@enduml')
         .toString('\n')

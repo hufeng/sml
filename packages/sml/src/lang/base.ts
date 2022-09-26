@@ -9,11 +9,18 @@ import {
   DirectionType,
   GlobalConfigType,
   LinkAst,
+  NoteAst,
   Position,
   ZoneStyle,
 } from './types'
 
 // ~~~~~~~~~~ builder ~~~~~~~~~~~~~~~~~~~~~~
+export class Builder {
+  protected id(s: string) {
+    const md5 = crypto.createHash('md5')
+    return md5.update(s).digest('hex').substring(0, 8)
+  }
+}
 
 export class LinkBuilder {
   #link: LinkAst
@@ -32,13 +39,6 @@ export class LinkBuilder {
       label,
       position,
     }
-  }
-}
-
-export class Builder {
-  protected id(s: string) {
-    const md5 = crypto.createHash('md5')
-    return md5.update(s).digest('hex').substring(0, 8)
   }
 }
 
@@ -113,8 +113,8 @@ export class Lang<T extends { title: string; config?: GlobalConfigType }> {
  * all Emitter base class
  */
 export abstract class Emitter<T extends BaseAst> {
-  protected meta: T
   protected s: S
+  protected meta: T
 
   constructor(meta: T) {
     this.meta = meta
@@ -144,7 +144,7 @@ export abstract class Emitter<T extends BaseAst> {
     s.$s(`!theme ${config!.theme}`)
   }
 
-  protected buildLink = (s: S, { from, to, note: link }: LinkAst) => {
+  protected buildLinks = (s: S, { from, to, note: link }: LinkAst) => {
     if (typeof link !== 'undefined') {
       s.$for(to, (s, to, i) =>
         s
@@ -169,6 +169,12 @@ export abstract class Emitter<T extends BaseAst> {
       s.$for(to, (s, to) => s.$s(`${from} ..> ${to}`))
     }
   }
+
+  protected buildNotes = (s: S, note: NoteAst) => {
+    const { label, position, on } = note
+    s.$s(`note ${position} of (${on})`).$s(`  ${label}`).$s('end note')
+  }
+  protected buildRels = (s: S, v: Rel) => s.$s(`${v.from} - ${v.to}`)
 
   plantUML(img: string) {
     const jar = path.join(__dirname, '../../bin/plantuml-1.2022.7.jar')

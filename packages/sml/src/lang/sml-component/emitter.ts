@@ -5,7 +5,7 @@ import { SmlComponentAst } from './types'
 
 export class PumlComponentEmitter extends Emitter<SmlComponentAst> {
   emitCode() {
-    const { zones, components, infs, links, vlinks, rels } = this.meta
+    const { zones, components, infs, links, vlinks, rels, notes } = this.meta
 
     return this.s
       .$s('@startuml')
@@ -20,9 +20,10 @@ export class PumlComponentEmitter extends Emitter<SmlComponentAst> {
       )
       .$for(components, this.container(`component`))
       .$for(infs, this.container(`interface`))
+      .$for(notes, this.buildNotes)
       .$for(links, this.link)
       .$for(vlinks, this.link)
-      .$for(rels, (s, v) => s.$s(`${v.from} - ${v.to}`))
+      .$for(rels, this.buildRels)
       .$s('@enduml')
       .toString('\n')
   }

@@ -12,9 +12,9 @@ export class PumlDeploymentEmitter extends Emitter<DeploymentLangAst> {
       .$s('')
       .$fors(components, this.build)
       .$for(zones, this.buildZones)
-      .$for(links, this.buildLink)
+      .$for(links, this.buildLinks)
       .$for(vlinks, this.buildVLink)
-      .$for(rels, (s, v) => s.$s(`${v.from} - ${v.to}`))
+      .$for(rels, this.buildRels)
       .$s('@enduml')
       .toString('\n')
   }
