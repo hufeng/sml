@@ -2,7 +2,7 @@ import path from 'node:path'
 import crypto from 'node:crypto'
 import { exec } from 'node:child_process'
 
-import S from '../common/s'
+import S from './s'
 import {
   ActorStyleType,
   BaseAst,

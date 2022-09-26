@@ -30,6 +30,10 @@ export class ZoneBuilder extends Builder {
     this.#meta.push(this.#zone)
   }
 
+  /**
+   * setting children
+   * @param arr
+   */
   has(...arr: Array<ComponentBuilder | InterfaceBuilder>) {
     arr.forEach((builder) => {
       // update component

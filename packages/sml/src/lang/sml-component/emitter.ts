@@ -1,4 +1,4 @@
-import S from '../../common/s'
+import S from '../s'
 import { Emitter } from '../base'
 import { LinkAst, SmlComponentAst } from '../types'
 

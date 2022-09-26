@@ -1,4 +1,4 @@
-import S from '../../common/s'
+import S from '../s'
 import { Emitter } from '../base'
 import { DeploymentBase, DeploymentLangAst } from '../types'
 
