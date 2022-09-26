@@ -1,5 +1,7 @@
 import path from 'node:path'
+import crypto from 'node:crypto'
 import { exec } from 'node:child_process'
+
 import S from '../common/s'
 import {
   ActorStyleType,
@@ -12,6 +14,13 @@ import {
 export const noop = () => {}
 
 // ~~~~~~~~~~ builder ~~~~~~~~~~~~~~~~~~~~~~
+export class Builder {
+  protected id(s: string) {
+    const md5 = crypto.createHash('md5')
+    return md5.update(s).digest('hex').substring(0, 8)
+  }
+}
+
 class ConfigBuilder {
   private config: GlobalConfigType
 

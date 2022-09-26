@@ -1,7 +1,7 @@
 import { LinkBuilder } from './link'
 import { UsecaseBuilder, usecaseWeakMap } from './usecase'
 import { ActorBuilderMeta, Position } from '../../types'
-import { Builder } from './base'
+import { Builder } from '../../base'
 
 export const actorWeakMap: WeakMap<ActorBuilder, string> = new WeakMap()
 

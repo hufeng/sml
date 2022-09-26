@@ -1,5 +1,5 @@
+import { Builder } from '../../base'
 import { Position, UsecaseMeta } from '../../types'
-import { Builder } from './base'
 
 export const usecaseWeakMap: WeakMap<UsecaseBuilder, string> = new WeakMap()
 
