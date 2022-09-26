@@ -149,45 +149,45 @@ export type ClazzAst = {
 }
 
 export interface DeploymentBase {
-  title: string
+  id: string
+  head: string
   label: string
-  id?: string
+  type: string
+}
+export interface DeploymentContainer {
+  id: string
+  head: string
+  label: string
+  type: DeploymentZoneStyle
+  children: Array<DeploymentBase>
 }
 
-export interface DeploymentContainer extends DeploymentBase {
-  id: string
-  databases: Array<DeploymentBase>
-  queues: Array<DeploymentBase>
-  stacks: Array<DeploymentBase>
-  boundary: Array<DeploymentBase>
-  infs: Array<DeploymentBase>
-  hexagons: Array<DeploymentBase>
-  controls: Array<DeploymentBase>
-  nodes: Array<DeploymentBase>
-  collections: Array<DeploymentBase>
-}
+export type DeploymentZoneStyle =
+  | 'artifact'
+  | 'cloud'
+  | 'component'
+  | 'database'
+  | 'node'
 
 export interface DeploymentLangAst extends BaseAst {
+  actors: Array<DeploymentBase>
   // container
-  artifacts: Array<DeploymentContainer>
-  clouds: Array<DeploymentContainer>
-  components: Array<DeploymentContainer>
-  databases: Array<DeploymentContainer>
-  nodes: Array<DeploymentContainer>
+  zones: Array<DeploymentContainer>
 
   // base
-  queues: Array<DeploymentBase>
-  stacks: Array<DeploymentBase>
-  actors: Array<DeploymentBase>
-  boundary: Array<DeploymentBase>
-  infs: Array<DeploymentBase>
-  hexagons: Array<DeploymentBase>
-  controls: Array<DeploymentBase>
-  collections: Array<DeploymentBase>
+  components: Array<DeploymentBase>
 
-  links: Array<{ from: string; to: string }>
-  vlinks: Array<{ from: string; to: string }>
-  rels: Array<{ from: string; to: string }>
+  links: Array<{
+    from: string
+    to: string[]
+    note?: { label: string; position: Position }
+  }>
+  vlinks: Array<{
+    from: string
+    to: string[]
+    note?: { label: string; position: Position }
+  }>
+  rels: Array<{ from: string; to: string[] }>
 }
 
 export type ComponentBuilderMeta = Pick<

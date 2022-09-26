@@ -8,20 +8,8 @@ export function DeploymentDiagram(
   const ast = {
     title,
 
-    artifacts: [],
-    clouds: [],
+    zones: [],
     components: [],
-    databases: [],
-    nodes: [],
-
-    queues: [],
-    stacks: [],
-    actors: [],
-    boundary: [],
-    infs: [],
-    hexagons: [],
-    controls: [],
-    collections: [],
 
     links: [],
     vlinks: [],

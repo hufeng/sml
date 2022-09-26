@@ -4,17 +4,7 @@ import { LinkAst, SmlComponentAst } from '../types'
 
 export class PumlComponentEmitter extends Emitter<SmlComponentAst> {
   emitCode() {
-    const {
-      zones,
-      clouds,
-      databases,
-      nodes,
-      components,
-      infs,
-      links,
-      vlinks,
-      rels,
-    } = this.meta
+    const { zones, components, infs, links, vlinks, rels } = this.meta
 
     return this.s
       .$s('@startuml')

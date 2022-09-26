@@ -8,6 +8,7 @@ import {
   BaseAst,
   DirectionType,
   GlobalConfigType,
+  LinkAst,
   ZoneStyle,
 } from './types'
 
@@ -121,6 +122,32 @@ export abstract class Emitter<T extends BaseAst> {
   protected buildTheme = (s: S) => {
     const { config } = this.meta
     s.$s(`!theme ${config!.theme}`)
+  }
+
+  protected buildLink = (s: S, { from, to, note: link }: LinkAst) => {
+    if (typeof link !== 'undefined') {
+      s.$for(to, (s, to, i) =>
+        s
+          .$s(`note "${link.label}" as N${i}`)
+          .$s(`(${from}) -- N${i}`)
+          .$s(`N${i} --> (${to})`),
+      )
+    } else {
+      s.$for(to, (s, to) => s.$s(`${from} --> ${to}`))
+    }
+  }
+
+  protected buildVLink = (s: S, { from, to, note: link }: LinkAst) => {
+    if (typeof link !== 'undefined') {
+      s.$for(to, (s, to, i) =>
+        s
+          .$s(`note "${link.label}" as N${i}`)
+          .$s(`(${from}) .. N${i}`)
+          .$s(`N${i} ..> (${to})`),
+      )
+    } else {
+      s.$for(to, (s, to) => s.$s(`${from} ..> ${to}`))
+    }
   }
 
   plantUML(img: string) {

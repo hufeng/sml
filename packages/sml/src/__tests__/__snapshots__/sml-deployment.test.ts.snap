@@ -7,20 +7,30 @@ skinparam packageStyle Rectangle
 left to right direction
 
 
-actor \\"Customer\\" as a1 <<actor>>
-actor \\"Guest\\" as a2 <<actor>>
-artifact \\"beehive-service\\" as a3 <<aritfact>>
-artifact \\"beehive-consumer\\" as a4 <<aritfact>>
-database \\"mysql\\" <<database>>
-queue \\"queue\\" <<queue>>
-stack \\"mem\\" <<stack>>
-boundary \\"end\\" as a5 <<boundary>>
-interface \\"invoke-service\\" <<interface>>
-control \\"control\\" <<control>>
-component \\"beehive-registry\\" <<component>>
-cloud \\"Network\\" <<cloud>>
-node \\"127.0.0.1\\" <<node>>
-a1 --> a3
-a2 ..> a4
+
+actor \\"Customer\\" as c_ce26601d <<actor>>
+
+cloud \\"registry\\" as z_a9205dcf <<cloud>> {
+  component \\"beehive-registry\\" as c_4dd942bb <<component>>
+}
+cloud \\"web-service\\" as z_82daadfb <<cloud>> {
+  component \\"nginx\\" as c_ee434023 <<component>>
+  component \\"dubbo-consumer\\" as c_fc2d8b3d <<component>>
+  queue \\"request queue\\" as c_9ad4f252 <<queue>>
+}
+cloud \\"User-Center\\" as z_42fac19d <<cloud>> {
+  collection \\"login-service\\" as c_b615bcf7 <<RpcService>>
+  collection \\"registry-service\\" as c_11289165 <<RpcService>>
+}
+database \\"persistence\\" as z_3a6988a0 <<database>> {
+  component \\"mysql\\" as c_81c3b080 <<component>>
+}
+c_ce26601d --> c_ee434023
+c_fc2d8b3d --> c_9ad4f252
+c_fc2d8b3d ..> c_4dd942bb
+c_9ad4f252 ..> c_b615bcf7
+c_9ad4f252 ..> c_11289165
+c_b615bcf7 ..> c_81c3b080
+c_11289165 ..> c_81c3b080
 @enduml"
 `;
