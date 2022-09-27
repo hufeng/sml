@@ -2,6 +2,7 @@ import path from 'node:path'
 import glob from 'glob'
 import chalk from 'chalk'
 import fs from 'fs-extra'
+import chokidar from 'chokidar'
 
 const cwd = process.cwd()
 
@@ -26,6 +27,8 @@ export async function compile() {
   const files = await scanSmlModules()
   console.log(chalk.greenBright(`compiler puml: 🛫️`))
 
+  globalThis.__emitters__ = []
+
   for (let file of files) {
     console.log(chalk.greenBright(`${file}...`))
     require(path.join(cwd, file))
@@ -44,21 +47,29 @@ export async function compile() {
     )
   }
 
+  globalThis.__emitters__ = []
+
   console.log()
 }
 
 /**
  * compile single file
  */
-export async function compileFile(file: string) {
-  console.log(chalk.greenBright(`${file}...`))
-  require(path.join(cwd, file))
+export function compileFile(file: string) {
+  // remove cache,let module reload
+  const full = path.join(cwd, file)
+  console.log(chalk.greenBright(`compiler puml: ${file} 🛫️`))
+  delete require.cache[full]
+
+  globalThis.__emitters__ = []
+  require(full)
+
   // create dist dir if need
   const dist = path.join(cwd, './dist')
   fs.ensureDirSync(dist)
 
   // build plant uml dsl code
-  for (let { ast, emitter } of __emitters__) {
+  for (let { ast, emitter } of globalThis.__emitters__) {
     // write puml code
     fs.writeFileSync(
       path.join('./dist', `${ast.title.replace(/ /g, '_')}.puml`),
@@ -66,5 +77,28 @@ export async function compileFile(file: string) {
     )
   }
 
+  globalThis.__emitters__ = []
+
   console.log()
+}
+
+export async function watchCompile() {
+  // watch mode
+  console.log(chalk.greenBright(`compile watch mode...`))
+  const watcher = chokidar.watch('**/*.sml.[jt]s', {
+    ignored: /node_modules|dist/,
+  })
+
+  watcher
+    .on('add', (path) => {
+      console.log(chalk.greenBright(`File ${path} has been added`))
+      compileFile(path)
+    })
+    .on('change', (path) => {
+      console.log(chalk.yellowBright(`File ${path} has been changed`))
+      compileFile(path)
+    })
+    .on('unlink', (path) => {
+      console.log(chalk.redBright(`File ${path} has been removed`))
+    })
 }

@@ -1,10 +1,8 @@
 #!/usr/bin/env node
 
-import chalk from 'chalk'
-import chokidar from 'chokidar'
 import { Command } from 'commander'
 import { build } from './build'
-import { compile } from './compile'
+import { compile, watchCompile } from './compile'
 import { init } from './init'
 
 // run typescript directly
@@ -45,15 +43,7 @@ program
       return
     }
 
-    // watch mode
-    console.log(chalk.greenBright(`compile watch mode...`))
-    const watcher = chokidar.watch('**/*.sml.[jt]s', {
-      ignored: /node_modules|dist/,
-    })
-    watcher.on('all', async (path, stats) => {
-      console.log(chalk.yellowBright(`watch ${path} => ${stats}`))
-      await compile()
-    })
+    await watchCompile()
   })
 
 program.parse(process.argv)

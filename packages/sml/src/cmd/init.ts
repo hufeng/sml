@@ -17,7 +17,7 @@ const pkg = `
 {
   "name": "sml-app",
   "dependencies": {
-    "@hf/sml": "^0.0.1"
+    "smlc": "^0.0.1"
   }
 }
 `
@@ -30,7 +30,7 @@ const tsconfig = `
     "module": "commonjs",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["sml/lib/typings/global"]
+    "types": ["smlc/lib/typings/global"]
   }
 } 
 `
@@ -43,9 +43,10 @@ sml.UsecaseDiagram('hello use case', ml => {
   // domain
   const z = ml.zone('System')
   const u = ml.usecase('login').belongTo(z)
-
+  const r = ml.usecase('registry').belongTo(z)
+  
   // link
-  a.link(z)
+  a.link([u, r])
 })
 `
 
