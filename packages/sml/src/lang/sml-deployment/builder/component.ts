@@ -16,6 +16,11 @@ export type DeployComponentType =
   | 'control'
   | 'collections'
   | 'component'
+  | 'artifact'
+  | 'cloud'
+  | 'component'
+  | 'database'
+  | 'node'
 
 export const componentWeakMap: WeakMap<ComponentBuilder, string> = new WeakMap()
 

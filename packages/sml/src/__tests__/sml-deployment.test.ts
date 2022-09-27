@@ -41,4 +41,79 @@ describe('deployment test suite', () => {
 
     expect(emitter.emitCode()).toMatchSnapshot()
   })
+
+  it('test artifact cloud database node', () => {
+    const { ast, emitter } = DeploymentDiagram('hello more component', (ml) => {
+      const a = ml.artifact('artifact')
+      const c = ml.cloud('cloud')
+      const database = ml.database('db')
+      const node = ml.node('node')
+
+      a.link(c)
+      c.link(database)
+      database.link(node)
+    })
+    expect(ast).toMatchInlineSnapshot(`
+      {
+        "components": [
+          {
+            "head": "artifact",
+            "id": "c_8e5b948a",
+            "label": "artifact",
+            "type": "artifact",
+          },
+          {
+            "head": "cloud",
+            "id": "c_a1234b31",
+            "label": "cloud",
+            "type": "cloud",
+          },
+          {
+            "head": "database",
+            "id": "c_d77d5e50",
+            "label": "db",
+            "type": "database",
+          },
+          {
+            "head": "node",
+            "id": "c_36c45369",
+            "label": "node",
+            "type": "node",
+          },
+        ],
+        "config": {
+          "actorStyle": "default",
+          "direction": "left->right",
+          "packageStyle": "Rectangle",
+          "theme": "sketchy-outline",
+        },
+        "links": [
+          {
+            "from": "c_8e5b948a",
+            "to": [
+              "c_a1234b31",
+            ],
+          },
+          {
+            "from": "c_a1234b31",
+            "to": [
+              "c_d77d5e50",
+            ],
+          },
+          {
+            "from": "c_d77d5e50",
+            "to": [
+              "c_36c45369",
+            ],
+          },
+        ],
+        "notes": [],
+        "rels": [],
+        "title": "hello more component",
+        "vlinks": [],
+        "zones": [],
+      }
+    `)
+    expect(emitter.emitCode()).toMatchSnapshot()
+  })
 })

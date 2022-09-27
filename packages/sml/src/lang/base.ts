@@ -42,6 +42,10 @@ export class LinkBuilder {
       position,
     }
   }
+
+  commentOf(comment: string) {
+    this.#link.comment = comment
+  }
 }
 
 class ConfigBuilder {
@@ -148,31 +152,59 @@ export abstract class Emitter<T extends BaseAst> {
     s.$s(`!theme ${config!.theme}`)
   }
 
-  protected buildLinks = (s: S, { from, to, note: link }: LinkAst) => {
-    if (typeof link !== 'undefined') {
-      s.$for(to, (s, to, i) =>
-        s
-          .$s(`note "${link.label}" as N${i}`)
-          .$s(`(${from}) -- N${i}`)
-          .$s(`N${i} --> (${to})`),
-      )
-    } else {
-      s.$for(to, (s, to) => s.$s(`${from} --> ${to}`))
-    }
+  protected buildActorStyle = (s: S) => {
+    const { config } = this.meta
+    s.$if(
+      config!.actorStyle !== 'default',
+      `skinparam actorStyle ${config!.actorStyle}`,
+    )
   }
 
-  protected buildVLink = (s: S, { from, to, note: link }: LinkAst) => {
-    if (typeof link !== 'undefined') {
-      s.$for(to, (s, to, i) =>
-        s
-          .$s(`note "${link.label}" as N${i}`)
-          .$s(`(${from}) .. N${i}`)
-          .$s(`N${i} ..> (${to})`),
-      )
-    } else {
-      s.$for(to, (s, to) => s.$s(`${from} ..> ${to}`))
-    }
+  protected buildPackageStyle = (s: S) => {
+    const { config } = this.meta
+    // setting direction
+    s.$s(`${config!.direction.replace('->', ' to ')} direction\n`)
   }
+
+  protected buildDirection = (s: S) => {
+    const { config } = this.meta
+    // setting direction
+    s.$s(`${config!.direction.replace('->', ' to ')} direction\n`)
+  }
+
+  protected buildLinks =
+    (linkStyle: '-->' | '->' = '-->') =>
+    (s: S, { from, to, comment, note: link }: LinkAst) => {
+      if (typeof link !== 'undefined') {
+        s.$for(to, (s, to, i) =>
+          s
+            .$s(`note "${link.label}" as N${i}`)
+            .$s(`(${from}) -- N${i}`)
+            .$s(`N${i} --> (${to})`),
+        )
+      } else {
+        s.$for(to, (s, to) =>
+          s.$s(`${from} ${linkStyle} ${to}${comment ? ' : ' + comment : ''}`),
+        )
+      }
+    }
+
+  protected buildVlink =
+    (linkStyle: '..>' | '.>' | '-->' = '..>') =>
+    (s: S, { from, to, comment, note: link }: LinkAst) => {
+      if (typeof link !== 'undefined') {
+        s.$for(to, (s, to, i) =>
+          s
+            .$s(`note "${link.label}" as N${i}`)
+            .$s(`(${from}) .. N${i}`)
+            .$s(`N${i} ..> (${to})`),
+        )
+      } else {
+        s.$for(to, (s, to) =>
+          s.$s(`${from} ${linkStyle} ${to}${comment ? ' : ' + comment : ''}`),
+        )
+      }
+    }
 
   protected buildNotes = (s: S, note: NoteAst) => {
     const { label, position, on } = note

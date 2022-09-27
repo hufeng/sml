@@ -92,4 +92,20 @@ export class SmlDeploymentLang extends Lang<DeploymentLangAst> {
   collections(label: string) {
     return new ComponentBuilder(this.meta, label, 'collections')
   }
+
+  artifact(label: string) {
+    return new ComponentBuilder(this.meta, label, 'artifact')
+  }
+
+  cloud(label: string) {
+    return new ComponentBuilder(this.meta, label, 'cloud')
+  }
+
+  database(label: string) {
+    return new ComponentBuilder(this.meta, label, 'database')
+  }
+
+  node(label: string) {
+    return new ComponentBuilder(this.meta, label, 'node')
+  }
 }

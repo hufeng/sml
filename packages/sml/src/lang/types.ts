@@ -54,6 +54,7 @@ export interface BaseAst {
 export type LinkAst = {
   from: string
   to: Array<string>
+  comment?: string
   note?: {
     label: string
     position?: Position
@@ -69,17 +70,20 @@ export type NoteAst = {
 export type RelAst = {
   from: string
   to: string[]
+  commment?: string
 }
 
 export interface LinkContaniner {
   links: Array<{
     from: string
     to: string[]
+    commment?: string
     note?: { label: string; position: Position }
   }>
   vlinks?: Array<{
     from: string
     to: string[]
+    commment?: string
     note?: { label: string; position: Position }
   }>
   rels?: Array<RelAst>
