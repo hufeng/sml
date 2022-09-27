@@ -37,10 +37,15 @@ const tsconfig = `
 
 const index = `
 sml.UsecaseDiagram('hello use case', ml => {
-  ml.actor('user', 'a1')
-  ml.package('System')
-    .usecase('login', 'u1')
-  ml.link('a1', 'u1')
+  // actor
+  const a = ml.actor('user')
+  
+  // domain
+  const z = ml.zone('System')
+  const u = ml.usecase('login').belongTo(z)
+
+  // link
+  a.link(z)
 })
 `
 

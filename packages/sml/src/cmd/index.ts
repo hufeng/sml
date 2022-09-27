@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+import chalk from 'chalk'
+import chokidar from 'chokidar'
 import { Command } from 'commander'
 import { build } from './build'
 import { compile } from './compile'
@@ -35,8 +37,23 @@ program
 program
   .command('compile')
   .description('emit sml to puml')
-  .action(async () => {
-    await compile()
+  .option('-w, --watch', 'watch mode')
+  .action(async (options) => {
+    if (!options.watch) {
+      // compile mode
+      await compile()
+      return
+    }
+
+    // watch mode
+    console.log(chalk.greenBright(`compile watch mode...`))
+    const watcher = chokidar.watch('**/*.sml.[jt]s', {
+      ignored: /node_modules|dist/,
+    })
+    watcher.on('all', async (path, stats) => {
+      console.log(chalk.yellowBright(`watch ${path} => ${stats}`))
+      await compile()
+    })
   })
 
 program.parse(process.argv)

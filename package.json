@@ -10,6 +10,7 @@
     "test:watch": "vitest",
     "ts-check": "tsc --project ./packages/sml/tsconfig.json --noEmit",
     "build": "tsc --project ./packages/sml/tsconfig.json",
+    "link": "pnpm run build && cd ./packages/sml && npm link",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {

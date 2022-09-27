@@ -9,6 +9,7 @@
   "license": "MIT",
   "dependencies": {
     "commander": "^9.4.0",
+    "chokidar": "^3.5.3",
     "chalk": "^4.1.1",
     "esbuild": "^0.15.7",
     "esbuild-register": "^3.3.3",
