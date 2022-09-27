@@ -18,12 +18,20 @@ export type ZoneStyle =
  */
 export type JsonPath = string
 export type ActorStyleType = 'default' | 'awesome' | 'Hollow'
-export type DirectionType = 'left->right' | 'top->down'
+export type DirectionType = 'left->right' | 'top->bottom'
 
 export type Position = 'top' | 'right' | 'bottom' | 'left'
 export type DataType = string
 
 export type ParamType = { name: string; type: DataType }
+
+export type Theme =
+  | 'sketchy-outline'
+  | 'cerulean-outline'
+  | 'black-knight'
+  | 'crt-green'
+  | 'hacker'
+  | 'sandstone'
 
 // ~~~~~~ composite type ~~~~~~~~~~~~~~~
 
@@ -31,7 +39,7 @@ export type GlobalConfigType = {
   actorStyle: ActorStyleType
   direction: DirectionType
   packageStyle: ZoneStyle
-  theme: 'sketchy-outline' | 'cerulean-outline' | 'black-knight'
+  theme: Theme
 }
 
 // ~~~~~~~~ Diagram Ast ~~~~~~~~~~~~~~~~~~~

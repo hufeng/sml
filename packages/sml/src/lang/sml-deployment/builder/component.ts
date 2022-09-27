@@ -21,7 +21,7 @@ export const componentWeakMap: WeakMap<ComponentBuilder, string> = new WeakMap()
 
 export class ComponentBuilder extends Builder {
   #meta: ComponentBuilderMeta
-  #name: string
+  #id: string
   #component: Deployment
 
   constructor(
@@ -32,11 +32,11 @@ export class ComponentBuilder extends Builder {
     super()
     this.#meta = meta
     const prefix = type === 'interface' ? 'i_' : 'c_'
-    this.#name = prefix + this.id(label)
-    componentWeakMap.set(this, this.#name)
+    this.#id = prefix + this.id(label)
+    componentWeakMap.set(this, this.#id)
 
     this.#component = {
-      id: this.#name,
+      id: this.#id,
       head: type,
       label,
       type,
@@ -59,7 +59,7 @@ export class ComponentBuilder extends Builder {
     const zone = this.#meta.zones.find((zone) => zone.id === name)
     zone?.components.push(this.#component)
 
-    const index = this.#meta.components.findIndex((c) => c.id === this.#name)
+    const index = this.#meta.components.findIndex((c) => c.id === this.#id)
     this.#meta.components.splice(index, 1)
 
     return this
@@ -70,9 +70,9 @@ export class ComponentBuilder extends Builder {
     fn?: (l: LinkBuilder) => void,
   ) {
     c = Array.isArray(c) ? c : [c]
-    const to = c.map((c) => c.#name)
+    const to = c.map((c) => c.#id)
 
-    const link = { from: this.#name, to }
+    const link = { from: this.#id, to }
     fn && fn(new LinkBuilder(link))
 
     this.#meta.links.push(link)
@@ -84,9 +84,9 @@ export class ComponentBuilder extends Builder {
     fn?: (l: LinkBuilder) => void,
   ) {
     c = Array.isArray(c) ? c : [c]
-    const to = c.map((c) => c.#name)
+    const to = c.map((c) => c.#id)
 
-    const link = { from: this.#name, to }
+    const link = { from: this.#id, to }
     fn && fn(new LinkBuilder(link))
 
     this.#meta.vlinks.push(link)
@@ -100,7 +100,7 @@ export class ComponentBuilder extends Builder {
   rel(i: ComponentBuilder | Array<ComponentBuilder>) {
     i = Array.isArray(i) ? i : [i]
     const to = i.map((i) => componentWeakMap.get(i)!)
-    this.#meta.rels.push({ from: this.#name, to })
+    this.#meta.rels.push({ from: this.#id, to })
 
     return this
   }

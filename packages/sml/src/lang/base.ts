@@ -12,6 +12,7 @@ import {
   NoteAst,
   Position,
   RelAst,
+  Theme,
   ZoneStyle,
 } from './types'
 
@@ -76,14 +77,16 @@ class ConfigBuilder {
    */
   direction(direction: DirectionType) {
     this.config.direction = direction
+    return this
   }
 
   /**
    * 设置主题
    * @param theme
    */
-  theme(theme: GlobalConfigType['theme'] = 'cerulean-outline') {
+  theme(theme: Theme = 'cerulean-outline') {
     this.config.theme = theme
+    return this
   }
 }
 
