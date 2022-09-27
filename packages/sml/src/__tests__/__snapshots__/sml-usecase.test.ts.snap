@@ -1,7 +1,7 @@
 // Vitest Snapshot v1
 
 exports[`sml usecase test suites > only actor 2`] = `
-"@startuml
+"@startuml hello_usecase_diagram
 !theme sketchy-outline
 skinparam packageStyle Rectangle
 left to right direction
@@ -13,7 +13,7 @@ actor :Last actor: as a_8b705053
 `;
 
 exports[`sml usecase test suites > test actor awesome style 1`] = `
-"@startuml
+"@startuml test_actor_awesome_style
 !theme sketchy-outline
 skinparam actorStyle awesome
 skinparam packageStyle Rectangle
@@ -28,7 +28,7 @@ a_8f9bfe9d --> uc_5d686b2e
 `;
 
 exports[`sml usecase test suites > test actor style 1`] = `
-"@startuml
+"@startuml test_actor_style
 !theme sketchy-outline
 skinparam packageStyle Rectangle
 left to right direction
@@ -42,7 +42,7 @@ a_ee11cbb1 --> uc_0cce1966
 `;
 
 exports[`sml usecase test suites > test note on simple actor or usecase 1`] = `
-"@startuml
+"@startuml test_simple_note
 !theme sketchy-outline
 skinparam packageStyle Rectangle
 left to right direction
@@ -61,7 +61,7 @@ end note
 `;
 
 exports[`sml usecase test suites > test only usecases 2`] = `
-"@startuml
+"@startuml hello_usecase_diagram
 !theme sketchy-outline
 skinparam packageStyle Rectangle
 left to right direction
@@ -73,7 +73,7 @@ usecase (play) as uc_a3b34c08
 `;
 
 exports[`sml usecase test suites > test packages 1`] = `
-"@startuml
+"@startuml hello_usecase_diagram
 !theme sketchy-outline
 skinparam packageStyle Rectangle
 left to right direction
@@ -99,7 +99,7 @@ a_8fd82b88 --> uc_a6709cd3
 `;
 
 exports[`sml usecase test suites > test rect 2`] = `
-"@startuml
+"@startuml hello_usecase_diagram
 !theme sketchy-outline
 skinparam packageStyle Rectangle
 left to right direction

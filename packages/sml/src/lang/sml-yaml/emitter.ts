@@ -6,6 +6,7 @@ export default class PumlYamlEmitter extends Emitter<YamlDiagramAst> {
     const { title, highlights, yaml } = this.meta
 
     return this.s
+      .reset()
       .$s(`@startyaml ${title.replace(/ /g, '_')}`)
       .$fn(this.buildTheme)
       .$for(highlights, (s, highlight) =>
@@ -18,6 +19,6 @@ export default class PumlYamlEmitter extends Emitter<YamlDiagramAst> {
       )
       .$s(yaml)
       .$s('@endyaml')
-      .toString('\n')
+      .toString()
   }
 }

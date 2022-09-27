@@ -7,6 +7,7 @@ export class PumlUseCaseEmitter extends Emitter<UseCaseDiagramAst> {
 
     return (
       this.s
+        .reset()
         // start
         .$s(`@startuml ${title.replace(/ /g, '_')}`)
         .$fn(this.buildConfig)
@@ -30,7 +31,7 @@ export class PumlUseCaseEmitter extends Emitter<UseCaseDiagramAst> {
         .$fors(links, this.buildLinks)
         //end
         .$s('@enduml')
-        .toString('\n')
+        .toString()
     )
   }
 }

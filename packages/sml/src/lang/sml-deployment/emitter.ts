@@ -7,6 +7,7 @@ export class PumlDeploymentEmitter extends Emitter<DeploymentLangAst> {
     const { title, zones, components, links, vlinks, rels } = this.meta
 
     return this.s
+      .reset()
       .$s(`@startuml ${title.replace(/ /g, '_')}`)
       .$fn(this.buildConfig)
       .$s('')
@@ -16,7 +17,7 @@ export class PumlDeploymentEmitter extends Emitter<DeploymentLangAst> {
       .$for(vlinks, this.buildVLink)
       .$for(rels, this.buildRels)
       .$s('@enduml')
-      .toString('\n')
+      .toString()
   }
 
   build(s: S, v: DeploymentBase) {

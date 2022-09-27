@@ -46,3 +46,25 @@ export async function compile() {
 
   console.log()
 }
+
+/**
+ * compile single file
+ */
+export async function compileFile(file: string) {
+  console.log(chalk.greenBright(`${file}...`))
+  require(path.join(cwd, file))
+  // create dist dir if need
+  const dist = path.join(cwd, './dist')
+  fs.ensureDirSync(dist)
+
+  // build plant uml dsl code
+  for (let { ast, emitter } of __emitters__) {
+    // write puml code
+    fs.writeFileSync(
+      path.join('./dist', `${ast.title.replace(/ /g, '_')}.puml`),
+      emitter.emitCode(),
+    )
+  }
+
+  console.log()
+}

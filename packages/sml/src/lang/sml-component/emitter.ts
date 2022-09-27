@@ -9,6 +9,7 @@ export class PumlComponentEmitter extends Emitter<SmlComponentAst> {
       this.meta
 
     return this.s
+      .reset()
       .$s(`@startuml ${title.replace(/ /g, '_')}`)
       .$fn(this.buildConfig)
       .$s('')
@@ -26,7 +27,7 @@ export class PumlComponentEmitter extends Emitter<SmlComponentAst> {
       .$for(vlinks, this.link)
       .$for(rels, this.buildRels)
       .$s('@enduml')
-      .toString('\n')
+      .toString()
   }
 
   container(name: 'component' | 'interface') {

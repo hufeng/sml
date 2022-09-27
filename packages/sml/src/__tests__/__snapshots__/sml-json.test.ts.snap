@@ -1,7 +1,7 @@
 // Vitest Snapshot v1
 
 exports[`sml json test suites > test syntax api 1`] = `
-"@startjson
+"@startjson hello_world
 !theme sketchy-outline
 
 #highlight \\"lastName\\"

@@ -48,7 +48,12 @@ export default class S {
     return this
   }
 
-  toString(delimiter = '') {
+  reset() {
+    this.buff = []
+    return this
+  }
+
+  toString(delimiter = '\n') {
     return this.buff.join(delimiter)
   }
 }

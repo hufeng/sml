@@ -1,7 +1,7 @@
 // Vitest Snapshot v1
 
 exports[`deployment test suite > test all elements 1`] = `
-"@startuml
+"@startuml hello_deployment
 !theme sketchy-outline
 skinparam packageStyle Rectangle
 left to right direction

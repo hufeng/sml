@@ -19,11 +19,12 @@ export class PumlClassEmitter extends Emitter<ClassDiagramAst> {
       .emitEnum(enums)
       .emitEnd()
 
-    return this.s.toString('\n')
+    return this.s.toString()
   }
 
   private emitStart() {
     this.s
+      .reset()
       .$s(`@startuml ${this.meta.title.replace(/ /g, '_')}`)
       .$fn(this.buildConfig)
     return this
