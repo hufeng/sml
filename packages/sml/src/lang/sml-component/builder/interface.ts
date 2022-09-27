@@ -64,7 +64,7 @@ export class InterfaceBuilder extends Builder {
   belongTo(z: ZoneBuilder) {
     const name = zoneWeakMap.get(z)!
     const zone = this.#meta.zones.find((zone) => zone.name === name)
-    zone?.components.push(this.#inf)
+    zone?.infs.push(this.#inf)
 
     const index = this.#meta.infs.findIndex((c) => c.id === this.#id)
     this.#meta.infs.splice(index, 1)

@@ -103,12 +103,13 @@ describe('component diagram test suites', () => {
                 "id": "c_4b00bbf4",
                 "label": "Nodejs",
               },
+            ],
+            "infs": [
               {
                 "id": "i_80791b3a",
                 "label": "http",
               },
             ],
-            "infs": [],
             "label": "cloud",
             "name": "z_a1234b31",
             "type": "cloud",
@@ -123,12 +124,13 @@ describe('component diagram test suites', () => {
                 "id": "c_d77ba138",
                 "label": "service-b",
               },
+            ],
+            "infs": [
               {
                 "id": "i_da0fb2ac",
                 "label": "rpc",
               },
             ],
-            "infs": [],
             "label": "bff",
             "name": "z_18452e2c",
             "type": "package",

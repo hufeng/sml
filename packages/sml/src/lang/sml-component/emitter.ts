@@ -1,6 +1,5 @@
 import S from '../s'
 import { Emitter } from '../base'
-import { LinkAst } from '../types'
 import { SmlComponentAst } from './types'
 
 export class PumlComponentEmitter extends Emitter<SmlComponentAst> {
@@ -23,8 +22,8 @@ export class PumlComponentEmitter extends Emitter<SmlComponentAst> {
       .$for(components, this.container(`component`))
       .$for(infs, this.container(`interface`))
       .$for(notes, this.buildNotes)
-      .$for(links, this.link)
-      .$for(vlinks, this.link)
+      .$for(links, this.buildVLink)
+      .$for(vlinks, this.buildVLink)
       .$for(rels, this.buildRels)
       .$s('@enduml')
       .toString()
@@ -33,19 +32,6 @@ export class PumlComponentEmitter extends Emitter<SmlComponentAst> {
   container(name: 'component' | 'interface') {
     return (s: S, v: { label: string; id?: string }) => {
       return s.$s(`  ${name} "${v.label}"${v.id ? '  as ' + v.id : ''}`)
-    }
-  }
-
-  link(s: S, { from, to, note }: LinkAst) {
-    if (typeof note !== 'undefined') {
-      s.$for(to, (s, to, i) =>
-        s
-          .$s(`note "${note.label}" as N${i}`)
-          .$s(`(${from}) -- N${i}`)
-          .$s(`N${i} --> (${to})`),
-      )
-    } else {
-      s.$for(to, (s, to) => s.$s(`${from} --> ${to}`))
     }
   }
 }
