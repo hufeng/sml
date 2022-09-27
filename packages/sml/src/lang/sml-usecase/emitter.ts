@@ -3,12 +3,12 @@ import { UseCaseDiagramAst } from './types'
 
 export class PumlUseCaseEmitter extends Emitter<UseCaseDiagramAst> {
   emitCode() {
-    const { actors, usecases, zones, links, notes } = this.meta
+    const { title, actors, usecases, zones, links, notes } = this.meta
 
     return (
       this.s
         // start
-        .$s('@startuml')
+        .$s(`@startuml ${title.replace(/ /g, '_')}`)
         .$fn(this.buildConfig)
         // actors
         .$for(actors, (s, v) => s.$s(`actor :${v.label}: as ${v.name}`))

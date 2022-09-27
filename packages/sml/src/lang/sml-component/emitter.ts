@@ -5,10 +5,11 @@ import { SmlComponentAst } from './types'
 
 export class PumlComponentEmitter extends Emitter<SmlComponentAst> {
   emitCode() {
-    const { zones, components, infs, links, vlinks, rels, notes } = this.meta
+    const { title, zones, components, infs, links, vlinks, rels, notes } =
+      this.meta
 
     return this.s
-      .$s('@startuml')
+      .$s(`@startuml ${title.replace(/ /g, '_')}`)
       .$fn(this.buildConfig)
       .$s('')
       .$for(zones, (s, v) =>

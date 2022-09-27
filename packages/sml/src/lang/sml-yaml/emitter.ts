@@ -3,10 +3,10 @@ import { YamlDiagramAst } from './types'
 
 export default class PumlYamlEmitter extends Emitter<YamlDiagramAst> {
   emitCode() {
-    const { highlights, yaml } = this.meta
+    const { title, highlights, yaml } = this.meta
 
     return this.s
-      .$s(`@startyaml`)
+      .$s(`@startyaml ${title.replace(/ /g, '_')}`)
       .$fn(this.buildTheme)
       .$for(highlights, (s, highlight) =>
         s.$s(

@@ -23,7 +23,9 @@ export class PumlClassEmitter extends Emitter<ClassDiagramAst> {
   }
 
   private emitStart() {
-    this.s.$s('@startuml').$fn(this.buildConfig)
+    this.s
+      .$s(`@startuml ${this.meta.title.replace(/ /g, '_')}`)
+      .$fn(this.buildConfig)
     return this
   }
 

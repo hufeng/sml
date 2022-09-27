@@ -3,9 +3,9 @@ import { JsonDiagramAst } from './types'
 
 export class PumlJsonEmitter extends Emitter<JsonDiagramAst> {
   emitCode() {
-    const { highlights, json } = this.meta
+    const { title, highlights, json } = this.meta
     return this.s
-      .$s(`@startjson`)
+      .$s(`@startjson ${title.replace(/ /g, '_')}`)
       .$fn(this.buildTheme)
       .$fors(highlights, (s, highlight) =>
         s.$s(
