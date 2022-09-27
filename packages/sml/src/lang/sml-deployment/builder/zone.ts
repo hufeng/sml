@@ -50,7 +50,7 @@ export class ZoneBuilder extends Builder {
    * set children
    * @param children
    */
-  has(children: ComponentBuilder | Array<ComponentBuilder>) {
+  has(...children: Array<ComponentBuilder>) {
     children = Array.isArray(children) ? children : [children]
     for (let child of children) {
       const name = componentWeakMap.get(child)!
