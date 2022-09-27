@@ -59,13 +59,15 @@ package \\"app\\" {
   component \\"LoginActivity\\"  as c_d8a28ff5
 }
 c_33fcf2b3 ..> c_0dc28396
+c_33fcf2b3 ..> i_acfd60a8
+c_0dc28396 ..> i_c062b511
+i_acfd60a8 ..> i_c062b511
+i_20445edb ..> i_ac37107e
+i_ac37107e ..> c_4faf9542
 c_02658109 ..> c_4faf9542
-c_33fcf2b3 - i_acfd60a8
-c_0dc28396 - i_c062b511
-i_acfd60a8 - i_c062b511
 c_02658109 - i_acfd60a8
-i_20445edb - i_ac37107e
-i_ac37107e - c_4faf9542
-c_d8a28ff5 - i_20445edb,i_ac37107e
+c_02658109 - i_c062b511
+c_d8a28ff5 - i_20445edb
+c_d8a28ff5 - i_ac37107e
 @enduml"
 `;

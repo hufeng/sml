@@ -1,6 +1,5 @@
 import { Builder } from '../../base'
 import { ComponentBuilder, componentWeakMap } from './component'
-import { InterfaceBuilder, interfaceWeakMap } from './interface'
 import {
   ComponentContainer,
   ComponentZoneStyle,
@@ -25,7 +24,6 @@ export class ZoneBuilder extends Builder {
       name: this.#name,
       type: 'package',
       components: [],
-      infs: [],
     }
 
     this.#meta.zones.push(this.#zone)
@@ -45,25 +43,15 @@ export class ZoneBuilder extends Builder {
    * setting children
    * @param arr
    */
-  has(...arr: Array<ComponentBuilder | InterfaceBuilder>) {
+  has(...arr: Array<ComponentBuilder>) {
     arr.forEach((builder) => {
       // update component
-      if (builder instanceof ComponentBuilder) {
-        const name = componentWeakMap.get(builder)!
-        const index = this.#meta.components.findIndex(
-          (component) => component.id === name,
-        )
-        this.#zone.components.push(this.#meta.components[index]!)
-        this.#meta.components.splice(index, 1)
-      }
-
-      // update interface
-      else if (builder instanceof InterfaceBuilder) {
-        const name = interfaceWeakMap.get(builder)!
-        const index = this.#meta.infs.findIndex((inf) => inf.id === name)
-        this.#zone.infs.push(this.#meta.infs[index]!)
-        this.#meta.infs.splice(index, 1)
-      }
+      const name = componentWeakMap.get(builder)!
+      const index = this.#meta.components.findIndex(
+        (component) => component.id === name,
+      )
+      this.#zone.components.push(this.#meta.components[index]!)
+      this.#meta.components.splice(index, 1)
     })
   }
 }

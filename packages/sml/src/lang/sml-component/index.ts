@@ -7,12 +7,8 @@ export function ComponentDiagram(
 ) {
   const ast = {
     title,
-
     zones: [],
-
     components: [],
-    infs: [],
-
     notes: [],
     vlinks: [],
     links: [],

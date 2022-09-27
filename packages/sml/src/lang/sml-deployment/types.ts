@@ -1,6 +1,6 @@
 import { BaseAst, LinkContaniner } from '../types'
 
-export interface DeploymentBase {
+export interface Deployment {
   id: string
   head: string
   label: string
@@ -11,7 +11,7 @@ export interface DeploymentContainer {
   head: string
   label: string
   type: DeploymentZoneStyle
-  children: Array<DeploymentBase>
+  components: Array<Deployment>
 }
 
 export type DeploymentZoneStyle =
@@ -25,5 +25,5 @@ export interface DeploymentLangAst extends BaseAst, Required<LinkContaniner> {
   // container
   zones: Array<DeploymentContainer>
   // base
-  components: Array<DeploymentBase>
+  components: Array<Deployment>
 }

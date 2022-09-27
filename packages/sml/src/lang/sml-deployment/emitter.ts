@@ -1,6 +1,6 @@
 import S from '../s'
 import { Emitter } from '../base'
-import { DeploymentLangAst, DeploymentBase, DeploymentContainer } from './types'
+import { DeploymentLangAst, Deployment, DeploymentContainer } from './types'
 
 export class PumlDeploymentEmitter extends Emitter<DeploymentLangAst> {
   emitCode() {
@@ -20,13 +20,13 @@ export class PumlDeploymentEmitter extends Emitter<DeploymentLangAst> {
       .toString()
   }
 
-  build(s: S, v: DeploymentBase) {
+  build(s: S, v: Deployment) {
     s.$s(`${v.type} "${v.label}"${' as ' + v.id} <<${v.head}>>`)
   }
 
   buildZones(s: S, v: DeploymentContainer) {
     s.$s(`${v.type} "${v.label}"${' as ' + v.id} <<${v.head}>> {`)
-      .$for(v.children, (s, v) =>
+      .$for(v.components, (s, v) =>
         s.$s(`  ${v.type} "${v.label}"${' as ' + v.id} <<${v.head}>>`),
       )
       .$s('}')

@@ -1,11 +1,10 @@
 import S from '../s'
 import { Emitter } from '../base'
-import { SmlComponentAst } from './types'
+import { Component, SmlComponentAst } from './types'
 
 export class PumlComponentEmitter extends Emitter<SmlComponentAst> {
   emitCode() {
-    const { title, zones, components, infs, links, vlinks, rels, notes } =
-      this.meta
+    const { title, zones, components, links, vlinks, rels, notes } = this.meta
 
     return this.s
       .reset()
@@ -15,12 +14,10 @@ export class PumlComponentEmitter extends Emitter<SmlComponentAst> {
       .$for(zones, (s, v) =>
         s
           .$s(`${v.type} "${v.label}" {`)
-          .$for(v.components, this.container('component'))
-          .$for(v.infs, this.container('interface'))
+          .$for(v.components, this.buildComponent)
           .$s('}'),
       )
-      .$for(components, this.container(`component`))
-      .$for(infs, this.container(`interface`))
+      .$for(components, this.buildComponent)
       .$for(notes, this.buildNotes)
       .$for(links, this.buildVLink)
       .$for(vlinks, this.buildVLink)
@@ -29,9 +26,7 @@ export class PumlComponentEmitter extends Emitter<SmlComponentAst> {
       .toString()
   }
 
-  container(name: 'component' | 'interface') {
-    return (s: S, v: { label: string; id?: string }) => {
-      return s.$s(`  ${name} "${v.label}"${v.id ? '  as ' + v.id : ''}`)
-    }
+  buildComponent(s: S, { id, type, label }: Component) {
+    return s.$s(`  ${type} "${label}"  as ${id}`)
   }
 }

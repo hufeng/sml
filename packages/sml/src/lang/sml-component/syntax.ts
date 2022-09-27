@@ -1,7 +1,6 @@
 import { Lang } from '../base'
 import { ZoneBuilder } from './builder/zone'
 import { ComponentBuilder } from './builder/component'
-import { InterfaceBuilder } from './builder/interface'
 import { SmlComponentAst } from './types'
 
 export class SmlComponentLang extends Lang<SmlComponentAst> {
@@ -24,7 +23,7 @@ export class SmlComponentLang extends Lang<SmlComponentAst> {
    * @returns
    */
   component(label: string) {
-    return new ComponentBuilder(this.meta, label)
+    return new ComponentBuilder(this.meta, label, 'component')
   }
 
   /**
@@ -33,6 +32,6 @@ export class SmlComponentLang extends Lang<SmlComponentAst> {
    * @returns
    */
   interface(label: string) {
-    return new InterfaceBuilder(this.meta, label)
+    return new ComponentBuilder(this.meta, label, 'interface')
   }
 }

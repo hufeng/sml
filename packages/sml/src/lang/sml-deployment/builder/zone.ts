@@ -25,7 +25,7 @@ export class ZoneBuilder extends Builder {
       head: 'zone',
       label,
       type: 'component',
-      children: [],
+      components: [],
     }
     this.#meta.zones.push(this.#zone)
   }
@@ -55,10 +55,9 @@ export class ZoneBuilder extends Builder {
     for (let child of children) {
       const name = componentWeakMap.get(child)!
       const index = this.#meta.components.findIndex((c) => c.id === name)
-      this.#zone.children.push(this.#meta.components[index]!)
+      this.#zone.components.push(this.#meta.components[index]!)
       this.#meta.components.splice(index, 1)
     }
-
     return this
   }
 }

@@ -175,7 +175,8 @@ export abstract class Emitter<T extends BaseAst> {
     const { label, position, on } = note
     s.$s(`note ${position} of (${on})`).$s(`  ${label}`).$s('end note')
   }
-  protected buildRels = (s: S, v: RelAst) => s.$s(`${v.from} - ${v.to}`)
+  protected buildRels = (s: S, { from, to }: RelAst) =>
+    s.$for(to, (s, t) => s.$s(`${from} - ${t}`))
 
   plantUML(img: string) {
     const jar = path.join(__dirname, '../../bin/plantuml-1.2022.7.jar')

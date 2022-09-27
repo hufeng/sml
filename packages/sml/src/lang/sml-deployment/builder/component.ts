@@ -1,7 +1,6 @@
 import { Builder, LinkBuilder } from '../../base'
 import { ZoneBuilder, zoneWeakMap } from './zone'
-import { InterfaceBuilder, interfaceWeakMap } from './interface'
-import { DeploymentBase, DeploymentLangAst } from '../types'
+import { Deployment, DeploymentLangAst } from '../types'
 
 export type ComponentBuilderMeta = Pick<
   DeploymentLangAst,
@@ -23,7 +22,7 @@ export const componentWeakMap: WeakMap<ComponentBuilder, string> = new WeakMap()
 export class ComponentBuilder extends Builder {
   #meta: ComponentBuilderMeta
   #name: string
-  #component: DeploymentBase
+  #component: Deployment
 
   constructor(
     meta: ComponentBuilderMeta,
@@ -32,7 +31,8 @@ export class ComponentBuilder extends Builder {
   ) {
     super()
     this.#meta = meta
-    this.#name = 'c_' + this.id(label)
+    const prefix = type === 'interface' ? 'i_' : 'c_'
+    this.#name = prefix + this.id(label)
     componentWeakMap.set(this, this.#name)
 
     this.#component = {
@@ -57,7 +57,7 @@ export class ComponentBuilder extends Builder {
   belongTo(z: ZoneBuilder) {
     const name = zoneWeakMap.get(z)!
     const zone = this.#meta.zones.find((zone) => zone.id === name)
-    zone?.children.push(this.#component)
+    zone?.components.push(this.#component)
 
     const index = this.#meta.components.findIndex((c) => c.id === this.#name)
     this.#meta.components.splice(index, 1)
@@ -97,9 +97,9 @@ export class ComponentBuilder extends Builder {
    * setting relation with interface
    * @param i
    */
-  rel(i: InterfaceBuilder | Array<InterfaceBuilder>) {
+  rel(i: ComponentBuilder | Array<ComponentBuilder>) {
     i = Array.isArray(i) ? i : [i]
-    const to = i.map((i) => interfaceWeakMap.get(i)!)
+    const to = i.map((i) => componentWeakMap.get(i)!)
     this.#meta.rels.push({ from: this.#name, to })
 
     return this

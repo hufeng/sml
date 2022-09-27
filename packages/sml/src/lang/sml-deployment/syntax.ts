@@ -1,6 +1,5 @@
 import { Lang } from '../base'
 import { ComponentBuilder } from './builder/component'
-import { InterfaceBuilder } from './builder/interface'
 import { ZoneBuilder } from './builder/zone'
 import { DeploymentLangAst } from './types'
 
@@ -61,11 +60,10 @@ export class SmlDeploymentLang extends Lang<DeploymentLangAst> {
   /**
    * 设置接口元素
    * @param label
-   * @param id
    * @returns
    */
   interface(label: string) {
-    return new InterfaceBuilder(this.meta, label)
+    return new ComponentBuilder(this.meta, label, 'interface')
   }
 
   /**
