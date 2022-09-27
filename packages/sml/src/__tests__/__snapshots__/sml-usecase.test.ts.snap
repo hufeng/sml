@@ -41,6 +41,33 @@ a_ee11cbb1 --> uc_0cce1966
 @enduml"
 `;
 
+exports[`sml usecase test suites > test demo 2`] = `
+"@startuml use_case_diagram
+!theme sketchy-outline
+skinparam packageStyle Rectangle
+left to right direction
+
+actor :Guest: as a_adb831a7
+rectangle Professional {
+actor :Chef: as a_8fd82b88
+actor :Food Critic: as a_8781da4a
+}
+rectangle Restaurant {
+  usecase \\"Eat food\\" as uc_39ce479e
+  usecase \\"Pay for food\\" as uc_f870119e
+  usecase \\"Drink\\" as uc_40491db1
+  usecase \\"Review\\" as uc_457dd551
+}
+
+a_adb831a7 --> uc_39ce479e
+a_adb831a7 --> uc_f870119e
+a_adb831a7 --> uc_40491db1
+a_adb831a7 --> uc_457dd551
+a_8781da4a --> uc_457dd551
+
+@enduml"
+`;
+
 exports[`sml usecase test suites > test note on simple actor or usecase 1`] = `
 "@startuml test_simple_note
 !theme sketchy-outline

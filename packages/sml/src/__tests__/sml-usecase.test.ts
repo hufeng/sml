@@ -171,4 +171,106 @@ describe('sml usecase test suites', () => {
     })
     expect(emitter.emitCode()).toMatchSnapshot()
   })
+
+  it('test demo', () => {
+    const { ast, emitter } = sml.UsecaseDiagram('use case diagram', (ml) => {
+      // ~~~~~~~~~~~~ actor domain ~~~~~~~~~~~~
+      const a = ml.actor('Guest')
+
+      const p = ml.zone('Professional')
+      ml.actor('Chef').belongTo(p)
+      const a1 = ml.actor('Food Critic').belongTo(p)
+
+      // ~~~~~~~~~~~~ shopping domain ~~~~~~~~~~~~
+      const shopping = ml.zone('Restaurant')
+      const u1 = ml.usecase('Eat food').belongTo(shopping)
+      const u2 = ml.usecase('Pay for food').belongTo(shopping)
+      const u3 = ml.usecase('Drink').belongTo(shopping)
+      const u4 = ml.usecase('Review').belongTo(shopping)
+
+      // ~~~~~~~~~~~~ relation ~~~~~~~~~~~~
+      a.link([u1, u2, u3, u4])
+      a1.link(u4)
+    })
+
+    expect(ast).toMatchInlineSnapshot(`
+      {
+        "actors": [
+          {
+            "label": "Guest",
+            "name": "a_adb831a7",
+          },
+        ],
+        "config": {
+          "actorStyle": "default",
+          "direction": "left->right",
+          "packageStyle": "Rectangle",
+          "theme": "sketchy-outline",
+        },
+        "links": [
+          {
+            "from": "a_adb831a7",
+            "to": [
+              "uc_39ce479e",
+              "uc_f870119e",
+              "uc_40491db1",
+              "uc_457dd551",
+            ],
+          },
+          {
+            "from": "a_8781da4a",
+            "to": [
+              "uc_457dd551",
+            ],
+          },
+        ],
+        "notes": [],
+        "title": "use case diagram",
+        "usecases": [],
+        "zones": [
+          {
+            "actors": [
+              {
+                "label": "Chef",
+                "name": "a_8fd82b88",
+              },
+              {
+                "label": "Food Critic",
+                "name": "a_8781da4a",
+              },
+            ],
+            "label": "Professional",
+            "name": "z_9e8b1602",
+            "type": "Rectangle",
+            "usecases": [],
+          },
+          {
+            "actors": [],
+            "label": "Restaurant",
+            "name": "z_e197a9cc",
+            "type": "Rectangle",
+            "usecases": [
+              {
+                "label": "Eat food",
+                "name": "uc_39ce479e",
+              },
+              {
+                "label": "Pay for food",
+                "name": "uc_f870119e",
+              },
+              {
+                "label": "Drink",
+                "name": "uc_40491db1",
+              },
+              {
+                "label": "Review",
+                "name": "uc_457dd551",
+              },
+            ],
+          },
+        ],
+      }
+    `)
+    expect(emitter.emitCode()).toMatchSnapshot()
+  })
 })

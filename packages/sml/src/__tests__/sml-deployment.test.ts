@@ -7,7 +7,7 @@ describe('deployment test suite', () => {
       const a1 = ml.actor('Customer').head('actor')
 
       // registry
-      const nz = ml.zone('registry').type('cloud')
+      const nz = ml.zone('registry')
       const registry = ml.component('beehive-registry').belongTo(nz)
 
       // web service

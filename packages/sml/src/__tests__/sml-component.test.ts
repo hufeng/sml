@@ -168,4 +168,181 @@ describe('component diagram test suites', () => {
     `)
     expect(emitter.emitCode()).toMatchSnapshot()
   })
+
+  it('test has', () => {
+    const { ast, emitter } = ComponentDiagram('component diagram', (ml) => {
+      const bls = ml.zone('bls').type('package')
+      const c1 = ml.component('Repository')
+      const c2 = ml.component('LoginDataSource')
+      const i1 = ml.interface('getLoginDS')
+      const i2 = ml.interface('ILoginDS')
+      bls.has(c1, c2, i1, i2)
+
+      c1.vlink(c2)
+      c1.rel(i1)
+      c2.rel(i2)
+      i1.rel(i2)
+
+      const vm = ml.zone('vm')
+      const c3 = ml.component('ViewModelFactory').belongTo(vm)
+      const c4 = ml.component('AppViewModel').belongTo(vm)
+      const i3 = ml.interface('getLoginVM').belongTo(vm)
+      const i4 = ml.interface('ILoginVM').belongTo(vm)
+
+      c3.rel(i1)
+      i3.rel(i4)
+      i4.rel(c4)
+      c3.vlink(c4)
+
+      const app = ml.zone('app')
+      ml.component('MainActivity').belongTo(app)
+      const c6 = ml.component('LoginActivity').belongTo(app)
+
+      c6.rel([i3, i4])
+    })
+
+    expect(ast).toMatchInlineSnapshot(`
+      {
+        "components": [],
+        "config": {
+          "actorStyle": "default",
+          "direction": "left->right",
+          "packageStyle": "Rectangle",
+          "theme": "sketchy-outline",
+        },
+        "infs": [],
+        "links": [],
+        "notes": [],
+        "rels": [
+          {
+            "from": "c_33fcf2b3",
+            "to": [
+              "i_acfd60a8",
+            ],
+          },
+          {
+            "from": "c_0dc28396",
+            "to": [
+              "i_c062b511",
+            ],
+          },
+          {
+            "from": "i_acfd60a8",
+            "to": [
+              "i_c062b511",
+            ],
+          },
+          {
+            "from": "c_02658109",
+            "to": [
+              "i_acfd60a8",
+            ],
+          },
+          {
+            "from": "i_20445edb",
+            "to": [
+              "i_ac37107e",
+            ],
+          },
+          {
+            "from": "i_ac37107e",
+            "to": [
+              "c_4faf9542",
+            ],
+          },
+          {
+            "from": "c_d8a28ff5",
+            "to": [
+              "i_20445edb",
+              "i_ac37107e",
+            ],
+          },
+        ],
+        "title": "component diagram",
+        "vlinks": [
+          {
+            "from": "c_33fcf2b3",
+            "to": [
+              "c_0dc28396",
+            ],
+          },
+          {
+            "from": "c_02658109",
+            "to": [
+              "c_4faf9542",
+            ],
+          },
+        ],
+        "zones": [
+          {
+            "components": [
+              {
+                "id": "c_33fcf2b3",
+                "label": "Repository",
+              },
+              {
+                "id": "c_0dc28396",
+                "label": "LoginDataSource",
+              },
+            ],
+            "infs": [
+              {
+                "id": "i_acfd60a8",
+                "label": "getLoginDS",
+              },
+              {
+                "id": "i_c062b511",
+                "label": "ILoginDS",
+              },
+            ],
+            "label": "bls",
+            "name": "z_d5ff4b9a",
+            "type": "package",
+          },
+          {
+            "components": [
+              {
+                "id": "c_02658109",
+                "label": "ViewModelFactory",
+              },
+              {
+                "id": "c_4faf9542",
+                "label": "AppViewModel",
+              },
+            ],
+            "infs": [
+              {
+                "id": "i_20445edb",
+                "label": "getLoginVM",
+              },
+              {
+                "id": "i_ac37107e",
+                "label": "ILoginVM",
+              },
+            ],
+            "label": "vm",
+            "name": "z_686c821a",
+            "type": "package",
+          },
+          {
+            "components": [
+              {
+                "id": "c_db3a4a28",
+                "label": "MainActivity",
+              },
+              {
+                "id": "c_d8a28ff5",
+                "label": "LoginActivity",
+              },
+            ],
+            "infs": [],
+            "label": "app",
+            "name": "z_d2a57dc1",
+            "type": "package",
+          },
+        ],
+      }
+    `)
+    expect(emitter.emitCode()).toMatchSnapshot()
+  })
 })

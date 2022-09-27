@@ -22,12 +22,16 @@ export class ZoneBuilder extends Builder {
 
     this.#zone = {
       id: this.#name,
-      head: '',
+      head: 'zone',
       label,
       type: 'component',
       children: [],
     }
     this.#meta.zones.push(this.#zone)
+  }
+
+  head(head: string) {
+    this.#zone.head = head
   }
 
   /**
@@ -36,7 +40,7 @@ export class ZoneBuilder extends Builder {
    */
   type(t: DeploymentZoneStyle) {
     this.#zone.type = t
-    if (!this.#zone.head) {
+    if (this.#zone.head === 'zone') {
       this.#zone.head = t
     }
     return this

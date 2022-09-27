@@ -10,7 +10,7 @@ left to right direction
 
 actor \\"Customer\\" as c_ce26601d <<actor>>
 
-cloud \\"registry\\" as z_a9205dcf <<cloud>> {
+component \\"registry\\" as z_a9205dcf <<zone>> {
   component \\"beehive-registry\\" as c_4dd942bb <<component>>
 }
 cloud \\"web-service\\" as z_82daadfb <<cloud>> {
