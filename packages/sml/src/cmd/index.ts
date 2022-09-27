@@ -2,6 +2,7 @@
 
 import { Command } from 'commander'
 import { build } from './build'
+import { compile } from './compile'
 import { init } from './init'
 
 // run typescript directly
@@ -28,6 +29,14 @@ program
   .description('compile sml code gen')
   .action(async () => {
     await build()
+  })
+
+// compile project
+program
+  .command('compile')
+  .description('emit sml to puml')
+  .action(async () => {
+    await compile()
   })
 
 program.parse(process.argv)
