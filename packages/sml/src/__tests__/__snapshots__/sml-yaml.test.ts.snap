@@ -3,8 +3,11 @@
 exports[`sml yaml test suites > test full pipeline 1`] = `
 "@startyaml hello_yaml_demo
 !theme sketchy-outline
+
+
 #highlight \\"french-hens\\"
 #highlight \\"xmas-fifth-day\\" / \\"partridges\\"
+
 doe: \\"a deer, a female deer\\"
 ray: \\"a drop of golden sun\\"
 pi: 3.14159
