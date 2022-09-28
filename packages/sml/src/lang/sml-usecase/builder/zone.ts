@@ -1,37 +1,46 @@
-import { ActorBuilder, actorWeakMap } from './actor'
-import { UsecaseBuilder, usecaseWeakMap } from './usecase'
+import { ComponentBuilder, componentWeakMap } from './component'
 import { Builder } from '../../base'
-import { ZoneMeta, Zone } from '../types'
-import { ZoneStyle } from '../../types'
+import { ZoneBuilderNode, ZoneNode } from '../types'
+import { ZoneType } from '../../types'
 
 export const zoneWeakMap: WeakMap<ZoneBuilder, string> = new WeakMap()
 
 export class ZoneBuilder extends Builder {
-  #meta: ZoneMeta
-  #zone: Zone
+  #meta: ZoneBuilderNode
+  #zone: ZoneNode
   #name: string
 
-  constructor(meta: ZoneMeta, label: string) {
+  constructor(meta: ZoneBuilderNode, label: string) {
     super()
     this.#meta = meta
     this.#name = 'z_' + this.id(label)
     zoneWeakMap.set(this, this.#name)
 
     this.#zone = {
+      id: this.#name,
       label,
-      name: this.#name,
+      stereotypes: '',
       type: 'Rectangle',
-      actors: [],
-      usecases: [],
+      components: [],
     }
     this.#meta.zones.push(this.#zone)
+  }
+
+  /**
+   * setting stereotypes
+   * @param s
+   * @returns
+   */
+  stereotypes(s: string) {
+    this.#zone.stereotypes = s
+    return this
   }
 
   /**
    * setting zone style, include 'package' | 'node' | 'cloud' | 'database'
    * @param type
    */
-  style(type: ZoneStyle) {
+  style(type: ZoneType) {
     this.#zone.type = type
     return this
   }
@@ -40,26 +49,12 @@ export class ZoneBuilder extends Builder {
    * setting has actor or usecase
    * @param children
    */
-  has(...children: Array<ActorBuilder | UsecaseBuilder>) {
+  has(...children: Array<ComponentBuilder>) {
     for (let child of children) {
-      // update actor
-      if (child instanceof ActorBuilder) {
-        const name = actorWeakMap.get(child)!
-        const index = this.#meta.actors.findIndex(
-          (actor) => actor.name === name,
-        )
-        this.#zone.actors.push(this.#meta.actors[index]!)
-        this.#meta.actors.splice(index, 1)
-      }
-      //update usecase
-      else if (child instanceof UsecaseBuilder) {
-        const name = usecaseWeakMap.get(child)
-        const index = this.#meta.usecases.findIndex(
-          (usecase) => usecase.name === name,
-        )
-        this.#zone.usecases.push(this.#meta.usecases[index]!)
-        this.#meta.usecases.splice(index, 1)
-      }
+      const id = componentWeakMap.get(child)!
+      const index = this.#meta.components.findIndex((actor) => actor.id === id)
+      this.#zone.components.push(this.#meta.components[index]!)
+      this.#meta.components.splice(index, 1)
     }
   }
 }

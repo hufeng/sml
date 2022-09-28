@@ -1,5 +1,5 @@
-import { Emitter } from '../base'
 import S from '../s'
+import { Emitter } from '../base'
 import { Component, SmlActivityLangMeta } from './types'
 
 export class PumlActivityEmitter extends Emitter<SmlActivityLangMeta> {

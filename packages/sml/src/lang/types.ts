@@ -4,7 +4,7 @@ export type ID = string
 /**
  * package style
  */
-export type ZoneStyle =
+export type ZoneType =
   | 'Node'
   | 'Rectangle'
   | 'Folder'
@@ -38,7 +38,7 @@ export type Theme =
 export type GlobalConfigType = {
   actorStyle: ActorStyleType
   direction: DirectionType
-  packageStyle: ZoneStyle
+  packageStyle: ZoneType
   theme: Theme
 }
 
@@ -70,20 +70,20 @@ export type NoteAst = {
 export type RelAst = {
   from: string
   to: string[]
-  commment?: string
+  comment?: string
 }
 
-export interface LinkContaniner {
+export interface LinkContainer {
   links: Array<{
     from: string
     to: string[]
-    commment?: string
+    comment?: string
     note?: { label: string; position: Position }
   }>
   vlinks?: Array<{
     from: string
     to: string[]
-    commment?: string
+    comment?: string
     note?: { label: string; position: Position }
   }>
   rels?: Array<RelAst>

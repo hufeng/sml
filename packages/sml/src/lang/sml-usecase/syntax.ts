@@ -1,6 +1,5 @@
 import { Lang } from '../base'
-import { ActorBuilder } from './builder/actor'
-import { UsecaseBuilder } from './builder/usecase'
+import { ComponentBuilder } from './builder/component'
 import { ZoneBuilder } from './builder/zone'
 import { UseCaseDiagramAst } from './types'
 
@@ -16,7 +15,7 @@ export class SmlUseCaseLang extends Lang<UseCaseDiagramAst> {
    * @returns
    */
   actor(label: string) {
-    return new ActorBuilder(this.meta, label)
+    return new ComponentBuilder(this.meta, label, 'actor')
   }
 
   /**
@@ -25,7 +24,7 @@ export class SmlUseCaseLang extends Lang<UseCaseDiagramAst> {
    * @returns
    */
   usecase(label: string) {
-    return new UsecaseBuilder(this.meta, label)
+    return new ComponentBuilder(this.meta, label, 'usecase')
   }
 
   /**

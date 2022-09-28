@@ -1,4 +1,4 @@
-import { BaseAst, LinkContaniner } from '../types'
+import { BaseAst, LinkContainer } from '../types'
 export type ComponentZoneStyle = 'package' | 'node' | 'cloud' | 'database'
 
 export interface Component {
@@ -14,7 +14,7 @@ export interface ComponentContainer {
   components: Array<Component>
 }
 
-export interface SmlComponentAst extends BaseAst, Required<LinkContaniner> {
+export interface SmlComponentAst extends BaseAst, Required<LinkContainer> {
   zones: Array<ComponentContainer>
   components: Array<Component>
 }

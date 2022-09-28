@@ -1,4 +1,4 @@
-import { BaseAst, LinkContaniner } from '../types'
+import { BaseAst, LinkContainer } from '../types'
 
 export interface Deployment {
   id: string
@@ -21,7 +21,7 @@ export type DeploymentZoneStyle =
   | 'database'
   | 'node'
 
-export interface DeploymentLangAst extends BaseAst, Required<LinkContaniner> {
+export interface DeploymentLangAst extends BaseAst, Required<LinkContainer> {
   // container
   zones: Array<DeploymentContainer>
   // base

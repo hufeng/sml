@@ -1,4 +1,4 @@
-import { BaseAst, LinkContaniner } from '../types'
+import { BaseAst, LinkContainer } from '../types'
 
 export type ComponentType =
   | 'participant'
@@ -16,7 +16,7 @@ export interface Component {
   type: string
 }
 
-export type LinkContainer = Omit<Required<LinkContaniner>, 'rels'>
+export type LinkContainer = Omit<Required<LinkContainer>, 'rels'>
 
 export interface SmlActivityLangMeta extends BaseAst, LinkContainer {
   components: Array<Component>

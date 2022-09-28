@@ -9,9 +9,11 @@ export function UsecaseDiagram(
   const ast = {
     title: title,
     actors: [],
-    usecases: [],
+    components: [],
     zones: [],
     links: [],
+    vlinks: [],
+    rels: [],
     notes: [],
   }
 

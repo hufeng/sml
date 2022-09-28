@@ -13,7 +13,7 @@ import {
   Position,
   RelAst,
   Theme,
-  ZoneStyle,
+  ZoneType,
 } from './types'
 
 // ~~~~~~~~~~ builder ~~~~~~~~~~~~~~~~~~~~~~
@@ -70,7 +70,7 @@ class ConfigBuilder {
    * @param style
    * @returns
    */
-  packageStyle(style: ZoneStyle = 'Rectangle') {
+  packageStyle(style: ZoneType = 'Rectangle') {
     this.config.packageStyle = style
     return this
   }

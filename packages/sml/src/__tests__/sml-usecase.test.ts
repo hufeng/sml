@@ -10,22 +10,7 @@ describe('sml usecase test suites', () => {
       ml.usecase('play')
     })
 
-    expect(ast.usecases).toMatchInlineSnapshot(`
-      [
-        {
-          "label": "blog",
-          "name": "uc_126ac9f6",
-        },
-        {
-          "label": "music",
-          "name": "uc_18d67699",
-        },
-        {
-          "label": "play",
-          "name": "uc_a3b34c08",
-        },
-      ]
-    `)
+    expect(ast.usecases).toMatchInlineSnapshot('undefined')
     expect(emitter.emitCode()).toMatchSnapshot()
   })
 
@@ -36,22 +21,7 @@ describe('sml usecase test suites', () => {
       ml.actor('Last actor')
     })
 
-    expect(ast.actors).toMatchInlineSnapshot(`
-      [
-        {
-          "label": "first actor",
-          "name": "a_dd79c149",
-        },
-        {
-          "label": "another actor",
-          "name": "a_fc3baf5b",
-        },
-        {
-          "label": "Last actor",
-          "name": "a_8b705053",
-        },
-      ]
-    `)
+    expect(ast.actors).toMatchInlineSnapshot('[]')
     expect(emitter.emitCode()).toMatchSnapshot()
   })
 
@@ -73,10 +43,13 @@ describe('sml usecase test suites', () => {
 
     expect(ast).toMatchInlineSnapshot(`
       {
-        "actors": [
+        "actors": [],
+        "components": [
           {
+            "id": "a_8781da4a",
             "label": "Food Critic",
-            "name": "a_8781da4a",
+            "stereotypes": "",
+            "type": "actor",
           },
         ],
         "config": {
@@ -89,35 +62,42 @@ describe('sml usecase test suites', () => {
           {
             "from": "a_8781da4a",
             "to": [
-              "uc_a6709cd3",
-              "uc_f870119e",
-              "uc_40491db1",
+              "a_a6709cd3",
+              "a_f870119e",
+              "a_40491db1",
             ],
           },
         ],
         "notes": [],
+        "rels": [],
         "title": "hello usecase diagram",
-        "usecases": [],
+        "vlinks": [],
         "zones": [
           {
-            "actors": [],
-            "label": "Restaurant",
-            "name": "z_e197a9cc",
-            "type": "Rectangle",
-            "usecases": [
+            "components": [
               {
+                "id": "a_a6709cd3",
                 "label": "Eat Food",
-                "name": "uc_a6709cd3",
+                "stereotypes": "",
+                "type": "usecase",
               },
               {
+                "id": "a_f870119e",
                 "label": "Pay for food",
-                "name": "uc_f870119e",
+                "stereotypes": "",
+                "type": "usecase",
               },
               {
+                "id": "a_40491db1",
                 "label": "Drink",
-                "name": "uc_40491db1",
+                "stereotypes": "",
+                "type": "usecase",
               },
             ],
+            "id": "z_e197a9cc",
+            "label": "Restaurant",
+            "stereotypes": "",
+            "type": "Rectangle",
           },
         ],
       }
@@ -195,10 +175,13 @@ describe('sml usecase test suites', () => {
 
     expect(ast).toMatchInlineSnapshot(`
       {
-        "actors": [
+        "actors": [],
+        "components": [
           {
+            "id": "a_adb831a7",
             "label": "Guest",
-            "name": "a_adb831a7",
+            "stereotypes": "",
+            "type": "actor",
           },
         ],
         "config": {
@@ -211,64 +194,101 @@ describe('sml usecase test suites', () => {
           {
             "from": "a_adb831a7",
             "to": [
-              "uc_39ce479e",
-              "uc_f870119e",
-              "uc_40491db1",
-              "uc_457dd551",
+              "a_39ce479e",
+              "a_f870119e",
+              "a_40491db1",
+              "a_457dd551",
             ],
           },
           {
             "from": "a_8781da4a",
             "to": [
-              "uc_457dd551",
+              "a_457dd551",
             ],
           },
         ],
         "notes": [],
+        "rels": [],
         "title": "use case diagram",
-        "usecases": [],
+        "vlinks": [],
         "zones": [
           {
-            "actors": [
-              {
-                "label": "Chef",
-                "name": "a_8fd82b88",
-              },
-              {
-                "label": "Food Critic",
-                "name": "a_8781da4a",
-              },
-            ],
+            "components": [],
+            "id": "z_9e8b1602",
             "label": "Professional",
-            "name": "z_9e8b1602",
+            "stereotypes": "",
             "type": "Rectangle",
-            "usecases": [],
           },
           {
-            "actors": [],
+            "components": [],
+            "id": "z_e197a9cc",
             "label": "Restaurant",
-            "name": "z_e197a9cc",
+            "stereotypes": "",
             "type": "Rectangle",
-            "usecases": [
-              {
-                "label": "Eat food",
-                "name": "uc_39ce479e",
-              },
-              {
-                "label": "Pay for food",
-                "name": "uc_f870119e",
-              },
-              {
-                "label": "Drink",
-                "name": "uc_40491db1",
-              },
-              {
-                "label": "Review",
-                "name": "uc_457dd551",
-              },
+          },
+        ],
+      }
+    `)
+    expect(emitter.emitCode()).toMatchSnapshot()
+  })
+
+  it('test stereotypes', () => {
+    const { ast, emitter } = sml.UsecaseDiagram('test stereotypes', (ml) => {
+      const a1 = ml.actor('User').stereotypes('human')
+      const a2 = ml.actor('Main DataBase').stereotypes('Application')
+      const u1 = ml.usecase('Use the application').stereotypes('Main')
+
+      a1.link(u1)
+      a2.link(u1)
+    })
+    expect(ast).toMatchInlineSnapshot(`
+      {
+        "actors": [],
+        "components": [
+          {
+            "id": "a_8f9bfe9d",
+            "label": "User",
+            "stereotypes": "human",
+            "type": "actor",
+          },
+          {
+            "id": "a_a811389a",
+            "label": "Main DataBase",
+            "stereotypes": "Application",
+            "type": "actor",
+          },
+          {
+            "id": "a_a6f3cf91",
+            "label": "Use the application",
+            "stereotypes": "Main",
+            "type": "usecase",
+          },
+        ],
+        "config": {
+          "actorStyle": "default",
+          "direction": "left->right",
+          "packageStyle": "Rectangle",
+          "theme": "sketchy-outline",
+        },
+        "links": [
+          {
+            "from": "a_8f9bfe9d",
+            "to": [
+              "a_a6f3cf91",
+            ],
+          },
+          {
+            "from": "a_a811389a",
+            "to": [
+              "a_a6f3cf91",
             ],
           },
         ],
+        "notes": [],
+        "rels": [],
+        "title": "test stereotypes",
+        "vlinks": [],
+        "zones": [],
       }
     `)
     expect(emitter.emitCode()).toMatchSnapshot()
