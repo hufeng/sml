@@ -41,10 +41,12 @@ export class LinkBuilder {
       label,
       position,
     }
+    return this
   }
 
   commentOf(comment: string) {
     this.#link.comment = comment
+    return this
   }
 }
 
@@ -176,15 +178,15 @@ export abstract class Emitter<T extends BaseAst> {
     (linkStyle: '-->' | '->' = '-->') =>
     (s: S, { from, to, comment, note: link }: LinkAst) => {
       if (typeof link !== 'undefined') {
-        s.$for(to, (s, to, i) =>
-          s
-            .$s(`note "${link.label}" as N${i}`)
-            .$s(`(${from}) -- N${i}`)
-            .$s(`N${i} --> (${to})`),
-        )
+        s.$for(to, (s, to) => {
+          const noteName = `nvlink_${from}_${to}`
+          s.$s(`note "${link.label}" as ${noteName}`)
+            .$s(`(${from}) --${noteName}`)
+            .$s(`${noteName} --> (${to})`, s._if(comment, ` : ${comment}`))
+        })
       } else {
         s.$for(to, (s, to) =>
-          s.$s(`${from} ${linkStyle} ${to}${comment ? ' : ' + comment : ''}`),
+          s.$s(`${from} ${linkStyle} ${to}`, s._if(comment, ` : ${comment}`)),
         )
       }
     }
@@ -193,15 +195,18 @@ export abstract class Emitter<T extends BaseAst> {
     (linkStyle: '..>' | '.>' | '-->' = '..>') =>
     (s: S, { from, to, comment, note: link }: LinkAst) => {
       if (typeof link !== 'undefined') {
-        s.$for(to, (s, to, i) =>
-          s
-            .$s(`note "${link.label}" as N${i}`)
-            .$s(`(${from}) .. N${i}`)
-            .$s(`N${i} ..> (${to})`),
-        )
+        s.$for(to, (s, to) => {
+          const noteName = `nvlink_${from}_${to}`
+          s.$s(`note "${link.label}" as ${noteName}`)
+            .$s(`(${from}) .. ${noteName}`)
+            .$s(`${noteName} ..> (${to})`, s._if(comment, ` : ${comment}`))
+        })
       } else {
         s.$for(to, (s, to) =>
-          s.$s(`${from} ${linkStyle} ${to}${comment ? ' : ' + comment : ''}`),
+          s.$s(
+            `${from} ${linkStyle} ${to}`,
+            s._if(comment, ` : ${comment}`, ''),
+          ),
         )
       }
     }

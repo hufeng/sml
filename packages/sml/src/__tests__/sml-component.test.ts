@@ -23,8 +23,8 @@ describe('component diagram test suites', () => {
       node.has(c6)
 
       // links
-      c1.link(c2, (l) => l.noteOf('connected'))
-      c2.link(c3)
+      c1.link(c2, (l) => l.noteOf('connected').commentOf('invoke'))
+      c2.link(c3, (l) => l.commentOf('invoke'))
       c3.link(c4)
       c4.vlink(c5)
       c5.vlink(c6)
@@ -32,6 +32,42 @@ describe('component diagram test suites', () => {
       i1.rel(c1)
       i2.rel(c3)
     })
+
+    expect(emitter.emitCode()).toMatchInlineSnapshot(`
+      "@startuml component_title
+      !theme sketchy-outline
+      skinparam actorStyle awesome
+      skinparam packageStyle Rectangle
+      left to right direction
+
+
+      cloud \\"cloud\\" {
+        component \\"Nodejs\\"  as c_4b00bbf4
+        interface \\"http\\"  as i_80791b3a
+      }
+      package \\"bff\\" {
+        component \\"service-a\\"  as c_7fdd65ec
+        component \\"service-b\\"  as c_d77ba138
+        interface \\"rpc\\"  as i_da0fb2ac
+      }
+      database \\"DataBase\\" {
+        component \\"mysql\\"  as c_81c3b080
+        component \\"redis\\"  as c_86a1b907
+      }
+      node \\"Node\\" {
+        component \\"Go\\"  as c_5f075ae3
+      }
+      note \\"connected\\" as nvlink_c_4b00bbf4_c_7fdd65ec
+      (c_4b00bbf4) .. nvlink_c_4b00bbf4_c_7fdd65ec
+      nvlink_c_4b00bbf4_c_7fdd65ec ..> (c_7fdd65ec) : invoke
+      c_7fdd65ec ..> c_d77ba138 : invoke
+      c_d77ba138 ..> c_81c3b080
+      c_81c3b080 ..> c_86a1b907
+      c_86a1b907 ..> c_5f075ae3
+      i_80791b3a - c_4b00bbf4
+      i_da0fb2ac - c_d77ba138
+      @enduml"
+    `)
     expect(ast).toMatchInlineSnapshot(`
       {
         "components": [],
@@ -43,6 +79,7 @@ describe('component diagram test suites', () => {
         },
         "links": [
           {
+            "comment": "invoke",
             "from": "c_4b00bbf4",
             "note": {
               "label": "connected",
@@ -53,6 +90,7 @@ describe('component diagram test suites', () => {
             ],
           },
           {
+            "comment": "invoke",
             "from": "c_7fdd65ec",
             "to": [
               "c_d77ba138",
@@ -167,7 +205,6 @@ describe('component diagram test suites', () => {
         ],
       }
     `)
-    expect(emitter.emitCode()).toMatchSnapshot()
   })
 
   it('test has', () => {

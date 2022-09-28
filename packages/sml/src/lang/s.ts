@@ -1,12 +1,35 @@
 export default class S {
-  private buff: Array<string | S>
+  #delimiter: string
+  #buff: Array<string | S>
 
   constructor() {
-    this.buff = []
+    this.#buff = []
+    this.#delimiter = '\n'
   }
 
-  $s(s: string) {
-    this.buff.push(s)
+  set $delimiter(s: string) {
+    this.#delimiter = s
+  }
+
+  _if(cond: unknown, s1: string, s2: string = '') {
+    return (s: S) => {
+      s.$if(cond, s1, s2)
+    }
+  }
+
+  $s(...as: Array<string | ((s: S) => void)>) {
+    const buff = []
+    for (let s of as) {
+      if (typeof s === 'string') {
+        buff.push(s)
+      } else {
+        const ss = new S()
+        s(ss)
+        buff.push(ss.toString())
+      }
+    }
+    this.#buff.push(buff.join(''))
+
     return this
   }
 
@@ -15,10 +38,8 @@ export default class S {
     return this
   }
 
-  $if(cond: boolean, str: string) {
-    if (cond) {
-      this.buff.push(str)
-    }
+  $if(cond: unknown, s1: string, s2: string = '') {
+    this.#buff.push(typeof cond === 'undefined' ? s2 : s1)
     return this
   }
 
@@ -38,22 +59,22 @@ export default class S {
       return this
     }
 
-    this.buff.push('')
+    this.#buff.push('')
     // append for
     arr.forEach((v, i) => {
       fn(this, v, i)
     })
-    this.buff.push('')
+    this.#buff.push('')
 
     return this
   }
 
-  reset() {
-    this.buff = []
+  $reset() {
+    this.#buff = []
     return this
   }
 
-  toString(delimiter = '\n') {
-    return this.buff.join(delimiter)
+  toString() {
+    return this.#buff.join(this.#delimiter)
   }
 }

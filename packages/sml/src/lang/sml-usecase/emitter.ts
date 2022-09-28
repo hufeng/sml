@@ -1,3 +1,7 @@
+/**
+ * @prettier
+ * --print-width 120
+ */
 import { Emitter } from '../base'
 import S from '../s'
 import { ComponentNode, UseCaseDiagramAst } from './types'
@@ -8,7 +12,7 @@ export class PumlUseCaseEmitter extends Emitter<UseCaseDiagramAst> {
 
     return (
       this.s
-        .reset()
+        .$reset()
         // start
         .$s(`@startuml ${title.replace(/ /g, '_')}`)
         .$fn(this.buildConfig)
@@ -16,11 +20,7 @@ export class PumlUseCaseEmitter extends Emitter<UseCaseDiagramAst> {
         .$for(components, this.buildComponent())
         // domains
         .$for(zones, (s, v) => {
-          s.$s(
-            `${v.type} ${v.label.replace(/ /g, '_')}${
-              v.stereotypes ? ` <<${v.stereotypes}>>` : ''
-            } {`,
-          )
+          s.$s(`${v.type} ${v.label.replace(/ /g, '_')}${v.stereotypes ? ` <<${v.stereotypes}>>` : ''} {`)
           s.$for(v.components, this.buildComponent('  '))
           s.$s('}')
         })
@@ -39,10 +39,6 @@ export class PumlUseCaseEmitter extends Emitter<UseCaseDiagramAst> {
   buildComponent =
     (indent: '  ' | '' = '') =>
     (s: S, v: ComponentNode) => {
-      s.$s(
-        `${indent}${v.type} (${v.label}) as ${v.id}${
-          v.stereotypes ? ` <<${v.stereotypes}>>` : ''
-        }`,
-      )
+      s.$s(`${indent}${v.type} "${v.label}" as ${v.id}${v.stereotypes ? ` <<${v.stereotypes}>>` : ''}`)
     }
 }

@@ -7,9 +7,9 @@ skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 
-actor (first actor) as a_dd79c149
-actor (another actor) as a_fc3baf5b
-actor (Last actor) as a_8b705053
+actor \\"first actor\\" as a_dd79c149
+actor \\"another actor\\" as a_fc3baf5b
+actor \\"Last actor\\" as a_8b705053
 @enduml"
 `;
 
@@ -20,8 +20,8 @@ skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 
-actor (User) as a_8f9bfe9d
-usecase (Learn JavaScript) as a_5d686b2e
+actor \\"User\\" as a_8f9bfe9d
+usecase \\"Learn JavaScript\\" as a_5d686b2e
 
 a_8f9bfe9d --> a_5d686b2e
 
@@ -31,11 +31,12 @@ a_8f9bfe9d --> a_5d686b2e
 exports[`sml usecase test suites > test actor style 1`] = `
 "@startuml test_actor_style
 !theme sketchy-outline
+skinparam actorStyle default
 skinparam packageStyle Rectangle
 left to right direction
 
-actor (user) as a_ee11cbb1
-usecase (Write Blog) as a_0cce1966
+actor \\"user\\" as a_ee11cbb1
+usecase \\"Write Blog\\" as a_0cce1966
 
 a_ee11cbb1 --> a_0cce1966
 
@@ -49,7 +50,7 @@ skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 
-actor (Guest) as a_adb831a7
+actor \\"Guest\\" as a_adb831a7
 Rectangle Professional {
 }
 Rectangle Restaurant {
@@ -71,8 +72,8 @@ skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 
-actor (User) as a_8f9bfe9d
-usecase (Coding) as a_cddcade0
+actor \\"User\\" as a_8f9bfe9d
+usecase \\"Coding\\" as a_cddcade0
 
 note right of (a_8f9bfe9d)
   a student user
@@ -91,9 +92,9 @@ skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 
-usecase (blog) as a_126ac9f6
-usecase (music) as a_18d67699
-usecase (play) as a_a3b34c08
+usecase \\"blog\\" as a_126ac9f6
+usecase \\"music\\" as a_18d67699
+usecase \\"play\\" as a_a3b34c08
 @enduml"
 `;
 
@@ -104,18 +105,18 @@ skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 
-actor (guest) as a_084e0343
+actor \\"guest\\" as a_084e0343
 Rectangle Restaurant {
 }
 Rectangle Professional {
 }
 
-note \\"guest note\\" as N0
-(a_084e0343) -- N0
-N0 --> (a_a6709cd3)
-note \\"guest note\\" as N1
-(a_084e0343) -- N1
-N1 --> (a_f870119e)
+note \\"guest note\\" as nvlink_a_084e0343_a_a6709cd3
+(a_084e0343) --nvlink_a_084e0343_a_a6709cd3
+nvlink_a_084e0343_a_a6709cd3 --> (a_a6709cd3)
+note \\"guest note\\" as nvlink_a_084e0343_a_f870119e
+(a_084e0343) --nvlink_a_084e0343_a_f870119e
+nvlink_a_084e0343_a_f870119e --> (a_f870119e)
 a_8fd82b88 --> a_a6709cd3
 
 @enduml"
@@ -128,11 +129,11 @@ skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 
-actor (Food Critic) as a_8781da4a
+actor \\"Food Critic\\" as a_8781da4a
 Rectangle Restaurant {
-  usecase (Eat Food) as a_a6709cd3
-  usecase (Pay for food) as a_f870119e
-  usecase (Drink) as a_40491db1
+  usecase \\"Eat Food\\" as a_a6709cd3
+  usecase \\"Pay for food\\" as a_f870119e
+  usecase \\"Drink\\" as a_40491db1
 }
 
 a_8781da4a --> a_a6709cd3
@@ -149,12 +150,12 @@ skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 
-actor (User) as a_8f9bfe9d <<human>>
-actor (Main DataBase) as a_a811389a <<Application>>
-usecase (Use the application) as a_a6f3cf91 <<Main>>
+actor \\"User\\" as a_8f9bfe9d <<human>>
+actor \\"Main DataBase\\" as a_a811389a <<Application>>
+usecase \\"Use the application\\" as a_a6f3cf91 <<Main>>
 
-a_8f9bfe9d --> a_a6f3cf91
-a_a811389a --> a_a6f3cf91
+a_8f9bfe9d --> a_a6f3cf91 : invoke
+a_a811389a --> a_a6f3cf91 : invoke
 
 @enduml"
 `;

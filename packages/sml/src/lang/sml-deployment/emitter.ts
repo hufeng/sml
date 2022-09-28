@@ -7,7 +7,7 @@ export class PumlDeploymentEmitter extends Emitter<DeploymentLangAst> {
     const { title, zones, components, links, vlinks, rels } = this.meta
 
     return this.s
-      .reset()
+      .$reset()
       .$s(`@startuml ${title.replace(/ /g, '_')}`)
       .$fn(this.buildTheme)
       .$s('')
@@ -26,9 +26,7 @@ export class PumlDeploymentEmitter extends Emitter<DeploymentLangAst> {
 
   buildZones(s: S, v: DeploymentContainer) {
     s.$s(`${v.type} "${v.label}"${' as ' + v.id} <<${v.head}>> {`)
-      .$for(v.components, (s, v) =>
-        s.$s(`  ${v.type} "${v.label}"${' as ' + v.id} <<${v.head}>>`),
-      )
+      .$for(v.components, (s, v) => s.$s(`  ${v.type} "${v.label}"${' as ' + v.id} <<${v.head}>>`))
       .$s('}')
   }
 }

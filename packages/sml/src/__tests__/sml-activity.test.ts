@@ -16,7 +16,7 @@ describe('sml activity test suite', () => {
       c.link(e)
       e.link(db)
       db.link(coll)
-      coll.link(queue)
+      coll.link(queue, (l) => l.commentOf('invoke'))
       queue.vlink(coll)
     })
 
@@ -98,6 +98,7 @@ describe('sml activity test suite', () => {
             ],
           },
           {
+            "comment": "invoke",
             "from": "ca9fc9193",
             "to": [
               "q722ad2d0",
@@ -117,6 +118,30 @@ describe('sml activity test suite', () => {
         ],
       }
     `)
-    expect(emitter.emitCode()).toMatchSnapshot()
+    expect(emitter.emitCode()).toMatchInlineSnapshot(`
+      "@startuml
+      !theme sketchy-outline
+
+      actor \\"Alice\\" as a64489c85
+      boundary \\"Boundary\\" as be234de58
+      control \\"Control\\" as ca1595abb
+      entity \\"Entity\\" as e1a434bef
+      database \\"Database\\" as de307db07
+      collections \\"Collections\\" as ca9fc9193
+      queue \\"Queue\\" as q722ad2d0
+
+
+      a64489c85 -> be234de58 : To Boundary
+      be234de58 -> ca1595abb
+      ca1595abb -> e1a434bef
+      e1a434bef -> de307db07
+      de307db07 -> ca9fc9193
+      ca9fc9193 -> q722ad2d0 : invoke
+
+
+      q722ad2d0 --> ca9fc9193
+
+      @enduml"
+    `)
   })
 })

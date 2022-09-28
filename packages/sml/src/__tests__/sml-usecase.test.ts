@@ -10,7 +10,43 @@ describe('sml usecase test suites', () => {
       ml.usecase('play')
     })
 
-    expect(ast.usecases).toMatchInlineSnapshot('undefined')
+    expect(ast).toMatchInlineSnapshot(`
+      {
+        "actors": [],
+        "components": [
+          {
+            "id": "a_126ac9f6",
+            "label": "blog",
+            "stereotypes": "",
+            "type": "usecase",
+          },
+          {
+            "id": "a_18d67699",
+            "label": "music",
+            "stereotypes": "",
+            "type": "usecase",
+          },
+          {
+            "id": "a_a3b34c08",
+            "label": "play",
+            "stereotypes": "",
+            "type": "usecase",
+          },
+        ],
+        "config": {
+          "actorStyle": "awesome",
+          "direction": "left->right",
+          "packageStyle": "Rectangle",
+          "theme": "sketchy-outline",
+        },
+        "links": [],
+        "notes": [],
+        "rels": [],
+        "title": "hello usecase diagram",
+        "vlinks": [],
+        "zones": [],
+      }
+    `)
     expect(emitter.emitCode()).toMatchSnapshot()
   })
 
@@ -238,8 +274,8 @@ describe('sml usecase test suites', () => {
       const a2 = ml.actor('Main DataBase').stereotypes('Application')
       const u1 = ml.usecase('Use the application').stereotypes('Main')
 
-      a1.link(u1)
-      a2.link(u1)
+      a1.link(u1, (l) => l.commentOf('invoke'))
+      a2.link(u1, (l) => l.commentOf('invoke'))
     })
     expect(ast).toMatchInlineSnapshot(`
       {
@@ -272,12 +308,14 @@ describe('sml usecase test suites', () => {
         },
         "links": [
           {
+            "comment": "invoke",
             "from": "a_8f9bfe9d",
             "to": [
               "a_a6f3cf91",
             ],
           },
           {
+            "comment": "invoke",
             "from": "a_a811389a",
             "to": [
               "a_a6f3cf91",

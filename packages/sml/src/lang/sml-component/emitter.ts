@@ -7,16 +7,11 @@ export class PumlComponentEmitter extends Emitter<SmlComponentAst> {
     const { title, zones, components, links, vlinks, rels, notes } = this.meta
 
     return this.s
-      .reset()
+      .$reset()
       .$s(`@startuml ${title.replace(/ /g, '_')}`)
       .$fn(this.buildConfig)
       .$s('')
-      .$for(zones, (s, v) =>
-        s
-          .$s(`${v.type} "${v.label}" {`)
-          .$for(v.components, this.buildComponent)
-          .$s('}'),
-      )
+      .$for(zones, (s, v) => s.$s(`${v.type} "${v.label}" {`).$for(v.components, this.buildComponent).$s('}'))
       .$for(components, this.buildComponent)
       .$for(notes, this.buildNotes)
       .$for(links, this.buildVlink())

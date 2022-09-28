@@ -7,7 +7,7 @@ export class PumlActivityEmitter extends Emitter<SmlActivityLangMeta> {
     const { components, links, vlinks, notes } = this.meta
 
     return this.s
-      .reset()
+      .$reset()
       .$s('@startuml')
       .$fn(this.buildTheme)
       .$fors(components, this.buildComponents)

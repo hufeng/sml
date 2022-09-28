@@ -24,7 +24,7 @@ export class PumlClassEmitter extends Emitter<ClassDiagramAst> {
 
   private emitStart() {
     this.s
-      .reset()
+      .$reset()
       .$s(`@startuml ${this.meta.title.replace(/ /g, '_')}`)
       .$fn(this.buildConfig)
     return this
@@ -45,14 +45,8 @@ export class PumlClassEmitter extends Emitter<ClassDiagramAst> {
       // extends and implements
       if (clazz.extends.length > 0 || clazz.implements.length > 0) {
         s.$s(
-          `class ${clazz.name}${
-            clazz.extends.length > 0
-              ? ' extends ' + clazz.extends.join(', ')
-              : ' '
-          }${
-            clazz.implements.length > 0
-              ? ' implements ' + clazz.implements.join(', ')
-              : ' '
+          `class ${clazz.name}${clazz.extends.length > 0 ? ' extends ' + clazz.extends.join(', ') : ' '}${
+            clazz.implements.length > 0 ? ' implements ' + clazz.implements.join(', ') : ' '
           }`,
         )
       }
@@ -68,11 +62,9 @@ export class PumlClassEmitter extends Emitter<ClassDiagramAst> {
       s.$for(clazz.methods, (s, method) => {
         const visible = PumlClassEmitter.visibleMap[method.visible]
         s.$s(
-          `  ${visible} ${method.abstract ? 'abstract ' : ''}${
-            method.name
-          }(${method.params.map((p) => `${p.name}: ${p.type}`).join(',')}): ${
-            method.ret
-          }`,
+          `  ${visible} ${method.abstract ? 'abstract ' : ''}${method.name}(${method.params
+            .map((p) => `${p.name}: ${p.type}`)
+            .join(',')}): ${method.ret}`,
         )
       })
       s.$s('}')
@@ -88,13 +80,7 @@ export class PumlClassEmitter extends Emitter<ClassDiagramAst> {
   private emitEnum(enums: ClassDiagramAst['enums']) {
     this.s.$for(enums, (s, e) => {
       s.$s(`enum ${e.name} {`)
-        .$for(e.fields, (s, field) =>
-          s.$s(
-            `  ${field.name}${
-              field.value !== 'undefined' ? ': ' + field.value : ''
-            }`,
-          ),
-        )
+        .$for(e.fields, (s, field) => s.$s(`  ${field.name}${field.value !== 'undefined' ? ': ' + field.value : ''}`))
         .$s('}')
     })
 
@@ -110,9 +96,7 @@ export class PumlClassEmitter extends Emitter<ClassDiagramAst> {
       // start interface
       s.$s(`interface ${i.name} {`)
         .$for(i.methods, (s, method) => {
-          const params = method.params
-            .map((p) => `${p.name}: ${p.type}`)
-            .join(',')
+          const params = method.params.map((p) => `${p.name}: ${p.type}`).join(',')
           s.$s(`  + ${method.name}(${params}): ${method.ret}`)
         })
         .$s('}')
@@ -128,9 +112,7 @@ export class PumlClassEmitter extends Emitter<ClassDiagramAst> {
       }
       s.$s(`protocol ${prot.name} {`)
         .$for(prot.methods, (s, method) => {
-          const params = method.params
-            .map((p) => `${p.name}: ${p.type}`)
-            .join(',')
+          const params = method.params.map((p) => `${p.name}: ${p.type}`).join(',')
           s.$s(`   + ${method.name}(${params}): ${method.ret}`)
         })
         .$s('}')
@@ -143,14 +125,8 @@ export class PumlClassEmitter extends Emitter<ClassDiagramAst> {
       // extends and implements
       if (struct.extends.length > 0 || struct.implements.length > 0) {
         s.$s(
-          `class ${struct.name}${
-            struct.extends.length > 0
-              ? ' extends ' + struct.extends.join(', ')
-              : ' '
-          }${
-            struct.implements.length > 0
-              ? ' implements ' + struct.implements.join(', ')
-              : ' '
+          `class ${struct.name}${struct.extends.length > 0 ? ' extends ' + struct.extends.join(', ') : ' '}${
+            struct.implements.length > 0 ? ' implements ' + struct.implements.join(', ') : ' '
           }`,
         )
       }
@@ -165,11 +141,9 @@ export class PumlClassEmitter extends Emitter<ClassDiagramAst> {
       s.$for(struct.methods, (s, method) => {
         const visible = PumlClassEmitter.visibleMap[method.visible]
         s.$s(
-          `  ${visible} ${method.abstract ? 'abstract ' : ''}${
-            method.name
-          }(${method.params.map((p) => `${p.name}: ${p.type}`).join(',')}): ${
-            method.ret
-          }`,
+          `  ${visible} ${method.abstract ? 'abstract ' : ''}${method.name}(${method.params
+            .map((p) => `${p.name}: ${p.type}`)
+            .join(',')}): ${method.ret}`,
         )
       })
       s.$s('}')

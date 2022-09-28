@@ -5,7 +5,7 @@ export class PumlJsonEmitter extends Emitter<JsonDiagramAst> {
   emitCode() {
     const { title, highlights, json } = this.meta
     return this.s
-      .reset()
+      .$reset()
       .$s(`@startjson ${title.replace(/ /g, '_')}`)
       .$fn(this.buildTheme)
       .$s('')
