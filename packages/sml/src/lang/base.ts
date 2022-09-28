@@ -105,7 +105,7 @@ export class Lang<T extends { title: string; config?: GlobalConfigType }> {
   constructor(meta: T) {
     this.meta = meta
     this.meta.config = {
-      actorStyle: 'default',
+      actorStyle: 'awesome',
       direction: 'left->right',
       packageStyle: 'Rectangle',
       theme: 'sketchy-outline',

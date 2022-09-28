@@ -36,7 +36,7 @@ describe('component diagram test suites', () => {
       {
         "components": [],
         "config": {
-          "actorStyle": "default",
+          "actorStyle": "awesome",
           "direction": "left->right",
           "packageStyle": "Rectangle",
           "theme": "sketchy-outline",
@@ -206,7 +206,7 @@ describe('component diagram test suites', () => {
       {
         "components": [],
         "config": {
-          "actorStyle": "default",
+          "actorStyle": "awesome",
           "direction": "left->right",
           "packageStyle": "Rectangle",
           "theme": "sketchy-outline",

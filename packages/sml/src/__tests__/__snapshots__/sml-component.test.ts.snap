@@ -3,6 +3,7 @@
 exports[`component diagram test suites > test all components 2`] = `
 "@startuml component_title
 !theme sketchy-outline
+skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 
@@ -38,6 +39,7 @@ i_da0fb2ac - c_d77ba138
 exports[`component diagram test suites > test has 2`] = `
 "@startuml component_diagram
 !theme sketchy-outline
+skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 

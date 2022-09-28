@@ -60,7 +60,7 @@ describe('sml activity test suite', () => {
           },
         ],
         "config": {
-          "actorStyle": "default",
+          "actorStyle": "awesome",
           "direction": "left->right",
           "packageStyle": "Rectangle",
           "theme": "sketchy-outline",
@@ -105,6 +105,7 @@ describe('sml activity test suite', () => {
           },
         ],
         "notes": [],
+        "rels": [],
         "title": "hello activities",
         "vlinks": [
           {

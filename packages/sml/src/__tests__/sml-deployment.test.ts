@@ -82,7 +82,7 @@ describe('deployment test suite', () => {
           },
         ],
         "config": {
-          "actorStyle": "default",
+          "actorStyle": "awesome",
           "direction": "left->right",
           "packageStyle": "Rectangle",
           "theme": "sketchy-outline",

@@ -3,6 +3,7 @@
 exports[`sml usecase test suites > only actor 2`] = `
 "@startuml hello_usecase_diagram
 !theme sketchy-outline
+skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 
@@ -44,6 +45,7 @@ a_ee11cbb1 --> a_0cce1966
 exports[`sml usecase test suites > test demo 2`] = `
 "@startuml use_case_diagram
 !theme sketchy-outline
+skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 
@@ -65,6 +67,7 @@ a_8781da4a --> a_457dd551
 exports[`sml usecase test suites > test note on simple actor or usecase 1`] = `
 "@startuml test_simple_note
 !theme sketchy-outline
+skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 
@@ -84,6 +87,7 @@ end note
 exports[`sml usecase test suites > test only usecases 2`] = `
 "@startuml hello_usecase_diagram
 !theme sketchy-outline
+skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 
@@ -96,6 +100,7 @@ usecase (play) as a_a3b34c08
 exports[`sml usecase test suites > test packages 1`] = `
 "@startuml hello_usecase_diagram
 !theme sketchy-outline
+skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 
@@ -119,6 +124,7 @@ a_8fd82b88 --> a_a6709cd3
 exports[`sml usecase test suites > test rect 2`] = `
 "@startuml hello_usecase_diagram
 !theme sketchy-outline
+skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 
@@ -139,6 +145,7 @@ a_8781da4a --> a_40491db1
 exports[`sml usecase test suites > test stereotypes 2`] = `
 "@startuml test_stereotypes
 !theme sketchy-outline
+skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 

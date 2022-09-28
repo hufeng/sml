@@ -53,7 +53,7 @@ describe('sml usecase test suites', () => {
           },
         ],
         "config": {
-          "actorStyle": "default",
+          "actorStyle": "awesome",
           "direction": "left->right",
           "packageStyle": "Rectangle",
           "theme": "sketchy-outline",
@@ -185,7 +185,7 @@ describe('sml usecase test suites', () => {
           },
         ],
         "config": {
-          "actorStyle": "default",
+          "actorStyle": "awesome",
           "direction": "left->right",
           "packageStyle": "Rectangle",
           "theme": "sketchy-outline",
@@ -265,7 +265,7 @@ describe('sml usecase test suites', () => {
           },
         ],
         "config": {
-          "actorStyle": "default",
+          "actorStyle": "awesome",
           "direction": "left->right",
           "packageStyle": "Rectangle",
           "theme": "sketchy-outline",
