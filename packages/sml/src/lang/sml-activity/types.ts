@@ -16,10 +16,11 @@ export interface Component {
   type: string
 }
 
-export type LinkContainer = Omit<Required<LinkContainer>, 'rels'>
-
-export interface SmlActivityLangMeta extends BaseAst, LinkContainer {
+export interface SmlActivityLangMeta extends BaseAst, Required<LinkContainer> {
   components: Array<Component>
 }
 
-export type ComponentBuilderMeta = SmlActivityLangMeta
+export type ComponentBuilderMeta = Pick<
+  SmlActivityLangMeta,
+  'components' | 'links' | 'notes' | 'vlinks'
+>

@@ -10,6 +10,7 @@ export function SmlActivityDiagram(
     components: [],
     links: [],
     vlinks: [],
+    rels: [],
     notes: [],
   }
 
