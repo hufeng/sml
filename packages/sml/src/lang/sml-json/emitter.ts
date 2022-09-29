@@ -7,9 +7,9 @@ export class PumlJsonEmitter extends Emitter<JsonDiagramAst> {
     return this.s
       .$reset()
       .$s(`@startjson ${title.replace(/ /g, '_')}`)
-      .$fn(this.buildTheme)
+      .$s(this.buildTheme)
       .$s('')
-      .$fors(highlights, (s, highlight) =>
+      .$for(highlights, (s, highlight) =>
         s.$s(
           `#highlight ${highlight
             .split('.')
@@ -17,6 +17,7 @@ export class PumlJsonEmitter extends Emitter<JsonDiagramAst> {
             .join(' / ')}`,
         ),
       )
+      .$s('')
       .$s(JSON.stringify(json, null, 2))
       .$s('@endjson')
       .toString()

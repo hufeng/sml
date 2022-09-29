@@ -26,7 +26,7 @@ export class PumlClassEmitter extends Emitter<ClassDiagramAst> {
     this.s
       .$reset()
       .$s(`@startuml ${this.meta.title.replace(/ /g, '_')}`)
-      .$fn(this.buildConfig)
+      .$s(this.buildConfig)
     return this
   }
 

@@ -4,7 +4,6 @@ exports[`sml yaml test suites > test full pipeline 1`] = `
 "@startyaml hello_yaml_demo
 !theme sketchy-outline
 
-
 #highlight \\"french-hens\\"
 #highlight \\"xmas-fifth-day\\" / \\"partridges\\"
 

@@ -15,7 +15,7 @@ export class PumlUseCaseEmitter extends Emitter<UseCaseDiagramAst> {
         .$reset()
         // start
         .$s(`@startuml ${title.replace(/ /g, '_')}`)
-        .$fn(this.buildConfig)
+        .$s(this.buildConfig)
         // usecases
         .$for(components, this.buildComponent())
         // domains
@@ -24,12 +24,14 @@ export class PumlUseCaseEmitter extends Emitter<UseCaseDiagramAst> {
           s.$for(v.components, this.buildComponent('  '))
           s.$s('}')
         })
+        .$s('')
         //links
-        .$fors(links, this.buildLinks())
-        .$fors(vlinks, this.buildVlink())
-        .$fors(rels, this.buildRels)
+        .$for(links, this.buildLinks())
+        .$for(vlinks, this.buildVlink())
+        .$for(rels, this.buildRels)
         // notes
-        .$fors(notes, this.buildNotes)
+        .$for(notes, this.buildNotes)
+        .$s('')
         //end
         .$s('@enduml')
         .toString()

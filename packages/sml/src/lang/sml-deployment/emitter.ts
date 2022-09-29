@@ -9,13 +9,14 @@ export class PumlDeploymentEmitter extends Emitter<DeploymentLangAst> {
     return this.s
       .$reset()
       .$s(`@startuml ${title.replace(/ /g, '_')}`)
-      .$fn(this.buildTheme)
+      .$s(this.buildConfig)
       .$s('')
-      .$fors(components, this.build)
+      .$for(components, this.build)
       .$for(zones, this.buildZones)
       .$for(links, this.buildLinks())
       .$for(vlinks, this.buildVlink())
       .$for(rels, this.buildRels)
+      .$s('')
       .$s('@enduml')
       .toString()
   }

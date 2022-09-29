@@ -24,6 +24,7 @@ package \\"app\\" {
   component \\"MainActivity\\"  as c_db3a4a28
   component \\"LoginActivity\\"  as c_d8a28ff5
 }
+
 c_33fcf2b3 ..> c_0dc28396
 c_33fcf2b3 ..> i_acfd60a8
 c_0dc28396 ..> i_c062b511

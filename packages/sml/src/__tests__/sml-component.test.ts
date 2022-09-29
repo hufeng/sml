@@ -57,6 +57,7 @@ describe('component diagram test suites', () => {
       node \\"Node\\" {
         component \\"Go\\"  as c_5f075ae3
       }
+
       note \\"connected\\" as nvlink_c_4b00bbf4_c_7fdd65ec
       (c_4b00bbf4) .. nvlink_c_4b00bbf4_c_7fdd65ec
       nvlink_c_4b00bbf4_c_7fdd65ec ..> (c_7fdd65ec) : invoke

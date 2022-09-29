@@ -134,19 +134,10 @@ export abstract class Emitter<T extends BaseAst> {
   abstract emitCode(): string
 
   protected buildConfig = (s: S) => {
-    const { config } = this.meta
-    s
-      // setting theme
-      .$s(`!theme ${config!.theme}`)
-      // setting actor style
-      .$if(
-        config!.actorStyle !== 'default',
-        `skinparam actorStyle ${config!.actorStyle}`,
-      )
-      .$s(`skinparam packageStyle ${config?.packageStyle}`)
-      // setting direction
-      .$s(`${config!.direction.replace('->', ' to ')} direction\n`)
-    return s
+    this.buildTheme(s)
+    this.buildActorStyle(s)
+    this.buildPackageStyle(s)
+    this.buildDirection(s)
   }
 
   protected buildTheme = (s: S) => {
@@ -165,7 +156,7 @@ export abstract class Emitter<T extends BaseAst> {
   protected buildPackageStyle = (s: S) => {
     const { config } = this.meta
     // setting direction
-    s.$s(`${config!.direction.replace('->', ' to ')} direction\n`)
+    s.$s(`skinparam packageStyle ${config!.packageStyle}`)
   }
 
   protected buildDirection = (s: S) => {
@@ -182,11 +173,11 @@ export abstract class Emitter<T extends BaseAst> {
           const noteName = `nvlink_${from}_${to}`
           s.$s(`note "${link.label}" as ${noteName}`)
             .$s(`(${from}) --${noteName}`)
-            .$s(`${noteName} --> (${to})`, s._if(comment, ` : ${comment}`))
+            .$s(`${noteName} --> (${to})`, s.if$(comment, ` : ${comment}`))
         })
       } else {
         s.$for(to, (s, to) =>
-          s.$s(`${from} ${linkStyle} ${to}`, s._if(comment, ` : ${comment}`)),
+          s.$s(`${from} ${linkStyle} ${to}`, s.if$(comment, ` : ${comment}`)),
         )
       }
     }
@@ -199,13 +190,13 @@ export abstract class Emitter<T extends BaseAst> {
           const noteName = `nvlink_${from}_${to}`
           s.$s(`note "${link.label}" as ${noteName}`)
             .$s(`(${from}) .. ${noteName}`)
-            .$s(`${noteName} ..> (${to})`, s._if(comment, ` : ${comment}`))
+            .$s(`${noteName} ..> (${to})`, s.if$(comment, ` : ${comment}`))
         })
       } else {
         s.$for(to, (s, to) =>
           s.$s(
             `${from} ${linkStyle} ${to}`,
-            s._if(comment, ` : ${comment}`, ''),
+            s.if$(comment, ` : ${comment}`, ''),
           ),
         )
       }

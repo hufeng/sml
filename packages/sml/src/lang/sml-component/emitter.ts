@@ -9,10 +9,11 @@ export class PumlComponentEmitter extends Emitter<SmlComponentAst> {
     return this.s
       .$reset()
       .$s(`@startuml ${title.replace(/ /g, '_')}`)
-      .$fn(this.buildConfig)
+      .$s(this.buildConfig)
       .$s('')
       .$for(zones, (s, v) => s.$s(`${v.type} "${v.label}" {`).$for(v.components, this.buildComponent).$s('}'))
       .$for(components, this.buildComponent)
+      .$s('')
       .$for(notes, this.buildNotes)
       .$for(links, this.buildVlink())
       .$for(vlinks, this.buildVlink())

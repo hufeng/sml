@@ -10,6 +10,8 @@ left to right direction
 actor \\"first actor\\" as a_dd79c149
 actor \\"another actor\\" as a_fc3baf5b
 actor \\"Last actor\\" as a_8b705053
+
+
 @enduml"
 `;
 
@@ -101,6 +103,8 @@ left to right direction
 usecase \\"blog\\" as a_126ac9f6
 usecase \\"music\\" as a_18d67699
 usecase \\"play\\" as a_a3b34c08
+
+
 @enduml"
 `;
 
