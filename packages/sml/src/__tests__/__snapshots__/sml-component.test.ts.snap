@@ -7,6 +7,7 @@ skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 
+title component diagram
 
 package \\"bls\\" {
   component \\"Repository\\"  as c_33fcf2b3

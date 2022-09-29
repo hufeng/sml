@@ -138,25 +138,27 @@ export abstract class Emitter<T extends BaseAst> {
     this.buildActorStyle(s)
     this.buildPackageStyle(s)
     this.buildDirection(s)
+    this.buildTile(s)
   }
 
   protected buildTheme = (s: S) => {
-    const { config } = this.meta
-    s.$s(`!theme ${config!.theme}`)
+    s.$s(`!theme ${this.meta.config!.theme}`)
+  }
+
+  protected buildTile = (s: S) => {
+    s.$s(`title ${this.meta.title}`)
   }
 
   protected buildActorStyle = (s: S) => {
-    const { config } = this.meta
     s.$if(
-      config!.actorStyle !== 'default',
-      `skinparam actorStyle ${config!.actorStyle}`,
+      this.meta.config!.actorStyle !== 'default',
+      `skinparam actorStyle ${this.meta.config!.actorStyle}`,
     )
   }
 
   protected buildPackageStyle = (s: S) => {
-    const { config } = this.meta
     // setting direction
-    s.$s(`skinparam packageStyle ${config!.packageStyle}`)
+    s.$s(`skinparam packageStyle ${this.meta.config!.packageStyle}`)
   }
 
   protected buildDirection = (s: S) => {

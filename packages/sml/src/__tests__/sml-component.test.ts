@@ -40,6 +40,7 @@ describe('component diagram test suites', () => {
       skinparam packageStyle Rectangle
       left to right direction
 
+      title component title
 
       cloud \\"cloud\\" {
         component \\"Nodejs\\"  as c_4b00bbf4

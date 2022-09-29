@@ -7,6 +7,7 @@ skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 
+title suml test suite
 abstract class or.hf.sml.AbstractUserCase {
   - id: number;
   - name: string;
@@ -23,6 +24,7 @@ skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 
+title suml test suite
  class org.hf.sml.UseCase {
   - id: number;
   - name: string;
@@ -45,6 +47,7 @@ skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 
+title suml test suite
 enum org.hufeng.enum.Color {
   Red: 0
   Green: 1
@@ -65,6 +68,7 @@ skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 
+title suml test suite
 interface List {
 }
 interface I1 {
@@ -89,6 +93,7 @@ skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 
+title suml test suite
 interface org.hufeng.service.UserService {
   + sayYou(name: string): void
   + sayMe(you: string): void

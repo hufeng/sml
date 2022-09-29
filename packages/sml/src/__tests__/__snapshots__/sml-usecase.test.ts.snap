@@ -7,6 +7,7 @@ skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 
+title hello usecase diagram
 actor \\"first actor\\" as a_dd79c149
 actor \\"another actor\\" as a_fc3baf5b
 actor \\"Last actor\\" as a_8b705053
@@ -22,6 +23,7 @@ skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 
+title test actor awesome style
 actor \\"User\\" as a_8f9bfe9d
 usecase \\"Learn JavaScript\\" as a_5d686b2e
 
@@ -37,6 +39,7 @@ skinparam actorStyle default
 skinparam packageStyle Rectangle
 left to right direction
 
+title test actor style
 actor \\"user\\" as a_ee11cbb1
 usecase \\"Write Blog\\" as a_0cce1966
 
@@ -52,6 +55,7 @@ skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 
+title use case diagram
 actor \\"Guest\\" as a_adb831a7
 Rectangle Professional {
   actor \\"Chef\\" as a_8fd82b88
@@ -80,6 +84,7 @@ skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 
+title test simple note
 actor \\"User\\" as a_8f9bfe9d
 usecase \\"Coding\\" as a_cddcade0
 
@@ -100,6 +105,7 @@ skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 
+title hello usecase diagram
 usecase \\"blog\\" as a_126ac9f6
 usecase \\"music\\" as a_18d67699
 usecase \\"play\\" as a_a3b34c08
@@ -115,6 +121,7 @@ skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 
+title hello usecase diagram
 actor \\"guest\\" as a_084e0343
 Rectangle Restaurant {
   usecase \\"Eat Food\\" as a_a6709cd3
@@ -142,6 +149,7 @@ skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 
+title hello usecase diagram
 actor \\"Food Critic\\" as a_8781da4a
 Rectangle Restaurant {
   usecase \\"Eat Food\\" as a_a6709cd3
@@ -163,6 +171,7 @@ skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 
+title test stereotypes
 actor \\"User\\" as a_8f9bfe9d <<human>>
 actor \\"Main DataBase\\" as a_a811389a <<Application>>
 usecase \\"Use the application\\" as a_a6f3cf91 <<Main>>

@@ -7,6 +7,7 @@ skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 
+title hello deployment
 
 actor \\"Customer\\" as c_ce26601d <<actor>>
 component \\"registry\\" as z_a9205dcf <<zone>> {
@@ -42,6 +43,7 @@ skinparam actorStyle awesome
 skinparam packageStyle Rectangle
 left to right direction
 
+title hello more component
 
 artifact \\"artifact\\" as c_8e5b948a <<artifact>>
 cloud \\"cloud\\" as c_a1234b31 <<cloud>>
