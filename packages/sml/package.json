@@ -5,6 +5,9 @@
   "bin": {
     "smlc": "./lib/cmd/index.js"
   },
+  "scripts": {
+    "postinstall": "node ./lib/cmd/download.js"
+  },
   "version": "0.0.1",
   "license": "MIT",
   "dependencies": {
@@ -14,6 +17,7 @@
     "esbuild": "^0.15.7",
     "esbuild-register": "^3.3.3",
     "glob": "^8.0.3",
-    "fs-extra": "^10.1.0"
+    "fs-extra": "^10.1.0",
+    "axios": "^0.27.2"
   }
 }
