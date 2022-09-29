@@ -219,7 +219,7 @@ export abstract class Emitter<T extends BaseAst> {
     s.$for(to, (s, t) => s.$s(`${from} - ${t}`))
 
   plantUML(img: string) {
-    const jar = path.join(__dirname, '../../bin/plantuml-1.2022.7.jar')
+    const jar = path.join(__dirname, '../../bin/plantuml-1.2022.8.jar')
 
     exec(
       `${this.emitCode()} | java -jar ${jar} -pipe > ${img}`,

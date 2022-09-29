@@ -249,14 +249,52 @@ describe('sml usecase test suites', () => {
         "vlinks": [],
         "zones": [
           {
-            "components": [],
+            "components": [
+              {
+                "id": "a_8fd82b88",
+                "label": "Chef",
+                "stereotypes": "",
+                "type": "actor",
+              },
+              {
+                "id": "a_8781da4a",
+                "label": "Food Critic",
+                "stereotypes": "",
+                "type": "actor",
+              },
+            ],
             "id": "z_9e8b1602",
             "label": "Professional",
             "stereotypes": "",
             "type": "Rectangle",
           },
           {
-            "components": [],
+            "components": [
+              {
+                "id": "a_39ce479e",
+                "label": "Eat food",
+                "stereotypes": "",
+                "type": "usecase",
+              },
+              {
+                "id": "a_f870119e",
+                "label": "Pay for food",
+                "stereotypes": "",
+                "type": "usecase",
+              },
+              {
+                "id": "a_40491db1",
+                "label": "Drink",
+                "stereotypes": "",
+                "type": "usecase",
+              },
+              {
+                "id": "a_457dd551",
+                "label": "Review",
+                "stereotypes": "",
+                "type": "usecase",
+              },
+            ],
             "id": "z_e197a9cc",
             "label": "Restaurant",
             "stereotypes": "",

@@ -13,7 +13,7 @@ export async function build() {
   await compile()
 
   // gen uml image
-  const plantUmlJar = path.join(__dirname, '../../bin/plantuml-1.2022.7.jar')
+  const plantUmlJar = path.join(__dirname, '../../bin/plantuml-1.2022.8.jar')
   exec(
     `java -Djava.awt.headless=true -jar ${plantUmlJar} ./dist`,
     (err, stdout, stderr) => {

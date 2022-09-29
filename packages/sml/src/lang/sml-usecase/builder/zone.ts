@@ -8,16 +8,16 @@ export const zoneWeakMap: WeakMap<ZoneBuilder, string> = new WeakMap()
 export class ZoneBuilder extends Builder {
   #meta: ZoneBuilderNode
   #zone: ZoneNode
-  #name: string
+  #id: string
 
   constructor(meta: ZoneBuilderNode, label: string) {
     super()
     this.#meta = meta
-    this.#name = 'z_' + this.id(label)
-    zoneWeakMap.set(this, this.#name)
+    this.#id = 'z_' + this.id(label)
+    zoneWeakMap.set(this, this.#id)
 
     this.#zone = {
-      id: this.#name,
+      id: this.#id,
       label,
       stereotypes: '',
       type: 'Rectangle',

@@ -108,8 +108,8 @@ export class ComponentBuilder extends Builder {
    * @returns
    */
   belongTo(z: ZoneBuilder) {
-    const name = zoneWeakMap.get(z)!
-    const zone = this.#meta.zones.find((zone) => zone.type === name)
+    const id = zoneWeakMap.get(z)!
+    const zone = this.#meta.zones.find((zone) => zone.id === id)
     zone?.components.push(this.#component)
 
     // remove from actors

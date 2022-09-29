@@ -52,8 +52,14 @@ left to right direction
 
 actor \\"Guest\\" as a_adb831a7
 Rectangle Professional {
+  actor \\"Chef\\" as a_8fd82b88
+  actor \\"Food Critic\\" as a_8781da4a
 }
 Rectangle Restaurant {
+  usecase \\"Eat food\\" as a_39ce479e
+  usecase \\"Pay for food\\" as a_f870119e
+  usecase \\"Drink\\" as a_40491db1
+  usecase \\"Review\\" as a_457dd551
 }
 
 a_adb831a7 --> a_39ce479e
@@ -107,8 +113,11 @@ left to right direction
 
 actor \\"guest\\" as a_084e0343
 Rectangle Restaurant {
+  usecase \\"Eat Food\\" as a_a6709cd3
+  usecase \\"Pay for food\\" as a_f870119e
 }
 Rectangle Professional {
+  actor \\"Chef\\" as a_8fd82b88
 }
 
 note \\"guest note\\" as nvlink_a_084e0343_a_a6709cd3
