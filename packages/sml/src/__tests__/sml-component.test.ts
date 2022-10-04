@@ -33,7 +33,7 @@ describe('component diagram test suites', () => {
       i2.rel(c3)
     })
 
-    expect(emitter.emitCode()).toMatchInlineSnapshot(`
+    expect(emitter.emitPuml()).toMatchInlineSnapshot(`
       "@startuml component_title
       !theme sketchy-outline
       skinparam actorStyle awesome
@@ -41,6 +41,7 @@ describe('component diagram test suites', () => {
       left to right direction
 
       title component title
+
 
       cloud \\"cloud\\" {
         component \\"Nodejs\\"  as c_4b00bbf4
@@ -393,6 +394,92 @@ describe('component diagram test suites', () => {
         ],
       }
     `)
-    expect(emitter.emitCode()).toMatchSnapshot()
+    expect(emitter.emitPuml()).toMatchInlineSnapshot(`
+      "@startuml component_diagram
+      !theme sketchy-outline
+      skinparam actorStyle awesome
+      skinparam packageStyle Rectangle
+      left to right direction
+
+      title component diagram
+
+
+      package \\"bls\\" {
+        component \\"Repository\\"  as c_33fcf2b3
+        component \\"LoginDataSource\\"  as c_0dc28396
+        interface \\"getLoginDS\\"  as i_acfd60a8
+        interface \\"ILoginDS\\"  as i_c062b511
+      }
+      package \\"vm\\" {
+        component \\"ViewModelFactory\\"  as c_02658109
+        component \\"AppViewModel\\"  as c_4faf9542
+        interface \\"getLoginVM\\"  as i_20445edb
+        interface \\"ILoginVM\\"  as i_ac37107e
+      }
+      package \\"app\\" {
+        component \\"MainActivity\\"  as c_db3a4a28
+        component \\"LoginActivity\\"  as c_d8a28ff5
+      }
+
+      c_33fcf2b3 ..> c_0dc28396
+      c_33fcf2b3 ..> i_acfd60a8
+      c_0dc28396 ..> i_c062b511
+      i_acfd60a8 ..> i_c062b511
+      i_20445edb ..> i_ac37107e
+      i_ac37107e ..> c_4faf9542
+      c_02658109 ..> c_4faf9542
+      c_02658109 - i_acfd60a8
+      c_02658109 - i_c062b511
+      c_d8a28ff5 - i_20445edb
+      c_d8a28ff5 - i_ac37107e
+      @enduml"
+    `)
+    expect(emitter.emitMarkdown()).toMatchInlineSnapshot(`
+      "## component diagram
+
+      \`\`\`plantuml
+
+      @startuml component_diagram
+      !theme sketchy-outline
+      skinparam actorStyle awesome
+      skinparam packageStyle Rectangle
+      left to right direction
+
+      title component diagram
+
+
+      package \\"bls\\" {
+        component \\"Repository\\"  as c_33fcf2b3
+        component \\"LoginDataSource\\"  as c_0dc28396
+        interface \\"getLoginDS\\"  as i_acfd60a8
+        interface \\"ILoginDS\\"  as i_c062b511
+      }
+      package \\"vm\\" {
+        component \\"ViewModelFactory\\"  as c_02658109
+        component \\"AppViewModel\\"  as c_4faf9542
+        interface \\"getLoginVM\\"  as i_20445edb
+        interface \\"ILoginVM\\"  as i_ac37107e
+      }
+      package \\"app\\" {
+        component \\"MainActivity\\"  as c_db3a4a28
+        component \\"LoginActivity\\"  as c_d8a28ff5
+      }
+
+      c_33fcf2b3 ..> c_0dc28396
+      c_33fcf2b3 ..> i_acfd60a8
+      c_0dc28396 ..> i_c062b511
+      i_acfd60a8 ..> i_c062b511
+      i_20445edb ..> i_ac37107e
+      i_ac37107e ..> c_4faf9542
+      c_02658109 ..> c_4faf9542
+      c_02658109 - i_acfd60a8
+      c_02658109 - i_c062b511
+      c_d8a28ff5 - i_20445edb
+      c_d8a28ff5 - i_ac37107e
+      @enduml
+
+      \`\`\`
+      "
+    `)
   })
 })

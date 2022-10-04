@@ -7,7 +7,7 @@ import S from '../s'
 import { ComponentNode, UseCaseDiagramAst } from './types'
 
 export class PumlUseCaseEmitter extends Emitter<UseCaseDiagramAst> {
-  emitCode() {
+  emitPuml() {
     const { title, components, zones, vlinks, rels, links, notes } = this.meta
 
     return (

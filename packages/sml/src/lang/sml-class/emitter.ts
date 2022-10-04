@@ -9,7 +9,7 @@ export class PumlClassEmitter extends Emitter<ClassDiagramAst> {
     public: '+',
   } as const
 
-  emitCode() {
+  emitPuml() {
     const { clazzes, structs, enums, interfaces, protocols } = this.meta
     this.emitStart()
       .emitInf(interfaces)

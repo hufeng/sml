@@ -3,14 +3,13 @@ import { Emitter } from '../base'
 import { DeploymentLangAst, Deployment, DeploymentContainer } from './types'
 
 export class PumlDeploymentEmitter extends Emitter<DeploymentLangAst> {
-  emitCode() {
+  emitPuml() {
     const { title, zones, components, links, vlinks, rels } = this.meta
 
     return this.s
       .$reset()
       .$s(`@startuml ${title.replace(/ /g, '_')}`)
       .$s(this.buildConfig)
-      .$s('')
       .$for(components, this.build)
       .$for(zones, this.buildZones)
       .$for(links, this.buildLinks())

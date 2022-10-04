@@ -39,7 +39,84 @@ describe('deployment test suite', () => {
       registryService.vlink(db)
     })
 
-    expect(emitter.emitCode()).toMatchSnapshot()
+    expect(emitter.emitPuml()).toMatchInlineSnapshot(`
+      "@startuml hello_deployment
+      !theme sketchy-outline
+      skinparam actorStyle awesome
+      skinparam packageStyle Rectangle
+      left to right direction
+
+      title hello deployment
+
+      actor \\"Customer\\" as c_ce26601d <<actor>>
+      component \\"registry\\" as z_a9205dcf <<zone>> {
+        component \\"beehive-registry\\" as c_4dd942bb <<component>>
+      }
+      cloud \\"web-service\\" as z_82daadfb <<cloud>> {
+        component \\"nginx\\" as c_ee434023 <<component>>
+        component \\"dubbo-consumer\\" as c_fc2d8b3d <<component>>
+        queue \\"request queue\\" as c_9ad4f252 <<queue>>
+      }
+      cloud \\"User-Center\\" as z_42fac19d <<cloud>> {
+        collections \\"login-service\\" as c_b615bcf7 <<RpcService>>
+        collections \\"registry-service\\" as c_11289165 <<RpcService>>
+      }
+      database \\"persistence\\" as z_3a6988a0 <<database>> {
+        component \\"mysql\\" as c_81c3b080 <<component>>
+      }
+      c_ce26601d --> c_ee434023
+      c_fc2d8b3d --> c_9ad4f252
+      c_fc2d8b3d ..> c_4dd942bb
+      c_9ad4f252 ..> c_b615bcf7
+      c_9ad4f252 ..> c_11289165
+      c_b615bcf7 ..> c_81c3b080
+      c_11289165 ..> c_81c3b080
+
+      @enduml"
+    `)
+
+    expect(emitter.emitMarkdown()).toMatchInlineSnapshot(`
+      "## hello deployment
+
+      \`\`\`plantuml
+
+      @startuml hello_deployment
+      !theme sketchy-outline
+      skinparam actorStyle awesome
+      skinparam packageStyle Rectangle
+      left to right direction
+
+      title hello deployment
+
+      actor \\"Customer\\" as c_ce26601d <<actor>>
+      component \\"registry\\" as z_a9205dcf <<zone>> {
+        component \\"beehive-registry\\" as c_4dd942bb <<component>>
+      }
+      cloud \\"web-service\\" as z_82daadfb <<cloud>> {
+        component \\"nginx\\" as c_ee434023 <<component>>
+        component \\"dubbo-consumer\\" as c_fc2d8b3d <<component>>
+        queue \\"request queue\\" as c_9ad4f252 <<queue>>
+      }
+      cloud \\"User-Center\\" as z_42fac19d <<cloud>> {
+        collections \\"login-service\\" as c_b615bcf7 <<RpcService>>
+        collections \\"registry-service\\" as c_11289165 <<RpcService>>
+      }
+      database \\"persistence\\" as z_3a6988a0 <<database>> {
+        component \\"mysql\\" as c_81c3b080 <<component>>
+      }
+      c_ce26601d --> c_ee434023
+      c_fc2d8b3d --> c_9ad4f252
+      c_fc2d8b3d ..> c_4dd942bb
+      c_9ad4f252 ..> c_b615bcf7
+      c_9ad4f252 ..> c_11289165
+      c_b615bcf7 ..> c_81c3b080
+      c_11289165 ..> c_81c3b080
+
+      @enduml
+
+      \`\`\`
+      "
+    `)
   })
 
   it('test artifact cloud database node', () => {
@@ -114,6 +191,51 @@ describe('deployment test suite', () => {
         "zones": [],
       }
     `)
-    expect(emitter.emitCode()).toMatchSnapshot()
+    expect(emitter.emitPuml()).toMatchInlineSnapshot(`
+      "@startuml hello_more_component
+      !theme sketchy-outline
+      skinparam actorStyle awesome
+      skinparam packageStyle Rectangle
+      left to right direction
+
+      title hello more component
+
+      artifact \\"artifact\\" as c_8e5b948a <<artifact>>
+      cloud \\"cloud\\" as c_a1234b31 <<cloud>>
+      database \\"db\\" as c_d77d5e50 <<database>>
+      node \\"node\\" as c_36c45369 <<node>>
+      c_8e5b948a --> c_a1234b31
+      c_a1234b31 --> c_d77d5e50
+      c_d77d5e50 --> c_36c45369
+
+      @enduml"
+    `)
+
+    expect(emitter.emitMarkdown()).toMatchInlineSnapshot(`
+      "## hello more component
+
+      \`\`\`plantuml
+
+      @startuml hello_more_component
+      !theme sketchy-outline
+      skinparam actorStyle awesome
+      skinparam packageStyle Rectangle
+      left to right direction
+
+      title hello more component
+
+      artifact \\"artifact\\" as c_8e5b948a <<artifact>>
+      cloud \\"cloud\\" as c_a1234b31 <<cloud>>
+      database \\"db\\" as c_d77d5e50 <<database>>
+      node \\"node\\" as c_36c45369 <<node>>
+      c_8e5b948a --> c_a1234b31
+      c_a1234b31 --> c_d77d5e50
+      c_d77d5e50 --> c_36c45369
+
+      @enduml
+
+      \`\`\`
+      "
+    `)
   })
 })

@@ -3,7 +3,7 @@ import { Emitter } from '../base'
 import { Component, SmlActivityLangMeta } from './types'
 
 export class PumlActivityEmitter extends Emitter<SmlActivityLangMeta> {
-  emitCode() {
+  emitPuml() {
     const { components, links, vlinks, notes } = this.meta
 
     return this.s

@@ -47,7 +47,22 @@ describe('sml usecase test suites', () => {
         "zones": [],
       }
     `)
-    expect(emitter.emitCode()).toMatchSnapshot()
+    expect(emitter.emitPuml()).toMatchInlineSnapshot(`
+      "@startuml hello_usecase_diagram
+      !theme sketchy-outline
+      skinparam actorStyle awesome
+      skinparam packageStyle Rectangle
+      left to right direction
+
+      title hello usecase diagram
+
+      usecase \\"blog\\" as a_126ac9f6
+      usecase \\"music\\" as a_18d67699
+      usecase \\"play\\" as a_a3b34c08
+
+
+      @enduml"
+    `)
   })
 
   it('only actor', () => {
@@ -58,7 +73,22 @@ describe('sml usecase test suites', () => {
     })
 
     expect(ast.actors).toMatchInlineSnapshot('[]')
-    expect(emitter.emitCode()).toMatchSnapshot()
+    expect(emitter.emitPuml()).toMatchInlineSnapshot(`
+      "@startuml hello_usecase_diagram
+      !theme sketchy-outline
+      skinparam actorStyle awesome
+      skinparam packageStyle Rectangle
+      left to right direction
+
+      title hello usecase diagram
+
+      actor \\"first actor\\" as a_dd79c149
+      actor \\"another actor\\" as a_fc3baf5b
+      actor \\"Last actor\\" as a_8b705053
+
+
+      @enduml"
+    `)
   })
 
   it('test rect', () => {
@@ -138,7 +168,28 @@ describe('sml usecase test suites', () => {
         ],
       }
     `)
-    expect(emitter.emitCode()).toMatchSnapshot()
+    expect(emitter.emitPuml()).toMatchInlineSnapshot(`
+      "@startuml hello_usecase_diagram
+      !theme sketchy-outline
+      skinparam actorStyle awesome
+      skinparam packageStyle Rectangle
+      left to right direction
+
+      title hello usecase diagram
+
+      actor \\"Food Critic\\" as a_8781da4a
+      Rectangle Restaurant {
+        usecase \\"Eat Food\\" as a_a6709cd3
+        usecase \\"Pay for food\\" as a_f870119e
+        usecase \\"Drink\\" as a_40491db1
+      }
+
+      a_8781da4a --> a_a6709cd3
+      a_8781da4a --> a_f870119e
+      a_8781da4a --> a_40491db1
+
+      @enduml"
+    `)
   })
 
   it('test packages', () => {
@@ -155,7 +206,34 @@ describe('sml usecase test suites', () => {
       g.link([u1, u2], (l) => l.noteOf('guest note'))
       a1.link(u1)
     })
-    expect(emitter.emitCode()).toMatchSnapshot()
+    expect(emitter.emitPuml()).toMatchInlineSnapshot(`
+      "@startuml hello_usecase_diagram
+      !theme sketchy-outline
+      skinparam actorStyle awesome
+      skinparam packageStyle Rectangle
+      left to right direction
+
+      title hello usecase diagram
+
+      actor \\"guest\\" as a_084e0343
+      Rectangle Restaurant {
+        usecase \\"Eat Food\\" as a_a6709cd3
+        usecase \\"Pay for food\\" as a_f870119e
+      }
+      Rectangle Professional {
+        actor \\"Chef\\" as a_8fd82b88
+      }
+
+      note \\"guest note\\" as nvlink_a_084e0343_a_a6709cd3
+      (a_084e0343) --nvlink_a_084e0343_a_a6709cd3
+      nvlink_a_084e0343_a_a6709cd3 --> (a_a6709cd3)
+      note \\"guest note\\" as nvlink_a_084e0343_a_f870119e
+      (a_084e0343) --nvlink_a_084e0343_a_f870119e
+      nvlink_a_084e0343_a_f870119e --> (a_f870119e)
+      a_8fd82b88 --> a_a6709cd3
+
+      @enduml"
+    `)
   })
 
   it('test actor style', () => {
@@ -165,7 +243,22 @@ describe('sml usecase test suites', () => {
       const c = ml.usecase('Write Blog')
       u.link(c)
     })
-    expect(emitter.emitCode()).toMatchSnapshot()
+    expect(emitter.emitPuml()).toMatchInlineSnapshot(`
+      "@startuml test_actor_style
+      !theme sketchy-outline
+      skinparam actorStyle default
+      skinparam packageStyle Rectangle
+      left to right direction
+
+      title test actor style
+
+      actor \\"user\\" as a_ee11cbb1
+      usecase \\"Write Blog\\" as a_0cce1966
+
+      a_ee11cbb1 --> a_0cce1966
+
+      @enduml"
+    `)
   })
 
   it('test actor awesome style', () => {
@@ -177,7 +270,22 @@ describe('sml usecase test suites', () => {
 
       a.link(c)
     })
-    expect(emitter.emitCode()).toMatchSnapshot()
+    expect(emitter.emitPuml()).toMatchInlineSnapshot(`
+      "@startuml test_actor_awesome_style
+      !theme sketchy-outline
+      skinparam actorStyle awesome
+      skinparam packageStyle Rectangle
+      left to right direction
+
+      title test actor awesome style
+
+      actor \\"User\\" as a_8f9bfe9d
+      usecase \\"Learn JavaScript\\" as a_5d686b2e
+
+      a_8f9bfe9d --> a_5d686b2e
+
+      @enduml"
+    `)
   })
 
   it('test note on simple actor or usecase', () => {
@@ -185,7 +293,27 @@ describe('sml usecase test suites', () => {
       ml.actor('User').noteOf('a student user')
       ml.usecase('Coding').noteOf('Coding Rust')
     })
-    expect(emitter.emitCode()).toMatchSnapshot()
+    expect(emitter.emitPuml()).toMatchInlineSnapshot(`
+      "@startuml test_simple_note
+      !theme sketchy-outline
+      skinparam actorStyle awesome
+      skinparam packageStyle Rectangle
+      left to right direction
+
+      title test simple note
+
+      actor \\"User\\" as a_8f9bfe9d
+      usecase \\"Coding\\" as a_cddcade0
+
+      note right of (a_8f9bfe9d)
+        a student user
+      end note
+      note right of (a_cddcade0)
+        Coding Rust
+      end note
+
+      @enduml"
+    `)
   })
 
   it('test demo', () => {
@@ -303,7 +431,35 @@ describe('sml usecase test suites', () => {
         ],
       }
     `)
-    expect(emitter.emitCode()).toMatchSnapshot()
+    expect(emitter.emitPuml()).toMatchInlineSnapshot(`
+      "@startuml use_case_diagram
+      !theme sketchy-outline
+      skinparam actorStyle awesome
+      skinparam packageStyle Rectangle
+      left to right direction
+
+      title use case diagram
+
+      actor \\"Guest\\" as a_adb831a7
+      Rectangle Professional {
+        actor \\"Chef\\" as a_8fd82b88
+        actor \\"Food Critic\\" as a_8781da4a
+      }
+      Rectangle Restaurant {
+        usecase \\"Eat food\\" as a_39ce479e
+        usecase \\"Pay for food\\" as a_f870119e
+        usecase \\"Drink\\" as a_40491db1
+        usecase \\"Review\\" as a_457dd551
+      }
+
+      a_adb831a7 --> a_39ce479e
+      a_adb831a7 --> a_f870119e
+      a_adb831a7 --> a_40491db1
+      a_adb831a7 --> a_457dd551
+      a_8781da4a --> a_457dd551
+
+      @enduml"
+    `)
   })
 
   it('test stereotypes', () => {
@@ -367,6 +523,48 @@ describe('sml usecase test suites', () => {
         "zones": [],
       }
     `)
-    expect(emitter.emitCode()).toMatchSnapshot()
+    expect(emitter.emitPuml()).toMatchInlineSnapshot(`
+      "@startuml test_stereotypes
+      !theme sketchy-outline
+      skinparam actorStyle awesome
+      skinparam packageStyle Rectangle
+      left to right direction
+
+      title test stereotypes
+
+      actor \\"User\\" as a_8f9bfe9d <<human>>
+      actor \\"Main DataBase\\" as a_a811389a <<Application>>
+      usecase \\"Use the application\\" as a_a6f3cf91 <<Main>>
+
+      a_8f9bfe9d --> a_a6f3cf91 : invoke
+      a_a811389a --> a_a6f3cf91 : invoke
+
+      @enduml"
+    `)
+    expect(emitter.emitMarkdown()).toMatchInlineSnapshot(`
+      "## test stereotypes
+
+      \`\`\`plantuml
+
+      @startuml test_stereotypes
+      !theme sketchy-outline
+      skinparam actorStyle awesome
+      skinparam packageStyle Rectangle
+      left to right direction
+
+      title test stereotypes
+
+      actor \\"User\\" as a_8f9bfe9d <<human>>
+      actor \\"Main DataBase\\" as a_a811389a <<Application>>
+      usecase \\"Use the application\\" as a_a6f3cf91 <<Main>>
+
+      a_8f9bfe9d --> a_a6f3cf91 : invoke
+      a_a811389a --> a_a6f3cf91 : invoke
+
+      @enduml
+
+      \`\`\`
+      "
+    `)
   })
 })

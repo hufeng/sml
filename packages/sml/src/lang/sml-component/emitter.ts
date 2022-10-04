@@ -3,7 +3,7 @@ import { Emitter } from '../base'
 import { Component, SmlComponentAst } from './types'
 
 export class PumlComponentEmitter extends Emitter<SmlComponentAst> {
-  emitCode() {
+  emitPuml() {
     const { title, zones, components, links, vlinks, rels, notes } = this.meta
 
     return this.s

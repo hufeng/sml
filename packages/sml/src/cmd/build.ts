@@ -9,8 +9,11 @@ import { compile } from './compile'
  * build all dist puml
  */
 export async function build() {
+  // clean dist
+  fs.emptyDirSync('./dist')
+
   // await  compile sml to puml
-  await compile()
+  await compile('puml')
 
   // gen uml image
   const plantUmlJar = path.join(__dirname, '../../bin/plantuml-1.2022.8.jar')

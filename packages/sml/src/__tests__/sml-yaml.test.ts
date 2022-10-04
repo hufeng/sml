@@ -41,6 +41,68 @@ xmas-fifth-day:
     })
 
     // emitter
-    expect(emitter.emitCode()).toMatchSnapshot()
+    expect(emitter.emitPuml()).toMatchInlineSnapshot(`
+      "@startyaml hello_yaml_demo
+      !theme sketchy-outline
+      title hello yaml demo
+
+      #highlight \\"french-hens\\"
+      #highlight \\"xmas-fifth-day\\" / \\"partridges\\"
+
+      doe: \\"a deer, a female deer\\"
+      ray: \\"a drop of golden sun\\"
+      pi: 3.14159
+      xmas: true
+      french-hens: 3
+      calling-birds: 
+      	- huey
+      	- dewey
+      	- louie
+      	- fred
+      xmas-fifth-day: 
+      	calling-birds: four
+      	french-hens: 3
+      	golden-rings: 5
+      	partridges: 
+      		count: 1
+      		location: \\"a pear tree\\"
+      	turtle-doves: two
+      @endyaml"
+    `)
+    expect(emitter.emitMarkdown()).toMatchInlineSnapshot(`
+      "## hello yaml demo
+
+      \`\`\`plantuml
+
+      @startyaml hello_yaml_demo
+      !theme sketchy-outline
+      title hello yaml demo
+
+      #highlight \\"french-hens\\"
+      #highlight \\"xmas-fifth-day\\" / \\"partridges\\"
+
+      doe: \\"a deer, a female deer\\"
+      ray: \\"a drop of golden sun\\"
+      pi: 3.14159
+      xmas: true
+      french-hens: 3
+      calling-birds: 
+      	- huey
+      	- dewey
+      	- louie
+      	- fred
+      xmas-fifth-day: 
+      	calling-birds: four
+      	french-hens: 3
+      	golden-rings: 5
+      	partridges: 
+      		count: 1
+      		location: \\"a pear tree\\"
+      	turtle-doves: two
+      @endyaml
+
+      \`\`\`
+      "
+    `)
   })
 })

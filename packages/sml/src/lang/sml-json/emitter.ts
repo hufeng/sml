@@ -2,13 +2,13 @@ import { Emitter } from '../base'
 import { JsonDiagramAst } from './types'
 
 export class PumlJsonEmitter extends Emitter<JsonDiagramAst> {
-  emitCode() {
+  emitPuml() {
     const { title, highlights, json } = this.meta
     return this.s
       .$reset()
       .$s(`@startjson ${title.replace(/ /g, '_')}`)
       .$s(this.buildTheme)
-      .$s('')
+      .$s(this.buildTile)
       .$for(highlights, (s, highlight) =>
         s.$s(
           `#highlight ${highlight

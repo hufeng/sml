@@ -131,7 +131,20 @@ export abstract class Emitter<T extends BaseAst> {
     this.s = new S()
   }
 
-  abstract emitCode(): string
+  abstract emitPuml(): string
+
+  emitMarkdown() {
+    return new S()
+      .$s(`## ${this.meta.title}`)
+      .$s('')
+      .$s('```plantuml')
+      .$s('')
+      .$s(this.emitPuml())
+      .$s('')
+      .$s('```')
+      .$s('')
+      .toString()
+  }
 
   protected buildConfig = (s: S) => {
     this.buildTheme(s)
@@ -146,7 +159,7 @@ export abstract class Emitter<T extends BaseAst> {
   }
 
   protected buildTile = (s: S) => {
-    s.$s(`title ${this.meta.title}`)
+    s.$s(`title ${this.meta.title}`).$s('')
   }
 
   protected buildActorStyle = (s: S) => {
@@ -215,7 +228,7 @@ export abstract class Emitter<T extends BaseAst> {
     const jar = path.join(__dirname, '../../bin/plantuml-1.2022.8.jar')
 
     exec(
-      `${this.emitCode()} | java -jar ${jar} -pipe > ${img}`,
+      `${this.emitPuml()} | java -jar ${jar} -pipe > ${img}`,
       (err, stdout, stderr) => {
         if (err) {
           throw err

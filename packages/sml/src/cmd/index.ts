@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import chalk from 'chalk'
 import { Command } from 'commander'
 import { build } from './build'
 import { compile, watchCompile } from './compile'
@@ -36,14 +37,17 @@ program
   .command('compile')
   .description('emit sml to puml')
   .option('-w, --watch', 'watch mode')
+  .option('-o, --output [type]', 'ouput markdown or puml', 'puml')
   .action(async (options) => {
-    if (!options.watch) {
-      // compile mode
-      await compile()
+    // validate check
+    const { output, watch } = options
+    if (!['puml', 'md'].includes(output)) {
+      console.error(chalk.redBright(`smlc ouput only support 'puml' and 'md'`))
       return
     }
 
-    await watchCompile()
+    // compile
+    watch ? await watchCompile(output) : await compile(output)
   })
 
 program.parse(process.argv)
