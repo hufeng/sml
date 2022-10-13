@@ -1,7 +1,3 @@
-/**
- * @prettier
- * --print-width 120
- */
 import { Emitter } from '../base'
 import S from '../s'
 import { ComponentNode, UseCaseDiagramAst } from './types'
