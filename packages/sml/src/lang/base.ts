@@ -17,9 +17,25 @@ import {
 
 // ~~~~~~~~~~ builder ~~~~~~~~~~~~~~~~~~~~~~
 export class Builder {
+  #id: string = ''
+
   protected id(s: string) {
     const md5 = crypto.createHash('md5')
     return md5.update(s).digest('hex').substring(0, 8)
+  }
+
+  protected buildLinks<T extends Builder>(
+    container: Array<LinkAst>,
+    o: T | Array<T>,
+    fn?: (l: LinkBuilder) => void,
+  ) {
+    o = Array.isArray(o) ? o : [o]
+    const to = o.map((o) => o.#id)
+
+    const link = { from: this.#id, to }
+    fn && fn(new LinkBuilder(link))
+
+    container.push(link)
   }
 }
 
