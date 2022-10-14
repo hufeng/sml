@@ -55,6 +55,7 @@ export type LinkAst = {
   from: string
   to: Array<string>
   comment?: string
+  direction?: 'left' | 'right' | 'up' | 'down' | ''
   note?: {
     label: string
     position?: Position
@@ -65,12 +66,6 @@ export type NoteAst = {
   label: string
   position: Position
   on: ID
-}
-
-export type RelAst = {
-  from: string
-  to: string[]
-  comment?: string
 }
 
 export interface LinkContainer {
@@ -86,6 +81,6 @@ export interface LinkContainer {
     comment?: string
     note?: { label: string; position: Position }
   }>
-  rels?: Array<RelAst>
+  rels?: Array<LinkAst>
   notes: Array<NoteAst>
 }

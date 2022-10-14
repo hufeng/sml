@@ -75,11 +75,16 @@ export class ComponentBuilder extends Builder {
    * @param dist
    * @returns
    */
-  rel(dist: ComponentBuilder | Array<ComponentBuilder>) {
-    this.#meta.rels.push({
+  rel(
+    dist: ComponentBuilder | Array<ComponentBuilder>,
+    fn?: (l: LinkBuilder) => void,
+  ) {
+    const link = {
       from: this.#id,
       to: this.#to(dist),
-    })
+    }
+    fn && fn(new LinkBuilder(link))
+    this.#meta.rels.push(link)
 
     return this
   }

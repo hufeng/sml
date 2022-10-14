@@ -15,9 +15,9 @@ export class PumlComponentEmitter extends Emitter<SmlComponentAst> {
       .$for(components, this.buildComponent)
       .$s('')
       .$for(notes, this.buildNotes)
-      .$for(links, this.buildVlink())
-      .$for(vlinks, this.buildVlink())
-      .$for(rels, this.buildRels)
+      .$for(links, this.buildLinks())
+      .$for(vlinks, this.buildLinks('..>'))
+      .$for(rels, this.buildLinks('-'))
       .$s('@enduml')
       .toString()
   }

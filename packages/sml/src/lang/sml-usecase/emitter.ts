@@ -23,8 +23,8 @@ export class PumlUseCaseEmitter extends Emitter<UseCaseDiagramAst> {
         .$s('')
         //links
         .$for(links, this.buildLinks())
-        .$for(vlinks, this.buildVlink())
-        .$for(rels, this.buildRels)
+        .$for(vlinks, this.buildLinks('..>'))
+        .$for(rels, this.buildLinks('--'))
         // notes
         .$for(notes, this.buildNotes)
         .$s('')

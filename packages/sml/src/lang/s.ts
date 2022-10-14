@@ -23,6 +23,12 @@ export default class S {
     }
   }
 
+  ifelse$(cond: unknown, s1: string, s2: string = '') {
+    return (s: S) => {
+      s.$ifelse(cond, s1, s2)
+    }
+  }
+
   for$<T>(arr: Array<T> = [], fn: (s: S, v: T, i?: number) => void) {
     return (s: S) => s.$for(arr, fn)
   }
@@ -46,6 +52,11 @@ export default class S {
 
   $if(cond: unknown, s1: string, s2: string = '') {
     this.#buff.push(typeof cond === 'undefined' ? s2 : s1)
+    return this
+  }
+
+  $ifelse(cond: unknown, s1: string, s2: string = '') {
+    this.#buff.push(cond ? s1 : s2)
     return this
   }
 

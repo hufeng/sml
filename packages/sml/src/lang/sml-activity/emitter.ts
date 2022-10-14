@@ -14,7 +14,7 @@ export class PumlActivityEmitter extends Emitter<SmlActivityLangMeta> {
       .$for(components, this.buildComponents)
       .$s('')
       .$for(links, this.buildLinks('->'))
-      .$for(vlinks, this.buildVlink('-->'))
+      .$for(vlinks, this.buildLinks('-->'))
       .$for(notes, this.buildNotes)
       .$s('')
       .$s('@enduml')

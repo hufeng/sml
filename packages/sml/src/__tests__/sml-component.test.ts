@@ -61,10 +61,10 @@ describe('component diagram test suites', () => {
       }
 
       note \\"connected\\" as nvlink_c_4b00bbf4_c_7fdd65ec
-      (c_4b00bbf4) .. nvlink_c_4b00bbf4_c_7fdd65ec
-      nvlink_c_4b00bbf4_c_7fdd65ec ..> (c_7fdd65ec) : invoke
-      c_7fdd65ec ..> c_d77ba138 : invoke
-      c_d77ba138 ..> c_81c3b080
+      (c_4b00bbf4) -- nvlink_c_4b00bbf4_c_7fdd65ec
+      nvlink_c_4b00bbf4_c_7fdd65ec --> (c_7fdd65ec) : invoke
+      c_7fdd65ec --> c_d77ba138 : invoke
+      c_d77ba138 --> c_81c3b080
       c_81c3b080 ..> c_86a1b907
       c_86a1b907 ..> c_5f075ae3
       i_80791b3a - c_4b00bbf4

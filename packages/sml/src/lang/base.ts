@@ -11,7 +11,6 @@ import {
   LinkAst,
   NoteAst,
   Position,
-  RelAst,
   Theme,
   ZoneType,
 } from './types'
@@ -47,6 +46,22 @@ export class LinkBuilder {
   commentOf(comment: string) {
     this.#link.comment = comment
     return this
+  }
+
+  directionOf(direction: '' | 'left' | 'up' | 'right' | 'down' = '') {
+    this.#link.direction = direction
+  }
+}
+
+export class RelBuilder {
+  #rel: LinkAst
+
+  constructor(rel: LinkAst) {
+    this.#rel = rel
+  }
+
+  directionOf(direction: '' | 'left' | 'up' | 'right' | 'down' = '') {
+    this.#rel.direction = direction
   }
 }
 
@@ -181,38 +196,29 @@ export abstract class Emitter<T extends BaseAst> {
   }
 
   protected buildLinks =
-    (linkStyle: '-->' | '->' = '-->') =>
-    (s: S, { from, to, comment, note: link }: LinkAst) => {
-      if (typeof link !== 'undefined') {
+    (linkStyle: '-->' | '->' | '..>' | '.>' | '--' | '-' = '-->') =>
+    (s: S, { from, to, direction, comment, note }: LinkAst) => {
+      const arrow =
+        linkStyle.charAt(0) + (direction || '') + linkStyle.substring(1)
+      if (typeof note !== 'undefined') {
         s.$for(to, (s, to) => {
           const noteName = `nvlink_${from}_${to}`
-          s.$s(`note "${link.label}" as ${noteName}`)
-            .$s(`(${from}) --${noteName}`)
-            .$s(`${noteName} --> (${to})`, s.if$(comment, ` : ${comment}`))
+          s.$s(`note "${note.label}" as ${noteName}`)
+            .$s(
+              `(${from})`,
+              s.ifelse$(linkStyle.startsWith('.'), ' .. ', ' -- '),
+              `${noteName}`,
+            )
+            .$s(
+              `${noteName}`,
+              s.ifelse$(linkStyle.startsWith('.'), ' ..> ', ' --> '),
+              `(${to})`,
+              s.if$(comment, ` : ${comment}`),
+            )
         })
       } else {
         s.$for(to, (s, to) =>
-          s.$s(`${from} ${linkStyle} ${to}`, s.if$(comment, ` : ${comment}`)),
-        )
-      }
-    }
-
-  protected buildVlink =
-    (linkStyle: '..>' | '.>' | '-->' = '..>') =>
-    (s: S, { from, to, comment, note: link }: LinkAst) => {
-      if (typeof link !== 'undefined') {
-        s.$for(to, (s, to) => {
-          const noteName = `nvlink_${from}_${to}`
-          s.$s(`note "${link.label}" as ${noteName}`)
-            .$s(`(${from}) .. ${noteName}`)
-            .$s(`${noteName} ..> (${to})`, s.if$(comment, ` : ${comment}`))
-        })
-      } else {
-        s.$for(to, (s, to) =>
-          s.$s(
-            `${from} ${linkStyle} ${to}`,
-            s.if$(comment, ` : ${comment}`, ''),
-          ),
+          s.$s(`${from} ${arrow} ${to}`, s.if$(comment, ` : ${comment}`)),
         )
       }
     }
@@ -221,8 +227,6 @@ export abstract class Emitter<T extends BaseAst> {
     const { label, position, on } = note
     s.$s(`note ${position} of (${on})`).$s(`  ${label}`).$s('end note')
   }
-  protected buildRels = (s: S, { from, to }: RelAst) =>
-    s.$for(to, (s, t) => s.$s(`${from} - ${t}`))
 
   plantUML(img: string) {
     const jar = path.join(__dirname, '../../bin/plantuml-1.2022.8.jar')

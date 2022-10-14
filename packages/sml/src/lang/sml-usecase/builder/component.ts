@@ -94,10 +94,17 @@ export class ComponentBuilder extends Builder {
    * setting relation with actor or usecase
    * @param i
    */
-  rel(i: ComponentBuilder | Array<ComponentBuilder>) {
+  rel(
+    i: ComponentBuilder | Array<ComponentBuilder>,
+    fn?: (r: LinkBuilder) => void,
+  ) {
     i = Array.isArray(i) ? i : [i]
     const to = i.map((i) => componentWeakMap.get(i)!)
-    this.#meta.rels.push({ from: this.#id, to })
+
+    const rel = { from: this.#id, to }
+    fn && fn(new LinkBuilder(rel))
+
+    this.#meta.rels.push(rel)
 
     return this
   }

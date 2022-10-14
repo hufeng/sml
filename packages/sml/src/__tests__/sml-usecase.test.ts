@@ -193,7 +193,7 @@ describe('sml usecase test suites', () => {
   })
 
   it('test packages', () => {
-    const { emitter } = sml.UsecaseDiagram(title, (ml) => {
+    const { ast, emitter } = sml.UsecaseDiagram(title, (ml) => {
       const g = ml.actor('guest')
 
       const z1 = ml.zone(`Restaurant`)
@@ -206,6 +206,85 @@ describe('sml usecase test suites', () => {
       g.link([u1, u2], (l) => l.noteOf('guest note'))
       a1.link(u1)
     })
+
+    expect(ast).toMatchInlineSnapshot(`
+      {
+        "actors": [],
+        "components": [
+          {
+            "id": "a_084e0343",
+            "label": "guest",
+            "stereotypes": "",
+            "type": "actor",
+          },
+        ],
+        "config": {
+          "actorStyle": "awesome",
+          "direction": "left->right",
+          "packageStyle": "Rectangle",
+          "theme": "sketchy-outline",
+        },
+        "links": [
+          {
+            "from": "a_084e0343",
+            "note": {
+              "label": "guest note",
+              "position": "right",
+            },
+            "to": [
+              "a_a6709cd3",
+              "a_f870119e",
+            ],
+          },
+          {
+            "from": "a_8fd82b88",
+            "to": [
+              "a_a6709cd3",
+            ],
+          },
+        ],
+        "notes": [],
+        "rels": [],
+        "title": "hello usecase diagram",
+        "vlinks": [],
+        "zones": [
+          {
+            "components": [
+              {
+                "id": "a_a6709cd3",
+                "label": "Eat Food",
+                "stereotypes": "",
+                "type": "usecase",
+              },
+              {
+                "id": "a_f870119e",
+                "label": "Pay for food",
+                "stereotypes": "",
+                "type": "usecase",
+              },
+            ],
+            "id": "z_e197a9cc",
+            "label": "Restaurant",
+            "stereotypes": "",
+            "type": "Rectangle",
+          },
+          {
+            "components": [
+              {
+                "id": "a_8fd82b88",
+                "label": "Chef",
+                "stereotypes": "",
+                "type": "actor",
+              },
+            ],
+            "id": "z_9e8b1602",
+            "label": "Professional",
+            "stereotypes": "",
+            "type": "Rectangle",
+          },
+        ],
+      }
+    `)
     expect(emitter.emitPuml()).toMatchInlineSnapshot(`
       "@startuml hello_usecase_diagram
       !theme sketchy-outline
@@ -225,10 +304,10 @@ describe('sml usecase test suites', () => {
       }
 
       note \\"guest note\\" as nvlink_a_084e0343_a_a6709cd3
-      (a_084e0343) --nvlink_a_084e0343_a_a6709cd3
+      (a_084e0343) -- nvlink_a_084e0343_a_a6709cd3
       nvlink_a_084e0343_a_a6709cd3 --> (a_a6709cd3)
       note \\"guest note\\" as nvlink_a_084e0343_a_f870119e
-      (a_084e0343) --nvlink_a_084e0343_a_f870119e
+      (a_084e0343) -- nvlink_a_084e0343_a_f870119e
       nvlink_a_084e0343_a_f870119e --> (a_f870119e)
       a_8fd82b88 --> a_a6709cd3
 
@@ -565,6 +644,126 @@ describe('sml usecase test suites', () => {
 
       \`\`\`
       "
+    `)
+  })
+
+  it('test relation with direction', () => {
+    const { ast, emitter } = sml.UsecaseDiagram(
+      'relation with direction',
+      (ml) => {
+        const u = ml.actor('user')
+        const usLeft = ml.usecase('left')
+        const usRight = ml.usecase('right')
+        const usUp = ml.usecase('up')
+        const usDown = ml.usecase('down')
+
+        u.link(usLeft, (l) => l.directionOf('left'))
+        u.link(usUp, (l) => l.directionOf('up'))
+        u.vlink(usRight, (l) => l.directionOf('right'))
+        u.rel(usDown, (l) => l.directionOf('left'))
+      },
+    )
+    expect(ast).toMatchInlineSnapshot(`
+      {
+        "actors": [],
+        "components": [
+          {
+            "id": "a_ee11cbb1",
+            "label": "user",
+            "stereotypes": "",
+            "type": "actor",
+          },
+          {
+            "id": "a_811882fe",
+            "label": "left",
+            "stereotypes": "",
+            "type": "usecase",
+          },
+          {
+            "id": "a_7c4f2940",
+            "label": "right",
+            "stereotypes": "",
+            "type": "usecase",
+          },
+          {
+            "id": "a_46c48bec",
+            "label": "up",
+            "stereotypes": "",
+            "type": "usecase",
+          },
+          {
+            "id": "a_74e8333a",
+            "label": "down",
+            "stereotypes": "",
+            "type": "usecase",
+          },
+        ],
+        "config": {
+          "actorStyle": "awesome",
+          "direction": "left->right",
+          "packageStyle": "Rectangle",
+          "theme": "sketchy-outline",
+        },
+        "links": [
+          {
+            "direction": "left",
+            "from": "a_ee11cbb1",
+            "to": [
+              "a_811882fe",
+            ],
+          },
+          {
+            "direction": "up",
+            "from": "a_ee11cbb1",
+            "to": [
+              "a_46c48bec",
+            ],
+          },
+        ],
+        "notes": [],
+        "rels": [
+          {
+            "direction": "left",
+            "from": "a_ee11cbb1",
+            "to": [
+              "a_74e8333a",
+            ],
+          },
+        ],
+        "title": "relation with direction",
+        "vlinks": [
+          {
+            "direction": "right",
+            "from": "a_ee11cbb1",
+            "to": [
+              "a_7c4f2940",
+            ],
+          },
+        ],
+        "zones": [],
+      }
+    `)
+    expect(emitter.emitPuml()).toMatchInlineSnapshot(`
+      "@startuml relation_with_direction
+      !theme sketchy-outline
+      skinparam actorStyle awesome
+      skinparam packageStyle Rectangle
+      left to right direction
+
+      title relation with direction
+
+      actor \\"user\\" as a_ee11cbb1
+      usecase \\"left\\" as a_811882fe
+      usecase \\"right\\" as a_7c4f2940
+      usecase \\"up\\" as a_46c48bec
+      usecase \\"down\\" as a_74e8333a
+
+      a_ee11cbb1 -left-> a_811882fe
+      a_ee11cbb1 -up-> a_46c48bec
+      a_ee11cbb1 .right.> a_7c4f2940
+      a_ee11cbb1 -left- a_74e8333a
+
+      @enduml"
     `)
   })
 })
