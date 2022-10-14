@@ -51,7 +51,7 @@ export default class S {
   }
 
   $if(cond: unknown, s1: string, s2: string = '') {
-    this.#buff.push(typeof cond === 'undefined' ? s2 : s1)
+    this.#buff.push(typeof cond === 'undefined' || cond === '' ? s2 : s1)
     return this
   }
 
