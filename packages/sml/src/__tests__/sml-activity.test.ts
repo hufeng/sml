@@ -1,8 +1,8 @@
-import { SmlActivityDiagram } from '../lang/sml-activity'
+import { SmlSequenceDiagram } from '../lang/sml-sequence'
 
 describe('sml activity test suite', () => {
   it('test syntax', () => {
-    const { ast, emitter } = SmlActivityDiagram('hello activities', (ml) => {
+    const { ast, emitter } = SmlSequenceDiagram('hello activities', (ml) => {
       const alice = ml.actor('Alice')
       const b = ml.boundary('Boundary')
       const c = ml.control('Control')

@@ -1,9 +1,9 @@
 import { Lang } from '../base'
 import { ComponentBuilder } from './builder/component'
-import { SmlActivityLangMeta } from './types'
+import { SmlSequenceLangMeta } from './types'
 
-export class SmlActivityLang extends Lang<SmlActivityLangMeta> {
-  constructor(meta: SmlActivityLangMeta) {
+export class SmlSequenceLang extends Lang<SmlSequenceLangMeta> {
+  constructor(meta: SmlSequenceLangMeta) {
     super(meta)
   }
 

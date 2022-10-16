@@ -1,8 +1,8 @@
 import S from '../s'
 import { Emitter } from '../base'
-import { Component, SmlActivityLangMeta } from './types'
+import { Component, SmlSequenceLangMeta } from './types'
 
-export class PumlActivityEmitter extends Emitter<SmlActivityLangMeta> {
+export class PumlSequenceEmitter extends Emitter<SmlSequenceLangMeta> {
   emitPuml() {
     const { components, links, vlinks, notes } = this.meta
 
