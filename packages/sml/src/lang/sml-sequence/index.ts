@@ -1,7 +1,7 @@
 import { PumlSequenceEmitter } from './emitter'
 import { SmlSequenceLang } from './syntax'
 
-export function SmlSequenceDiagram(
+export function SequenceDiagram(
   title: string,
   fn: (ml: SmlSequenceLang) => void,
 ) {
