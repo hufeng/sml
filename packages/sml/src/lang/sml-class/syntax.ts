@@ -11,7 +11,7 @@ export enum VisibleType {
   package_private = 'package_private',
 }
 
-// ~~~~~~~~~~~~~ define class lang modeing ~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~ define class lang modeling ~~~~~~~~~~~~~~~~~~~
 enum T {
   void = 'void',
   string = `string`,

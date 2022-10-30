@@ -37,12 +37,12 @@ program
   .command('compile')
   .description('emit sml to puml')
   .option('-w, --watch', 'watch mode')
-  .option('-o, --output [type]', 'ouput markdown or puml', 'puml')
+  .option('-o, --output [type]', 'output markdown or puml', 'puml')
   .action(async (options) => {
     // validate check
     const { output, watch } = options
     if (!['puml', 'md'].includes(output)) {
-      console.error(chalk.redBright(`smlc ouput only support 'puml' and 'md'`))
+      console.error(chalk.redBright(`smlc output only support 'puml' and 'md'`))
       return
     }
 

@@ -5,9 +5,6 @@
   "bin": {
     "smlc": "./lib/cmd/index.js"
   },
-  "scripts": {
-    "postinstall": "node ./lib/cmd/download.js"
-  },
   "version": "0.0.1",
   "license": "MIT",
   "dependencies": {

@@ -3,7 +3,7 @@ import axios from 'axios'
 import fs from 'fs-extra'
 
 // download
-;(async function downloadPlantUmlJar() {
+export async function downloadPlantUmlJar() {
   console.log(
     `downloading https://ghproxy.com/https://github.com/plantuml/plantuml/releases/download/v1.2022.8/plantuml-1.2022.8.jar`,
   )
@@ -23,4 +23,4 @@ import fs from 'fs-extra'
   fs.writeFileSync(path.join(dir, 'plantuml-1.2022.8.jar'), response.data, {
     encoding: 'binary',
   })
-})()
+}

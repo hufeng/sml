@@ -4,11 +4,19 @@ import fs from 'fs-extra'
 import chalk from 'chalk'
 import { exec } from 'node:child_process'
 import { compile } from './compile'
+import { downloadPlantUmlJar } from './download'
+
+const plantUmlJar = path.join(__dirname, '../../bin/plantuml-1.2022.8.jar')
 
 /**
  * build all dist puml
  */
 export async function build() {
+  // check plantuml.jar exists
+  if (!fs.existsSync(plantUmlJar)) {
+    await downloadPlantUmlJar()
+  }
+
   // clean dist
   fs.emptyDirSync('./dist')
 
@@ -16,7 +24,6 @@ export async function build() {
   await compile('puml')
 
   // gen uml image
-  const plantUmlJar = path.join(__dirname, '../../bin/plantuml-1.2022.8.jar')
   exec(
     `java -Djava.awt.headless=true -jar ${plantUmlJar} ./dist`,
     (err, stdout, stderr) => {
@@ -30,6 +37,6 @@ export async function build() {
   )
   // output
   const outputs = fs.readdirSync('./dist')
-  console.log(chalk.blueBright(`ouput: 👌`))
+  console.log(chalk.blueBright(`output: 👌`))
   console.log(chalk.yellowBright(`${outputs.join('\n')}`))
 }
