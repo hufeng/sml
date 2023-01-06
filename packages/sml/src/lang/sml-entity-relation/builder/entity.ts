@@ -1,5 +1,5 @@
 import { Builder } from '../../base'
-import { Entity, EntityRelationDiagramAst, Relation } from '../type'
+import { Entity, EntityRelationDiagramAst } from '../type'
 import { RelationBuilder } from './relation'
 
 export const erWeakMap: WeakMap<EntityBuilder, string> = new WeakMap()
